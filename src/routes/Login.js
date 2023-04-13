@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Login.scss";
+import "../styles/Login.css";
 import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
 
@@ -18,9 +18,15 @@ export default function Login() {
 
       console.log(response.data);
       setResult(response.data.message);
+      // localStorage.setItem("token", response.data.token);\
 
-      if (response.data.result) {
-        // localStorage.setItem("token", response.data.token);
+      if (response.data.result === "08") {
+        alert("비밀번호를 확인해주세요.");
+        navigate("/");
+      } else if (response.data.result === "25") {
+        alert("존재하지 않는 아이디입니다.");
+        navigate("/");
+      } else {
         alert("로그인 성공");
         navigate("/main");
       }
@@ -55,8 +61,6 @@ export default function Login() {
           </label>
           <input type="submit" value="Login" />
         </form>
-        {err && <p>{err}</p>}
-        {result}
       </div>
     </>
   );
