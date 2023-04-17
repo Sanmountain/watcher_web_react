@@ -1,0 +1,37 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+body {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.card-header .row {
+  float: left;
+  text-align: center;
+}
+.dropdown {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+#searchType-scandate {
+  width: 30px;
+  margin-bottom: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+#searchType-barcode {
+  margin-bottom: 0px;
+  width: 30px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  display: none;
+}
+#searchType-barcode > input {
+  width: 160px;
+  line-height: 34px;
+}
