@@ -1,10 +1,26 @@
 import React, { useState } from "react";
 import "../styles/Work.css";
+import { dvInAll } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
+  const [apiResponse, setApiResponse] = useState(null);
+
+  const handleApiCall = async () => {
+    try {
+      const response = await dvInAll({
+        start_time: "2023-04-14 00:00:00",
+        end_time: "2023-04-14 23:59:59",
+        bran_cd: "551",
+        longTime: ""
+      });
+      setApiResponse(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -71,7 +87,7 @@ export default function Work() {
 
               {/* 조회 */}
               <div className="ml-1 mr-1" style={{ width: "110px" }}>
-                <button className="btn btn-dark btn_search">조회</button>
+                <button className="btn btn-dark btn_search" onClick={handleApiCall}>조회</button>
               </div>
 
               <div
@@ -80,6 +96,14 @@ export default function Work() {
               >
                 <span id="total_count"> 조회량 : 6368건</span>
               </div>
+
+              {apiResponse && (
+        <div>
+          <p>API response:</p>
+          <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+        </div>
+      )}
+
             </div>
           </div>
         </div>
