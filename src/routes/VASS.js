@@ -4,6 +4,7 @@ import { dvInAll } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -11,6 +12,13 @@ export default function Work() {
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
+
+  /* cam 화면 열기 */
+  const movePage = useNavigate();
+
+  function goVass() {
+    movePage("/vasscam");
+  }
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -124,14 +132,10 @@ export default function Work() {
               <ul>
                 <li>No.</li>
                 <li>업무</li>
-                <li>영업소</li>
-                <li>상대영업소</li>
-                <li>차량</li>
-                <li>송장</li>
-                <li>상대</li>
-                <li>날짜</li>
-                <li>시간</li>
-                <li>사원</li>
+                <li>날짜&시간</li>
+                <li>차량번호</li>
+                <li>송장번호</li>
+                <li>화물추적</li>
               </ul>
             </li>
             {apiResponse &&
@@ -140,14 +144,12 @@ export default function Work() {
                   <ul>
                     <li>{index + 1}</li>
                     <li>업무</li>
-                    <li>{apiResponse.bran_cd}</li>
-                    <li>{apiResponse.tg_bran_cd}</li>
+                    <li>{apiResponse.scan_total_time}</li>
                     <li>{apiResponse.car_num}</li>
                     <li>{apiResponse.barcode}</li>
-                    <li>{apiResponse.pob}</li>
-                    <li>{apiResponse.scandate}</li>
-                    <li>{apiResponse.scantime}</li>
-                    <li>사원</li>
+                    <li>
+                      <button onClick={goVass}>조회</button>
+                    </li>
                   </ul>
                 </li>
               ))}

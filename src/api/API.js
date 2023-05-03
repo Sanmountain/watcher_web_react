@@ -13,14 +13,6 @@ export const signIn = (data) => {
   });
 };
 
-export const changePassword = (data) => {
-  return axios.post(`${url}/sign`, { api: "change", data: data });
-};
-
-export const modifyUser = (data) => {
-  return axios.post(`${url}/sign`, { api: "userModify", data: data });
-};
-
 export const dvInAll = (data) => {
   return axios.post(`${url}/lose`, {
     api: "dvInAll",

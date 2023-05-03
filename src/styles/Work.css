@@ -7,31 +7,92 @@ body {
   font-size: 14px;
   font-family: "Roboto", sans-serif;
 }
-
-.card-header .row {
-  float: left;
-  text-align: center;
-}
-.dropdown {
-  padding-top: 2px;
-  padding-bottom: 2px;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px;
 }
 
-#searchType-scandate {
-  width: 30px;
-  margin-bottom: 0px;
-  padding-top: 2px;
-  padding-bottom: 2px;
+.card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.card-header > select {
+  border: 1px solid darkgray;
+  width: 120px;
+  height: 30px;
+}
+.card-header .datepicker {
+  height: 30px;
+  border: 1px solid darkgray;
+  padding-top: 3px;
+  padding-left: 5px;
+}
+.checkBtn {
+  background-color: #6a24fe;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 35px;
 }
 
-#searchType-barcode {
-  margin-bottom: 0px;
-  width: 30px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  display: none;
+.checkBtn:hover {
+  background-color: #531cc9;
 }
-#searchType-barcode > input {
-  width: 160px;
-  line-height: 34px;
+
+#total_count {
+  margin-left: 20px;
+}
+
+.cardTable {
+  width: 100%;
+  margin: 0 auto;
+}
+#ulTable {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+  width: 110%;
+}
+
+#ulTable > li:first-child {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #f8f9fa;
+}
+
+#ulTable > li:first-child > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+  padding-left: 30px;
+  margin: 0;
+}
+
+#ulTable > li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+
+#ulTable > li > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+  padding-left: 30px;
+  margin: 0;
 }

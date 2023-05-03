@@ -3,12 +3,16 @@ import "../styles/Login.css";
 import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const [user_id, setId] = useState("");
+export default function Login({ setIsLoggedIn }) {
+  const [user_id, setId] = useState(sessionStorage.getItem("saveId") || "");
   const [user_password, setPw] = useState("");
+  const [rememberId, setRememberId] = useState(false);
   const [result, setResult] = useState("");
-  const [err, setErr] = useState("");
   const navigate = useNavigate();
+
+  const handleRememberId = (e) => {
+    setRememberId(e.target.checked);
+  };
 
   const handleSighIn = async (e) => {
     e.preventDefault();
@@ -27,13 +31,17 @@ export default function Login() {
         navigate("/");
       } else {
         alert("로그인 성공");
+        setIsLoggedIn(true);
+        if (rememberId) {
+          sessionStorage.setItem("saveId", response.data.data[0].user_id);
+        }
       }
-
-      localStorage.setItem("saveId", response.data.data[0].user_id);
+      sessionStorage.setItem("saveId", response.data.data[0].user_id);
       navigate("/main");
-    } catch (err) {
-      console.error(err);
-      setErr("로그인 요청 중 오류가 발생했습니다. 다시 시도해주세요");
+      console.log("sessionStorage:" + sessionStorage.getItem("saveId"));
+    } catch (error) {
+      console.error(error);
+      alert("로그인 요청 중 오류가 발생했습니다. 다시 시도해주세요");
     }
   };
 
@@ -57,7 +65,11 @@ export default function Login() {
             placeholder="Password"
           />
           <label>
-            <input type="checkbox" id="remember-check" />
+            <input
+              type="checkbox"
+              id="remember-check"
+              onChange={handleRememberId}
+            />
             ID 저장
           </label>
           <input type="submit" value="Login" />
