@@ -31,7 +31,8 @@ body {
   padding-top: 3px;
   padding-left: 5px;
 }
-.checkBtn {
+.checkBtn,
+.sendBtn {
   background-color: #6a24fe;
   color: white;
   padding: 8px 15px;
@@ -41,7 +42,6 @@ body {
   transition: background-color 0.3s;
   height: 35px;
 }
-
 .checkBtn:hover {
   background-color: #531cc9;
 }

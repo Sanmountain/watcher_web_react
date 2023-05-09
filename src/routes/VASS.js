@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Work.css";
 import { dvInAll } from "../api/API";
+import { getKtToken } from "../api/API_account";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -12,13 +13,7 @@ export default function Work() {
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
-
-  /* cam 화면 열기 */
-  const movePage = useNavigate();
-
-  function goVass() {
-    movePage("/vasscam");
-  }
+  const [ktToken, setktToken] = useState(null);
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -79,6 +74,22 @@ export default function Work() {
       } else {
         setApiResponse(response.data.data);
         alert("조회 성공");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const useKTAuthToken = async () => {
+    try {
+      const response = await getKtToken({
+        saId: "",
+      });
+      if (response.data.result === "00") {
+        setktToken(response.data.saId);
+        console.log("## getKTAuthenToken =>", response.data);
+      } else {
+        alert("Token 저장 실패");
       }
     } catch (error) {
       console.error(error);
@@ -148,18 +159,12 @@ export default function Work() {
                     <li>{apiResponse.car_num}</li>
                     <li>{apiResponse.barcode}</li>
                     <li>
-                      <button onClick={goVass}>조회</button>
+                      <button onClick={useKTAuthToken}>조회</button>
                     </li>
                   </ul>
                 </li>
               ))}
           </ul>
-
-          {/* {apiResponse && (
-            <div>
-              <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
-            </div>
-          )} */}
         </div>
       </div>
     </>

@@ -19,3 +19,10 @@ export const dvInAll = (data) => {
     data: [data],
   });
 };
+
+export const sendSelect = (data) => {
+  return axios.post(`${url}/send`, {
+    api: "sendSelect",
+    data: [data],
+  });
+};

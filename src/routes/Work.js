@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Work.css";
-import { dvInAll } from "../api/API";
+import { dvInAll, sendSelect } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -21,10 +21,10 @@ export default function Work() {
   const handleStartDateChange = (date) => {
     const formattedDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
     setStartDate(formattedDate);
-    console.log("aaa" + formattedDate);
+    console.log("시작날짜" + formattedDate);
     const endDate = dayjs(date).format("YYYY-MM-DD 23:59:59");
     setEndDate(endDate);
-    console.log("aaabb" + endDate);
+    console.log("종료날짜" + endDate);
   };
 
   /* 송장번호 입력 시 실행함수 */
@@ -77,6 +77,27 @@ export default function Work() {
     }
   };
 
+  const handleSendBtn = async () => {
+    try {
+      const bran_cd = sessionStorage.getItem("saveId");
+      const response = await sendSelect({
+        bran_cd: bran_cd,
+        start_time: startDate,
+        end_time: endDate,
+        longTime: "",
+      });
+      console.log(response.data);
+
+      if (response.data.result === "00") {
+        alert("전송완료");
+      } else {
+        alert("통신오류");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -116,6 +137,9 @@ export default function Work() {
             {" "}
             조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
           </span>
+          <button className="sendBtn" onClick={handleSendBtn}>
+            자료전송
+          </button>
         </div>
 
         <div className="cardTable">
@@ -139,7 +163,7 @@ export default function Work() {
                 <li key={apiResponse.index}>
                   <ul>
                     <li>{index + 1}</li>
-                    <li>업무</li>
+                    <li>{apiResponse.tm_dv}</li>
                     <li>{apiResponse.bran_cd}</li>
                     <li>{apiResponse.tg_bran_cd}</li>
                     <li>{apiResponse.car_num}</li>
@@ -147,17 +171,11 @@ export default function Work() {
                     <li>{apiResponse.pob}</li>
                     <li>{apiResponse.scandate}</li>
                     <li>{apiResponse.scantime}</li>
-                    <li>사원</li>
+                    <li>{apiResponse.emp_cd}</li>
                   </ul>
                 </li>
               ))}
           </ul>
-
-          {/* {apiResponse && (
-            <div>
-              <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
-            </div>
-          )} */}
         </div>
       </div>
     </>
