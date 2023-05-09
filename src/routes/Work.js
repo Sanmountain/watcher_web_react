@@ -4,6 +4,7 @@ import { dvInAll, sendSelect } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
+import Loding from "../components/work/Loading";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -11,6 +12,7 @@ export default function Work() {
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
+  const [isLoading, setIsLoading] = useState(false);
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -41,6 +43,7 @@ export default function Work() {
   };
 
   const handleScanDateApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = sessionStorage.getItem("saveId");
       const response = await dvInAll({
@@ -49,6 +52,7 @@ export default function Work() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
       setApiResponse(response.data.data);
     } catch (error) {
@@ -78,6 +82,8 @@ export default function Work() {
   };
 
   const handleSendBtn = async () => {
+    setIsLoading(true);
+
     try {
       const bran_cd = sessionStorage.getItem("saveId");
       const response = await sendSelect({
@@ -93,6 +99,7 @@ export default function Work() {
       } else {
         alert("통신오류");
       }
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -137,9 +144,13 @@ export default function Work() {
             {" "}
             조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
           </span>
-          <button className="sendBtn" onClick={handleSendBtn}>
-            자료전송
-          </button>
+          {isLoading ? (
+            <Loding />
+          ) : (
+            <button className="sendBtn" onClick={handleSendBtn}>
+              자료전송
+            </button>
+          )}
         </div>
 
         <div className="cardTable">
