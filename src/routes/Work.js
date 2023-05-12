@@ -61,6 +61,7 @@ export default function Work() {
   };
 
   const handleInvoiceNumberApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = sessionStorage.getItem("saveId");
       const response = await dvInAll({
@@ -69,6 +70,7 @@ export default function Work() {
         longTime: "",
       });
       console.log(response.data);
+      setIsLoading(false);
 
       if (response.data.result === "10") {
         alert("송장번호를 입력해주세요.");
@@ -93,13 +95,13 @@ export default function Work() {
         longTime: "",
       });
       console.log(response.data);
+      setIsLoading(false);
 
       if (response.data.result === "00") {
         alert("전송완료");
       } else {
         alert("통신오류");
       }
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -171,7 +173,7 @@ export default function Work() {
             </li>
             {apiResponse &&
               apiResponse.map((apiResponse, index) => (
-                <li key={apiResponse.index}>
+                <li key={apiResponse.id}>
                   <ul>
                     <li>{index + 1}</li>
                     <li>{apiResponse.tm_dv}</li>
