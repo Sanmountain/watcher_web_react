@@ -5,7 +5,7 @@ import { getKtToken } from "../api/API_account";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
-import Loding from "../components/work/Loading";
+import { useNavigate } from "react-router-dom";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -14,7 +14,6 @@ export default function Work() {
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
   const [ktToken, setktToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -45,7 +44,6 @@ export default function Work() {
   };
 
   const handleScanDateApiCall = async () => {
-    setIsLoading(true);
     try {
       const bran_cd = sessionStorage.getItem("saveId");
       const response = await dvInAll({
@@ -54,7 +52,6 @@ export default function Work() {
         bran_cd: bran_cd,
         longTime: "",
       });
-      setIsLoading(false);
       console.log(response.data);
       setApiResponse(response.data.data);
     } catch (error) {
@@ -63,7 +60,6 @@ export default function Work() {
   };
 
   const handleInvoiceNumberApiCall = async () => {
-    setIsLoading(true);
     try {
       const bran_cd = sessionStorage.getItem("saveId");
       const response = await dvInAll({
@@ -72,7 +68,6 @@ export default function Work() {
         longTime: "",
       });
       console.log(response.data);
-      setIsLoading(false);
 
       if (response.data.result === "10") {
         alert("송장번호를 입력해주세요.");
@@ -131,13 +126,11 @@ export default function Work() {
               />
             </div>
           )}
-          {isLoading ? (
-            <Loding />
-          ) : (
-            <button className="checkBtn" onClick={handleApiCall}>
-              조회
-            </button>
-          )}
+
+          <button className="checkBtn" onClick={handleApiCall}>
+            조회
+          </button>
+
           <span id="total_count">
             {" "}
             조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
@@ -158,7 +151,7 @@ export default function Work() {
             </li>
             {apiResponse &&
               apiResponse.map((apiResponse, index) => (
-                <li key={apiResponse.id}>
+                <li key={apiResponse.index}>
                   <ul>
                     <li>{index + 1}</li>
                     <li>업무</li>
