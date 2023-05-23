@@ -34,6 +34,19 @@ export default function Main() {
               VASS
             </button>
           </NavLink>
+          <NavLink to="/test">
+            <button
+              style={{
+                cursor: "pointer",
+                margin: "5px",
+                width: "50px",
+                height: "30px",
+                border: "1px solid black",
+              }}
+            >
+              TEST
+            </button>
+          </NavLink>
         </form>
       </div>
     </>
