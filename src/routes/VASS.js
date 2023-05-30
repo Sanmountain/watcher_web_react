@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "../styles/Work.css";
 import { dvInAll } from "../api/API";
-import { getKtToken } from "../api/API_account";
+import { getRecordVideoList } from "../api/API_KT";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -13,7 +12,6 @@ export default function Work() {
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
-  const [ktToken, setktToken] = useState(null);
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -24,10 +22,10 @@ export default function Work() {
   const handleStartDateChange = (date) => {
     const formattedDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
     setStartDate(formattedDate);
-    console.log("aaa" + formattedDate);
+    console.log("start date :" + formattedDate);
     const endDate = dayjs(date).format("YYYY-MM-DD 23:59:59");
     setEndDate(endDate);
-    console.log("aaabb" + endDate);
+    console.log("end data :" + endDate);
   };
 
   /* 송장번호 입력 시 실행함수 */
@@ -80,16 +78,14 @@ export default function Work() {
     }
   };
 
-  const useKTAuthToken = async () => {
+  /* 녹화 영상 정보 목록 조회 */
+  const useRecorVideoView = async () => {
     try {
-      const response = await getKtToken({
-        saId: "",
-      });
+      const response = await getRecordVideoList({});
       if (response.data.result === "00") {
-        setktToken(response.data.saId);
-        console.log("## getKTAuthenToken =>", response.data);
+        console.log(response.data);
       } else {
-        alert("Token 저장 실패");
+        alert("조회 실패");
       }
     } catch (error) {
       console.error(error);
@@ -159,7 +155,7 @@ export default function Work() {
                     <li>{apiResponse.car_num}</li>
                     <li>{apiResponse.barcode}</li>
                     <li>
-                      <button onClick={useKTAuthToken}>조회</button>
+                      <button onClick={useRecorVideoView}>조회</button>
                     </li>
                   </ul>
                 </li>

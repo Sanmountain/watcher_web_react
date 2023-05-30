@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Work.css";
-import { dvInAll, sendSelect } from "../api/API";
+import { dvInAll, sendSelect, autoChange } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ export default function Work() {
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
   const [isLoading, setIsLoading] = useState(false);
+  const [toggleState, setToggleState] = useState(false);
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -105,6 +106,33 @@ export default function Work() {
     }
   };
 
+  /* 토글버튼 */
+  useEffect(() => {
+    const autoValue = sessionStorage.getItem("auto");
+    if (autoValue === "0") {
+      setToggleState(false);
+    } else {
+      setToggleState(true);
+    }
+  }, []);
+
+  const handleToggle = async () => {
+    const bran_cd = sessionStorage.getItem("saveId");
+    const newAutoValue = toggleState ? "1" : "0";
+
+    try {
+      const response = await autoChange({
+        bran_cd: bran_cd,
+        auto: newAutoValue,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setToggleState(!toggleState);
+  };
+
   return (
     <>
       <div className="container">
@@ -147,9 +175,18 @@ export default function Work() {
           {isLoading ? (
             <Loding />
           ) : (
-            <button className="sendBtn" onClick={handleSendBtn}>
-              자료전송
-            </button>
+            <div>
+              <button className="sendBtn" onClick={handleSendBtn}>
+                자료전송
+              </button>
+              <input type="checkbox" id="toggle" hidden />
+
+              <label htmlFor="toggle" class="toggleSwitch">
+                <span className="toggleButton" onClick={handleToggle}>
+                  {toggleState ? "자동" : "수동"}
+                </span>
+              </label>
+            </div>
           )}
         </div>
 

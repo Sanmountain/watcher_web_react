@@ -14,7 +14,9 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
     navigate("/");
   };
   const goPage = () => {
-    navigate("/main");
+    if (isLoggedIn) {
+      navigate("/main");
+    }
   };
 
   return (

@@ -2,6 +2,8 @@ import axios from "axios";
 
 const url = "http://43.200.27.132:9000/AndyLogen";
 
+const url2 = "http://52.78.165.22:8080/AndyLogen";
+
 export const signUp = (data) => {
   return axios.post(`${url}/sign`, { api: "signUp", data: data });
 };
@@ -25,4 +27,12 @@ export const sendSelect = (data) => {
     api: "sendSelect",
     data: [data],
   });
+};
+
+export const autoChange = (bran_cd, auto) => {
+  return axios.post(`${url2}/autoChange`, { bran_cd, auto });
+};
+
+export const autoCheck = (data) => {
+  return axios.post(`${url2}/autoCheck`, { data: [data] });
 };
