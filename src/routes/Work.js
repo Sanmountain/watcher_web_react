@@ -3,7 +3,7 @@ import "../styles/Work.css";
 import { dvInAll, sendSelect, autoChange } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import dayjs from "dayjs";
+import moment from "moment";
 import Loding from "../components/work/Loading";
 
 export default function Work() {
@@ -22,10 +22,10 @@ export default function Work() {
 
   /* 스캔일자 선택 시 실행되는 날짜변형함수 */
   const handleStartDateChange = (date) => {
-    const formattedDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
+    const formattedDate = moment(date).format("YYYY-MM-DD 00:00:00");
     setStartDate(formattedDate);
     console.log("시작날짜" + formattedDate);
-    const endDate = dayjs(date).format("YYYY-MM-DD 23:59:59");
+    const endDate = moment(date).format("YYYY-MM-DD 23:59:59");
     setEndDate(endDate);
     console.log("종료날짜" + endDate);
   };
@@ -150,7 +150,7 @@ export default function Work() {
             <div className="datepicker">
               <DatePicker
                 dateFormat="yyyy-MM-dd"
-                selected={dayjs(startDate).toDate()}
+                selected={moment(startDate).toDate()}
                 onChange={handleStartDateChange}
               />
             </div>
