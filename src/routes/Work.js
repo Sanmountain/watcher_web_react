@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Work.css";
-import { dvInAll, sendSelect, autoChange } from "../api/API";
+import { dvInAll, sendSelect, autoChange, autoCheck } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -121,10 +121,7 @@ export default function Work() {
     const newAutoValue = toggleState ? "1" : "0";
 
     try {
-      const response = await autoChange({
-        bran_cd: bran_cd,
-        auto: newAutoValue,
-      });
+      const response = await autoChange(bran_cd, newAutoValue);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -132,6 +129,33 @@ export default function Work() {
 
     setToggleState(!toggleState);
   };
+
+  /* Auto 체크 */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const bran_cd = sessionStorage.getItem("saveId");
+        console.log("bran_cd :::" + bran_cd);
+        const response = await autoCheck({
+          bran_cd: bran_cd,
+        });
+        if (response.data.result === "00") {
+          console.log(response.data.data[0]);
+
+          const autoJsonString = JSON.stringify(response.data.data);
+          sessionStorage.setItem("auto", autoJsonString);
+
+          console.log("auto 값 :::" + sessionStorage.getItem("auto"));
+        } else {
+          alert("조회 실패");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -175,17 +199,20 @@ export default function Work() {
           {isLoading ? (
             <Loding />
           ) : (
-            <div>
+            <div className="btnSet">
               <button className="sendBtn" onClick={handleSendBtn}>
                 자료전송
               </button>
               <input type="checkbox" id="toggle" hidden />
 
-              <label htmlFor="toggle" class="toggleSwitch">
-                <span className="toggleButton" onClick={handleToggle}>
-                  {toggleState ? "자동" : "수동"}
-                </span>
+              <label
+                htmlFor="toggle"
+                className="toggleSwitch"
+                onClick={handleToggle}
+              >
+                <span className="toggleButton"></span>
               </label>
+              <div className="toggleLabel">{toggleState ? "자동" : "수동"}</div>
             </div>
           )}
         </div>
