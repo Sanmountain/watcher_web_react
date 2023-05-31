@@ -33,6 +33,6 @@ export const autoChange = (bran_cd, auto) => {
   return axios.post(`${url2}/autoChange`, { bran_cd, auto });
 };
 
-export const autoCheck = (data) => {
-  return axios.post(`${url2}/autoCheck`, { data: [data] });
+export const autoCheck = (postData) => {
+  return axios.post(`${url2}/autoCheck`, postData);
 };
