@@ -106,15 +106,48 @@ export default function Work() {
     }
   };
 
-  /* 토글버튼 */
+  /* Auto 체크 */
   useEffect(() => {
-    const autoValue = sessionStorage.getItem("auto");
-    if (autoValue === "0") {
-      setToggleState(false);
-    } else {
-      setToggleState(true);
-    }
-  }, []);
+    const fetchData = async () => {
+      try {
+        const bran_cd = sessionStorage.getItem("saveId");
+        const response = await autoCheck({
+          bran_cd: bran_cd,
+        });
+        if (response.data.result === "00") {
+          console.log(response.data.data[0]);
+
+          const autoJsonString = JSON.stringify(response.data.data[0]);
+          console.log("aaaaaaa::::" + autoJsonString);
+          sessionStorage.setItem("auto", autoJsonString);
+
+          if (autoJsonString === "{auto:0}") {
+            setToggleState(false);
+          } else {
+            setToggleState(true);
+          }
+          console.log("ddddd :::" + toggleState);
+        } else {
+          alert("조회 실패");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [toggleState]);
+
+  /* 토글버튼 */
+  // useEffect(() => {
+  //   const autoValue = sessionStorage.getItem("auto");
+  //   if (autoValue === "0") {
+  //     setToggleState(false);
+  //   } else {
+  //     setToggleState(true);
+  //   }
+  //   console.log("ddddd :::" + toggleState);
+  // }, [toggleState]);
 
   const handleToggle = async () => {
     const bran_cd = sessionStorage.getItem("saveId");
@@ -129,33 +162,6 @@ export default function Work() {
 
     setToggleState(!toggleState);
   };
-
-  /* Auto 체크 */
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const bran_cd = sessionStorage.getItem("saveId");
-        console.log("bran_cd :::" + bran_cd);
-        const response = await autoCheck({
-          bran_cd: bran_cd,
-        });
-        if (response.data.result === "00") {
-          console.log(response.data.data[0]);
-
-          const autoJsonString = JSON.stringify(response.data.data);
-          sessionStorage.setItem("auto", autoJsonString);
-
-          console.log("auto 값 :::" + sessionStorage.getItem("auto"));
-        } else {
-          alert("조회 실패");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -203,18 +209,21 @@ export default function Work() {
               <button className="sendBtn" onClick={handleSendBtn}>
                 자료전송
               </button>
-              <input type="checkbox" id="toggle" hidden />
-
-              <label
-                htmlFor="toggle"
-                className="toggleSwitch"
-                onClick={handleToggle}
-              >
-                <span className="toggleButton"></span>
-              </label>
-              <div className="toggleLabel">{toggleState ? "자동" : "수동"}</div>
             </div>
           )}
+          <input
+            type="checkbox"
+            id="toggle"
+            checked={toggleState}
+            onChange={handleToggle}
+            onClick={handleToggle}
+            hidden
+          />
+
+          <label htmlFor="toggle" className="toggleSwitch">
+            <span className="toggleButton"></span>
+          </label>
+          <div className="toggleLabel">{toggleState ? "자동" : "수동"}</div>
         </div>
 
         <div className="cardTable">
