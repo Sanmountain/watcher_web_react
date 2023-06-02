@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Work.css";
 import { dvInAll } from "../api/API";
 import { getRecordVideoList } from "../api/API_KT";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
+import { getCameraList } from "../api/API_camera";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -91,6 +92,30 @@ export default function Work() {
       console.error(error);
     }
   };
+
+  /* 카메라 정보 조회 */
+  useEffect(() => {
+    const cameraView = async () => {
+      try {
+        const response = await getCameraList({});
+        if (response.data.result === "00") {
+          console.log(response.data);
+          sessionStorage.setItem("authToken", response.data.authToken);
+          sessionStorage.setItem("authorization", response.data.authorization);
+
+          const listJsonString = JSON.stringify(response.data.list);
+
+          sessionStorage.setItem("cam_ids", listJsonString);
+        } else {
+          alert("조회 실패");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    cameraView();
+  }, []);
 
   return (
     <>

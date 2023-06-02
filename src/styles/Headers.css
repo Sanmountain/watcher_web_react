@@ -18,7 +18,14 @@
   padding: 5px;
   font-size: 2rem;
   font-weight: 600;
+}
+.header > .titleHeader {
+  padding: 5px 10px;
+  margin-left: 20px;
+  font-size: 1.5rem;
+  font-weight: 400;
   cursor: pointer;
+  transform: translateY(20%);
 }
 .header > .logoSmall {
   padding-top: 4px;

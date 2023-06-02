@@ -39,7 +39,7 @@ export default function Login({ setIsLoggedIn }) {
       sessionStorage.setItem("saveId", response.data.data[0].user_id);
       sessionStorage.setItem("saveSaId", response.data.data[0].sa_id);
       sessionStorage.setItem("saveAcId", response.data.data[0].account_id);
-      navigate("/main");
+      navigate("/work");
       console.log(
         "saveId:" +
           sessionStorage.getItem("saveId") +

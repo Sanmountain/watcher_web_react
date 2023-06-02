@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login";
-import Main from "./routes/Main";
 import Work from "./routes/Work";
 import Vass from "./routes/VASS";
 import Header from "./components/Header";
@@ -18,9 +17,14 @@ function App() {
           path="/"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
         ></Route>
-        <Route path="/main" element={<Main />}></Route>
-        <Route path="/work" element={<Work />}></Route>
-        <Route path="/vass" element={<Vass />}></Route>
+        <Route
+          path="/work"
+          element={<Work setIsLoggedIn={setIsLoggedIn} />}
+        ></Route>
+        <Route
+          path="/vass"
+          element={<Vass setIsLoggedIn={setIsLoggedIn} />}
+        ></Route>
         <Route path="/test" element={<Test />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

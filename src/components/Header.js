@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Headers.css";
 
@@ -11,20 +11,29 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
     navigate("/");
   };
   const onLogin = () => {
-    navigate("/");
+    navigate("/work");
   };
-  const goPage = () => {
+  const goPage1 = () => {
     if (isLoggedIn) {
-      navigate("/main");
+      navigate("/work");
+    }
+  };
+  const goPage2 = () => {
+    if (isLoggedIn) {
+      navigate("/vass");
     }
   };
 
   return (
     <div className="header">
-      <div className="logoBig" onClick={goPage}>
-        WATCHER
-      </div>
+      <div className="logoBig">WATCHER</div>
       <div className="logoSmall">JHC</div>
+      <div className="titleHeader" onClick={goPage1}>
+        WORK
+      </div>
+      <div className="titleHeader" onClick={goPage2}>
+        VASS
+      </div>
       <div>
         <button
           type="button"
