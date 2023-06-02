@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Login.css";
 import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ setIsLoggedIn }) {
-  const [user_id, setId] = useState(sessionStorage.getItem("saveId") || "");
+  const [user_id, setId] = useState(localStorage.getItem("saveId") || "");
   const [user_password, setPw] = useState("");
   const [rememberId, setRememberId] = useState(false);
   const [result, setResult] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem("isLoggedIn")) {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
   const handleRememberId = (e) => {
     setRememberId(e.target.checked);
   };
 
-  const handleSighIn = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
 
     try {
@@ -33,20 +39,20 @@ export default function Login({ setIsLoggedIn }) {
         alert("로그인 성공");
         setIsLoggedIn(true);
         if (rememberId) {
-          sessionStorage.setItem("saveId", response.data.data[0].user_id);
+          localStorage.setItem("saveId", response.data.data[0].user_id);
         }
       }
-      sessionStorage.setItem("saveId", response.data.data[0].user_id);
-      sessionStorage.setItem("saveSaId", response.data.data[0].sa_id);
-      sessionStorage.setItem("saveAcId", response.data.data[0].account_id);
+      localStorage.setItem("saveId", response.data.data[0].user_id);
+      localStorage.setItem("saveSaId", response.data.data[0].sa_id);
+      localStorage.setItem("saveAcId", response.data.data[0].account_id);
       navigate("/work");
       console.log(
         "saveId:" +
-          sessionStorage.getItem("saveId") +
+          localStorage.getItem("saveId") +
           ", saveSaId:" +
-          sessionStorage.getItem("saveSaId") +
+          localStorage.getItem("saveSaId") +
           ", saveAcId:" +
-          sessionStorage.getItem("saveAcId")
+          localStorage.getItem("saveAcId")
       );
     } catch (error) {
       console.error(error);
@@ -58,7 +64,7 @@ export default function Login({ setIsLoggedIn }) {
     <>
       <div className="login-wrapper">
         <h2>Watcher</h2>
-        <form id="login-form" onSubmit={handleSighIn}>
+        <form id="login-form" onSubmit={handleSignIn}>
           <input
             type="text"
             name="userName"

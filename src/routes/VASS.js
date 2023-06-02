@@ -44,7 +44,7 @@ export default function Work() {
 
   const handleScanDateApiCall = async () => {
     try {
-      const bran_cd = sessionStorage.getItem("saveId");
+      const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
         start_time: startDate,
         end_time: endDate,
@@ -60,7 +60,7 @@ export default function Work() {
 
   const handleInvoiceNumberApiCall = async () => {
     try {
-      const bran_cd = sessionStorage.getItem("saveId");
+      const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
         barcode: snNumber,
         bran_cd: bran_cd,
@@ -100,12 +100,12 @@ export default function Work() {
         const response = await getCameraList({});
         if (response.data.result === "00") {
           console.log(response.data);
-          sessionStorage.setItem("authToken", response.data.authToken);
-          sessionStorage.setItem("authorization", response.data.authorization);
+          localStorage.setItem("authToken", response.data.authToken);
+          localStorage.setItem("authorization", response.data.authorization);
 
           const listJsonString = JSON.stringify(response.data.list);
 
-          sessionStorage.setItem("cam_ids", listJsonString);
+          localStorage.setItem("cam_ids", listJsonString);
         } else {
           alert("조회 실패");
         }

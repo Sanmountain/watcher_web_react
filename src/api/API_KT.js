@@ -3,9 +3,9 @@ import axios from "axios";
 const url = "https://int.api.kt.com/gigaeyes/v1.0";
 
 export const getRecordVideoList = (data) => {
-  const authToken = sessionStorage.getItem("authToken");
-  const authorization = sessionStorage.getItem("authorization");
-  const cam_ids = sessionStorage.getItem("cam_ids");
+  const authToken = localStorage.getItem("authToken");
+  const authorization = localStorage.getItem("authorization");
+  const cam_ids = localStorage.getItem("cam_ids");
 
   return axios.post(`${url}/recordVideoList`, {
     headers: {

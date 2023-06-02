@@ -48,7 +48,7 @@ export default function Work() {
   const handleScanDateApiCall = async () => {
     setIsLoading(true);
     try {
-      const bran_cd = sessionStorage.getItem("saveId");
+      const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
         start_time: startDate,
         end_time: endDate,
@@ -66,7 +66,7 @@ export default function Work() {
   /* 송장번호입력 */
   const handleInvoiceNumberApiCall = async () => {
     try {
-      const bran_cd = sessionStorage.getItem("saveId");
+      const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
         barcode: snNumber,
         bran_cd: bran_cd,
@@ -90,7 +90,7 @@ export default function Work() {
     setIsLoading(true);
 
     try {
-      const bran_cd = sessionStorage.getItem("saveId");
+      const bran_cd = localStorage.getItem("saveId");
       const response = await sendSelect({
         bran_cd: bran_cd,
         start_time: startDate,
@@ -114,7 +114,7 @@ export default function Work() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bran_cd = sessionStorage.getItem("saveId");
+        const bran_cd = localStorage.getItem("saveId");
         const response = await autoCheck({
           bran_cd: bran_cd,
         });
@@ -143,7 +143,7 @@ export default function Work() {
 
   /* 자동,수동 변환 */
   const handleToggle = async () => {
-    const bran_cd = sessionStorage.getItem("saveId");
+    const bran_cd = localStorage.getItem("saveId");
     console.log(toggleState);
     const newAutoValue = toggleState ? "0" : "1";
     console.log("toggleState" + toggleState);

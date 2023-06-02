@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Headers.css";
 
 export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("saveId");
+    setIsLoggedIn(isLoggedIn);
+  }, [setIsLoggedIn]);
+
   const onLogout = () => {
-    sessionStorage.removeItem("saveId");
+    localStorage.removeItem("saveId");
+    localStorage.removeItem("saveSaId");
+    localStorage.removeItem("saveAcId");
     setIsLoggedIn(false);
     navigate("/");
   };
-  const onLogin = () => {
-    navigate("/work");
-  };
+
   const goPage1 = () => {
     if (isLoggedIn) {
       navigate("/work");
     }
   };
+
   const goPage2 = () => {
     if (isLoggedIn) {
       navigate("/vass");
@@ -38,9 +44,9 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         <button
           type="button"
           className="logoutBtn"
-          onClick={isLoggedIn ? onLogout : onLogin}
+          onClick={isLoggedIn ? onLogout : () => navigate("/")}
         >
-          {isLoggedIn ? "로그아웃" : "로그인"}
+          {localStorage.getItem("saveId") == null ? "로그인" : "로그아웃"}
         </button>
       </div>
     </div>

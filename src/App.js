@@ -4,7 +4,6 @@ import Login from "./routes/Login";
 import Work from "./routes/Work";
 import Vass from "./routes/VASS";
 import Header from "./components/Header";
-import NotFound from "./routes/NotFound";
 import Test from "./routes/Test";
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           element={<Vass setIsLoggedIn={setIsLoggedIn} />}
         ></Route>
         <Route path="/test" element={<Test />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
