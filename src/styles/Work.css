@@ -98,24 +98,23 @@ body {
 }
 
 .toggleSwitch {
-  width: 55px;
+  width: 65px;
   height: 30px;
-  display: inline-block;
+  display: block;
   position: relative;
   border-radius: 30px;
   background-color: #fff;
-  box-shadow: 0 0 16px 3px rgba(0 0 0 / 15%);
+  box-shadow: 0 0 13px 3px rgba(0 0 0 / 15%);
   cursor: pointer;
-  margin-left: 20px;
+  margin: 5px;
 }
 
 .toggleSwitch .toggleButton {
-  display: inline-block;
   width: 20px;
   height: 20px;
   position: absolute;
   top: 50%;
-  left: 4px;
+  left: 9px;
   transform: translateY(-50%);
   border-radius: 50%;
   background: #6a24fe;
@@ -126,29 +125,11 @@ body {
 }
 
 #toggle:checked ~ .toggleSwitch .toggleButton {
-  left: calc(100% - 24px);
+  left: calc(100% - 30px);
   background: #fff;
 }
 
 .toggleSwitch,
 .toggleButton {
   transition: all 0.2s ease-in;
-}
-
-.btnSet {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.sendBtn {
-  order: 1;
-}
-
-.toggleSwitch {
-  order: 2;
-}
-
-.toggleLabel {
-  order: 3;
 }

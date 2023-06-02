@@ -20,7 +20,7 @@ export default function Work() {
     setSearchOption2(e.target.value);
   };
 
-  /* 스캔일자 선택 시 실행되는 날짜변형함수 */
+  /* 스캔일자 선택 시 실행되는 날짜변형 */
   const handleStartDateChange = (date) => {
     const formattedDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
     setStartDate(formattedDate);
@@ -30,11 +30,12 @@ export default function Work() {
     console.log("종료날짜" + endDate);
   };
 
-  /* 송장번호 입력 시 실행함수 */
+  /* 송장번호 입력 시 실행 */
   const handleSnNumChange = (e) => {
     setSnNumber(e.target.value);
   };
 
+  /* 조회 버튼 클릭 시 실행 */
   const handleApiCall = () => {
     if (searchOption2 === "scandate") {
       handleScanDateApiCall();
@@ -43,6 +44,7 @@ export default function Work() {
     }
   };
 
+  /* 날짜입력 */
   const handleScanDateApiCall = async () => {
     setIsLoading(true);
     try {
@@ -61,6 +63,7 @@ export default function Work() {
     }
   };
 
+  /* 송장번호입력 */
   const handleInvoiceNumberApiCall = async () => {
     try {
       const bran_cd = sessionStorage.getItem("saveId");
@@ -82,6 +85,7 @@ export default function Work() {
     }
   };
 
+  /* 자료전송 버튼 클릭 시 실행 */
   const handleSendBtn = async () => {
     setIsLoading(true);
 
@@ -117,16 +121,15 @@ export default function Work() {
         if (response.data.result === "00") {
           console.log(response.data.data[0]);
 
-          const autoJsonString = JSON.stringify(response.data.data[0]);
-          console.log("aaaaaaa::::" + autoJsonString);
-          sessionStorage.setItem("auto", autoJsonString);
+          const autoValue = response.data.data[0].auto;
+          console.log("auto 값 :::", autoValue);
 
-          if (autoJsonString === "{auto:0}") {
-            setToggleState(false);
-          } else {
+          if (autoValue === "1") {
             setToggleState(true);
+          } else {
+            setToggleState(false);
           }
-          console.log("ddddd :::" + toggleState);
+          console.log("toggleState 값 :::", toggleState);
         } else {
           alert("조회 실패");
         }
@@ -136,31 +139,24 @@ export default function Work() {
     };
 
     fetchData();
-  }, [toggleState]);
+  }, []);
 
-  /* 토글버튼 */
-  // useEffect(() => {
-  //   const autoValue = sessionStorage.getItem("auto");
-  //   if (autoValue === "0") {
-  //     setToggleState(false);
-  //   } else {
-  //     setToggleState(true);
-  //   }
-  //   console.log("ddddd :::" + toggleState);
-  // }, [toggleState]);
-
+  /* 자동,수동 변환 */
   const handleToggle = async () => {
     const bran_cd = sessionStorage.getItem("saveId");
-    const newAutoValue = toggleState ? "1" : "0";
+    console.log(toggleState);
+    const newAutoValue = toggleState ? "0" : "1";
+    console.log("toggleState" + toggleState);
+    console.log("newAutoValue" + newAutoValue);
 
     try {
       const response = await autoChange(bran_cd, newAutoValue);
       console.log(response.data);
+      setToggleState(!toggleState);
+      console.log(newAutoValue);
     } catch (error) {
       console.error(error);
     }
-
-    setToggleState(!toggleState);
   };
 
   return (
@@ -216,7 +212,6 @@ export default function Work() {
             id="toggle"
             checked={toggleState}
             onChange={handleToggle}
-            onClick={handleToggle}
             hidden
           />
 
