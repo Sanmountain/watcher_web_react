@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/Work.css";
 import { dvInAll } from "../api/API";
-import { getRecordVideoList } from "../api/API_KT";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
-import { getCameraList } from "../api/API_camera";
+import { useNavigate } from "react-router-dom";
 
-export default function Work() {
+export default function VASS() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
+  const navigate = useNavigate();
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -79,43 +79,38 @@ export default function Work() {
     }
   };
 
-  /* 녹화 영상 정보 목록 조회 */
-  const useRecorVideoView = async () => {
-    try {
-      const response = await getRecordVideoList({});
-      if (response.data.result === "00") {
-        console.log(response.data);
-      } else {
-        alert("조회 실패");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   /* 카메라 정보 조회 */
-  useEffect(() => {
-    const cameraView = async () => {
-      try {
-        const response = await getCameraList({});
-        if (response.data.result === "00") {
-          console.log(response.data);
-          localStorage.setItem("authToken", response.data.authToken);
-          localStorage.setItem("authorization", response.data.authorization);
+  // useEffect(() => {
+  //   const cameraView = async () => {
+  //     try {
+  //       const response = await getCameraList({});
+  //       if (response.data.result === "00") {
+  //         console.log(response.data);
+  //         localStorage.setItem("authToken", response.data.authToken);
+  //         localStorage.setItem("authorization", response.data.authorization);
 
-          const listJsonString = JSON.stringify(response.data.list);
+  //         const listJsonString = JSON.stringify(response.data.list);
 
-          localStorage.setItem("cam_ids", listJsonString);
-        } else {
-          alert("조회 실패");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //         localStorage.setItem("cam_ids", listJsonString);
+  //       } else {
+  //         alert("조회 실패");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    cameraView();
-  }, []);
+  //   cameraView();
+  // }, []);
+
+  /* 캠 조회 화면으로 이동 */
+  const handleClick = () => {
+    const formattedStartDate = dayjs(startDate).format("YYYYMMDD000000");
+    const formattedEndDate = dayjs(endDate).format("YYYYMMDD005000");
+    localStorage.setItem("startDate", formattedStartDate);
+    localStorage.setItem("endDate", formattedEndDate);
+    navigate("/vasscam");
+  };
 
   return (
     <>
@@ -172,7 +167,7 @@ export default function Work() {
             </li>
             {apiResponse &&
               apiResponse.map((apiResponse, index) => (
-                <li key={apiResponse.index}>
+                <li key={index}>
                   <ul>
                     <li>{index + 1}</li>
                     <li>업무</li>
@@ -180,7 +175,7 @@ export default function Work() {
                     <li>{apiResponse.car_num}</li>
                     <li>{apiResponse.barcode}</li>
                     <li>
-                      <button onClick={useRecorVideoView}>조회</button>
+                      <button onClick={handleClick}>조회</button>
                     </li>
                   </ul>
                 </li>

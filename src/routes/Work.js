@@ -239,7 +239,7 @@ export default function Work() {
             </li>
             {apiResponse &&
               apiResponse.map((apiResponse, index) => (
-                <li key={apiResponse.index}>
+                <li key={index}>
                   <ul>
                     <li>{index + 1}</li>
                     <li>{apiResponse.tm_dv}</li>

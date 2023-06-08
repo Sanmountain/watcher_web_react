@@ -46,7 +46,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
           className="logoutBtn"
           onClick={isLoggedIn ? onLogout : () => navigate("/")}
         >
-          {localStorage.getItem("saveId") == null ? "로그인" : "로그아웃"}
+          {localStorage.getItem("saveId") === null ? "로그인" : "로그아웃"}
         </button>
       </div>
     </div>

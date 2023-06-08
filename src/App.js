@@ -4,7 +4,7 @@ import Login from "./routes/Login";
 import Work from "./routes/Work";
 import Vass from "./routes/VASS";
 import Header from "./components/Header";
-import Test from "./routes/Test";
+import VassCam from "./routes/VassCam";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +24,7 @@ function App() {
           path="/vass"
           element={<Vass setIsLoggedIn={setIsLoggedIn} />}
         ></Route>
-        <Route path="/test" element={<Test />}></Route>
+        <Route path="/vasscam" element={<VassCam />}></Route>
       </Routes>
     </BrowserRouter>
   );
