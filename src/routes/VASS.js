@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import Loding from "../components/work/Loading";
 
 export default function VASS() {
   const [startDate, setStartDate] = useState(new Date());
@@ -12,6 +13,7 @@ export default function VASS() {
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
   const [searchOption2, setSearchOption2] = useState("scandate");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   /* 송장번호,스캔일자 선택 */
@@ -43,6 +45,7 @@ export default function VASS() {
   };
 
   const handleScanDateApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
@@ -51,6 +54,7 @@ export default function VASS() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
       setApiResponse(response.data.data);
     } catch (error) {
@@ -146,11 +150,13 @@ export default function VASS() {
               />
             </div>
           )}
-
-          <button className="checkBtn" onClick={handleApiCall}>
-            조회
-          </button>
-
+          {isLoading ? (
+            <Loding />
+          ) : (
+            <button className="checkBtn" onClick={handleApiCall}>
+              조회
+            </button>
+          )}
           <span id="total_count">
             {" "}
             조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
