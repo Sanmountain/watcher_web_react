@@ -1,0 +1,61 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.containerVideo {
+  display: grid;
+  grid-template-columns: 10% 90%;
+  margin-bottom: 2%;
+}
+
+/* 왼쪽 바 */
+.video-menu {
+  grid-row-start: 1;
+  grid-row-end: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30%;
+}
+.video-menu button {
+  margin-top: 10%;
+  background-color: #6a24fe;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 35px;
+}
+.video-menu input {
+  margin-top: 5%;
+  border: 1px solid grey;
+  border-radius: 10px;
+  height: 30px;
+}
+
+/* 비디오 화면 */
+.video-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #6a24fe;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #3f16a1;
+}

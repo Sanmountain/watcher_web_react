@@ -21,12 +21,12 @@ export default function VASS() {
 
   /* 스캔일자 선택 시 실행되는 날짜변형함수 */
   const handleStartDateChange = (date) => {
-    const formattedDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
-    setStartDate(formattedDate);
-    console.log("start date :" + formattedDate);
+    const startDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
+    setStartDate(startDate);
+    console.log("handleStartDateChange start date :" + startDate);
     const endDate = dayjs(date).format("YYYY-MM-DD 23:59:59");
     setEndDate(endDate);
-    console.log("end data :" + endDate);
+    console.log("handleStartDateChange end data :" + endDate);
   };
 
   /* 송장번호 입력 시 실행함수 */
@@ -104,11 +104,15 @@ export default function VASS() {
   // }, []);
 
   /* 캠 조회 화면으로 이동 */
-  const handleClick = () => {
-    const formattedStartDate = dayjs(startDate).format("YYYYMMDD000000");
-    const formattedEndDate = dayjs(endDate).format("YYYYMMDD005000");
-    localStorage.setItem("startDate", formattedStartDate);
-    localStorage.setItem("endDate", formattedEndDate);
+  const handleClick = (id, scan_total_time) => {
+    const formattedStartDate = dayjs(scan_total_time).format("YYYYMMDDHHmmss");
+    console.log("formattedStartDate ::" + formattedStartDate);
+    const formattedEndDate = dayjs(scan_total_time)
+      .add(30, "minutes")
+      .format("YYYYMMDDHHmmss");
+    console.log("formattedEndDate ::" + formattedEndDate);
+    localStorage.setItem("formattedStartDate", formattedStartDate);
+    localStorage.setItem("formattedEndDate", formattedEndDate);
     navigate("/vasscam");
   };
 
@@ -175,7 +179,16 @@ export default function VASS() {
                     <li>{apiResponse.car_num}</li>
                     <li>{apiResponse.barcode}</li>
                     <li>
-                      <button onClick={handleClick}>조회</button>
+                      <button
+                        onClick={() =>
+                          handleClick(
+                            apiResponse.id,
+                            apiResponse.scan_total_time
+                          )
+                        }
+                      >
+                        조회
+                      </button>
                     </li>
                   </ul>
                 </li>
