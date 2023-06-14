@@ -108,7 +108,7 @@ export default function VASS() {
   // }, []);
 
   /* 캠 조회 화면으로 이동 */
-  const handleClick = (id, scan_total_time) => {
+  const handleClick = (id, scan_total_time, barcode) => {
     const formattedStartDate = dayjs(scan_total_time).format("YYYYMMDDHHmmss");
     console.log("formattedStartDate ::" + formattedStartDate);
     const formattedEndDate = dayjs(scan_total_time)
@@ -117,6 +117,7 @@ export default function VASS() {
     console.log("formattedEndDate ::" + formattedEndDate);
     localStorage.setItem("formattedStartDate", formattedStartDate);
     localStorage.setItem("formattedEndDate", formattedEndDate);
+    localStorage.setItem("barcode", barcode);
     navigate("/vasscam");
   };
 
@@ -189,7 +190,8 @@ export default function VASS() {
                         onClick={() =>
                           handleClick(
                             apiResponse.id,
-                            apiResponse.scan_total_time
+                            apiResponse.scan_total_time,
+                            apiResponse.barcode
                           )
                         }
                       >

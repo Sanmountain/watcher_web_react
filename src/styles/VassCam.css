@@ -59,3 +59,12 @@
 .pagination button.active {
   background-color: #3f16a1;
 }
+
+.videoCamname {
+  border: 1px solid #3f16a1;
+  width: 80px;
+  border-radius: 10px;
+  padding: 2px 5px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
