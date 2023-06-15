@@ -36,3 +36,10 @@ export const autoChange = (bran_cd, auto) => {
 export const autoCheck = (postData) => {
   return axios.post(`${url2}/autoCheck`, postData);
 };
+
+export const caminfo = (data) => {
+  return axios.post(`${url}/watcher/cam`, {
+    api: "caminfo",
+    data: [data],
+  });
+};

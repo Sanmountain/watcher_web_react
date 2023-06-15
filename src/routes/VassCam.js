@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import { getRecordVideoList } from "../api/API_camera";
+import { caminfo } from "../api/API";
 import "../styles/VassCam.css";
 
 const videosPerPage = 4;
@@ -13,6 +14,27 @@ export default function VassCam() {
   const startIndex = (currentPage - 1) * videosPerPage;
   const endIndex = startIndex + videosPerPage;
   const playerRefs = useRef([]);
+
+  /* 영상 순서 */
+  useEffect(() => {
+    const handleCaminfo = async () => {
+      try {
+        const user_id = localStorage.getItem("saveId");
+        const response = await caminfo({
+          user_id: user_id,
+        });
+        if (response.data.result === "00") {
+          console.log(response.data);
+        } else {
+          alert("조회 실패");
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    handleCaminfo();
+  }, []);
 
   /* 녹화 영상 정보 목록 조회 */
   useEffect(() => {
