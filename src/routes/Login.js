@@ -45,6 +45,7 @@ export default function Login({ setIsLoggedIn }) {
       localStorage.setItem("saveId", response.data.data[0].user_id);
       localStorage.setItem("saveSaId", response.data.data[0].sa_id);
       localStorage.setItem("saveAcId", response.data.data[0].account_id);
+      localStorage.setItem("bran_exp", response.data.data[0].bran_exp);
       navigate("/work");
       console.log(
         "saveId:" +
@@ -52,7 +53,9 @@ export default function Login({ setIsLoggedIn }) {
           ", saveSaId:" +
           localStorage.getItem("saveSaId") +
           ", saveAcId:" +
-          localStorage.getItem("saveAcId")
+          localStorage.getItem("saveAcId") +
+          ", bran_exp:" +
+          localStorage.getItem("bran_exp")
       );
     } catch (error) {
       console.error(error);

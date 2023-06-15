@@ -1,19 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Headers.css";
 
 export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
+  const [branExp, setBranExp] = useState("");
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("saveId");
-    setIsLoggedIn(isLoggedIn);
-  }, [setIsLoggedIn]);
+    const isloggedIn = localStorage.getItem("saveId");
+    setIsLoggedIn(isloggedIn);
+
+    const savedBranExp = localStorage.getItem("bran_exp");
+    setBranExp(savedBranExp);
+  });
 
   const onLogout = () => {
     localStorage.removeItem("saveId");
     localStorage.removeItem("saveSaId");
     localStorage.removeItem("saveAcId");
+    localStorage.removeItem("bran_exp");
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -41,6 +46,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         VASS
       </div>
       <div>
+        <div className="branExp">{branExp}</div>
         <button
           type="button"
           className="logoutBtn"
