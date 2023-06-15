@@ -14,6 +14,7 @@ export default function VassCam() {
   const startIndex = (currentPage - 1) * videosPerPage;
   const endIndex = startIndex + videosPerPage;
   const playerRefs = useRef([]);
+  const [sortedVideoList, setSortedVideoList] = useState([]);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -55,7 +56,12 @@ export default function VassCam() {
         });
         if (response.data.result === "00") {
           console.log(response.data);
-          setApiResponse(response.data.cam_list);
+
+          const sortedList = response.data.cam_list.sort(
+            (a, b) => a.cam_seq - b.cam_seq
+          );
+          setApiResponse(sortedList);
+          setSortedVideoList(sortedList);
         } else {
           alert("조회 실패");
           console.log(response.data);
@@ -112,8 +118,8 @@ export default function VassCam() {
         </div>
         <div className="content-wrapper">
           <div className="video-grid">
-            {apiResponse &&
-              apiResponse
+            {sortedVideoList &&
+              sortedVideoList
                 .slice(startIndex, endIndex)
                 .map((apiResponse, cam_id) => (
                   <div className="video-wrapper" key={cam_id}>
