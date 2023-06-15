@@ -113,6 +113,11 @@ export default function Work() {
   /* Auto 체크 */
   useEffect(() => {
     const fetchData = async () => {
+      const defaultStartDate = dayjs().startOf("day").toDate();
+      const defaultEndDate = dayjs().endOf("day").toDate();
+
+      setStartDate(defaultStartDate);
+      setEndDate(defaultEndDate);
       try {
         const bran_cd = localStorage.getItem("saveId");
         const response = await autoCheck({
@@ -241,7 +246,7 @@ export default function Work() {
               apiResponse.map((apiResponse, index) => (
                 <li key={index}>
                   <ul>
-                    <li>{index + 1}</li>
+                    <li>{apiResponse.length - index}</li>
                     <li>{apiResponse.tm_dv}</li>
                     <li>{apiResponse.bran_cd}</li>
                     <li>{apiResponse.tg_bran_cd}</li>
