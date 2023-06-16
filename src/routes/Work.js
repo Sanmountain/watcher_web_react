@@ -243,19 +243,19 @@ export default function Work() {
               </ul>
             </li>
             {apiResponse &&
-              apiResponse.map((apiResponse, index) => (
-                <li key={index}>
+              apiResponse.map((video, index) => (
+                <li key={video.id}>
                   <ul>
                     <li>{apiResponse.length - index}</li>
-                    <li>{apiResponse.tm_dv}</li>
-                    <li>{apiResponse.bran_cd}</li>
-                    <li>{apiResponse.tg_bran_cd}</li>
-                    <li>{apiResponse.car_num}</li>
-                    <li>{apiResponse.barcode}</li>
-                    <li>{apiResponse.pob}</li>
-                    <li>{apiResponse.scandate}</li>
-                    <li>{apiResponse.scantime}</li>
-                    <li>{apiResponse.emp_cd}</li>
+                    <li>{video.tm_dv}</li>
+                    <li>{video.bran_cd}</li>
+                    <li>{video.tg_bran_cd}</li>
+                    <li>{video.car_num}</li>
+                    <li>{video.barcode}</li>
+                    <li>{video.pob}</li>
+                    <li>{video.scandate}</li>
+                    <li>{video.scantime}</li>
+                    <li>{video.emp_cd}</li>
                   </ul>
                 </li>
               ))}

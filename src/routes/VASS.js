@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Work.css";
 import { dvInAll } from "../api/API";
 import DatePicker from "react-datepicker";
@@ -83,29 +83,18 @@ export default function VASS() {
     }
   };
 
-  /* 카메라 정보 조회 */
-  // useEffect(() => {
-  //   const cameraView = async () => {
-  //     try {
-  //       const response = await getCameraList({});
-  //       if (response.data.result === "00") {
-  //         console.log(response.data);
-  //         localStorage.setItem("authToken", response.data.authToken);
-  //         localStorage.setItem("authorization", response.data.authorization);
+  /* 날짜 선택 기본값 세팅 */
+  useEffect(() => {
+    const fetchData = async () => {
+      const defaultStartDate = dayjs().startOf("day").toDate();
+      const defaultEndDate = dayjs().endOf("day").toDate();
 
-  //         const listJsonString = JSON.stringify(response.data.list);
+      setStartDate(defaultStartDate);
+      setEndDate(defaultEndDate);
+    };
 
-  //         localStorage.setItem("cam_ids", listJsonString);
-  //       } else {
-  //         alert("조회 실패");
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   cameraView();
-  // }, []);
+    fetchData();
+  }, []);
 
   /* 캠 조회 화면으로 이동 */
   const handleClick = (id, scan_total_time, barcode) => {
@@ -177,21 +166,21 @@ export default function VASS() {
               </ul>
             </li>
             {apiResponse &&
-              apiResponse.map((apiResponse, index) => (
-                <li key={index}>
+              apiResponse.map((video, index) => (
+                <li key={video.id}>
                   <ul>
-                    <li>{index + 1}</li>
+                    <li>{apiResponse.length - index}</li>
                     <li>업무</li>
-                    <li>{apiResponse.scan_total_time}</li>
-                    <li>{apiResponse.car_num}</li>
-                    <li>{apiResponse.barcode}</li>
+                    <li>{video.scan_total_time}</li>
+                    <li>{video.car_num}</li>
+                    <li>{video.barcode}</li>
                     <li>
                       <button
                         onClick={() =>
                           handleClick(
-                            apiResponse.id,
-                            apiResponse.scan_total_time,
-                            apiResponse.barcode
+                            video.id,
+                            video.scan_total_time,
+                            video.barcode
                           )
                         }
                       >
