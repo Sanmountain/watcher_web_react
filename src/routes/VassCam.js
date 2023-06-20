@@ -62,7 +62,6 @@ export default function VassCam() {
         if (response.data.result === "00") {
           console.log(response.data);
           setVideoList(response.data.cam_list);
-          console.log(videoList);
         } else {
           alert("조회 실패");
           console.log(response.data);
@@ -94,18 +93,20 @@ export default function VassCam() {
     setVideoPlaying((prevState) => !prevState);
   };
 
-  /* 영상 10초 전 */
+  /* 영상 10초 후 */
   const handleRewindVideos = () => {
-    playerRefs.current.forEach((player) =>
-      player.seekTo(player.getCurrentTime() - 10)
-    );
+    playerRefs.current.forEach((player) => {
+      const currentTime = player.getCurrentTime();
+      player.seekTo(currentTime - 10);
+    });
   };
 
   /* 영상 10초 후 */
   const handleForwardVideos = () => {
-    playerRefs.current.forEach((player) =>
-      player.seekTo(player.getCurrentTime() + 10)
-    );
+    playerRefs.current.forEach((player) => {
+      const currentTime = player.getCurrentTime();
+      player.seekTo(currentTime + 10);
+    });
   };
 
   return (
@@ -133,7 +134,7 @@ export default function VassCam() {
                       {videosWithSameCamId.map((video) => (
                         <ReactPlayer
                           key={video.id}
-                          ref={(ref) => (playerRefs.current[video.id] = ref)}
+                          ref={(ref) => (playerRefs.current[cam_id] = ref)}
                           url={video.stream_url}
                           className="react-player"
                           width="90%"
