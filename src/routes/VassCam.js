@@ -7,6 +7,7 @@ import "../styles/VassCam.css";
 const videosPerPage = 4;
 
 export default function VassCam() {
+  const [videoList, setVideoList] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [videoPlaying, setVideoPlaying] = useState(true);
@@ -26,6 +27,10 @@ export default function VassCam() {
 
         if (response.data.result === "00") {
           console.log(response.data);
+          const sortedApiResponse = response.data.data.sort(
+            (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq)
+          );
+          setApiResponse(sortedApiResponse);
         } else {
           alert("조회 실패");
           console.log(response.data);
@@ -56,7 +61,8 @@ export default function VassCam() {
         });
         if (response.data.result === "00") {
           console.log(response.data);
-          setApiResponse(response.data.cam_list);
+          setVideoList(response.data.cam_list);
+          console.log(videoList);
         } else {
           alert("조회 실패");
           console.log(response.data);
@@ -116,20 +122,29 @@ export default function VassCam() {
             {apiResponse &&
               apiResponse
                 .slice(startIndex, endIndex)
-                .map((apiResponse, cam_id) => (
-                  <div className="video-wrapper" key={cam_id}>
-                    <div className="videoCamname">{apiResponse.cam_name}</div>
-                    <ReactPlayer
-                      ref={(ref) => (playerRefs.current[cam_id] = ref)}
-                      url={apiResponse.stream_url}
-                      className="react-player"
-                      width="90%"
-                      height="auto"
-                      controls={true}
-                      playing={videoPlaying}
-                    />
-                  </div>
-                ))}
+                .map((apiResponse, cam_id) => {
+                  const videosWithSameCamId = videoList.filter(
+                    (video) => video.cam_id === apiResponse.cam_id
+                  );
+
+                  return (
+                    <div className="video-wrapper" key={apiResponse.cam_id}>
+                      <div className="videoCamname">{apiResponse.cam_name}</div>
+                      {videosWithSameCamId.map((video) => (
+                        <ReactPlayer
+                          key={video.id}
+                          ref={(ref) => (playerRefs.current[video.id] = ref)}
+                          url={video.stream_url}
+                          className="react-player"
+                          width="90%"
+                          height="auto"
+                          controls={true}
+                          playing={videoPlaying}
+                        />
+                      ))}
+                    </div>
+                  );
+                })}
           </div>
           <div className="pagination">
             <button onClick={handleRewindVideos}>-10초</button>
