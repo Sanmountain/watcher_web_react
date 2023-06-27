@@ -46,7 +46,7 @@
   margin-top: 10px;
 }
 
-.pagination button {
+.pagination .btn1 {
   margin: 0 5px;
   padding: 5px 10px;
   background-color: #6a24fe;
@@ -56,8 +56,19 @@
   cursor: pointer;
 }
 
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: white;
+  color: #6a24fe;
+  border: 1px solid #6a24fe;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .pagination button.active {
   background-color: #3f16a1;
+  color: white;
 }
 
 .videoCamname {
@@ -68,4 +79,41 @@
   padding: 2px 5px;
   margin-bottom: 8px;
   font-weight: bold;
+}
+
+/* 비디오 순서 변경 모달창 */
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tableHead {
+  background-color: #f1f1f1;
+}
+
+.tableTh,
+.tableTd {
+  padding: 8px;
+}
+
+.tableTh {
+  border: 1px solid #ccc;
+  display: inline-block;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tableTd {
+  border: 1px solid #ccc;
+  display: inline-block;
+  text-align: center;
+}
+
+.tableHead :first-child,
+.tableContent :first-child {
+  width: 30%;
+}
+.tableHead :last-child,
+.tableContent :last-child {
+  width: 70%;
 }

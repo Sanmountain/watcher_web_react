@@ -43,3 +43,10 @@ export const caminfo = (data) => {
     data: [data],
   });
 };
+
+export const camModify = (data) => {
+  return axios.post(`${url}/watcher/cam`, {
+    api: "camModify",
+    data: data,
+  });
+};
