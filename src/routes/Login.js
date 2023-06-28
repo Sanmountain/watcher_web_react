@@ -4,9 +4,10 @@ import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
 
 export default function Login({ setIsLoggedIn }) {
+  const initialRememberId = localStorage.getItem("rememberId") === "true";
   const [user_id, setId] = useState(localStorage.getItem("saveId") || "");
   const [user_password, setPw] = useState("");
-  const [rememberId, setRememberId] = useState(false);
+  const [rememberId, setRememberId] = useState(initialRememberId);
   const [result, setResult] = useState("");
   const navigate = useNavigate();
 
@@ -17,7 +18,9 @@ export default function Login({ setIsLoggedIn }) {
   }, [setIsLoggedIn]);
 
   const handleRememberId = (e) => {
-    setRememberId(e.target.checked);
+    const isChecked = e.target.checked;
+    setRememberId(isChecked);
+    localStorage.setItem("rememberId", isChecked);
   };
 
   const handleSignIn = async (e) => {
@@ -39,7 +42,9 @@ export default function Login({ setIsLoggedIn }) {
         alert("로그인 성공");
         setIsLoggedIn(true);
         if (rememberId) {
-          localStorage.setItem("saveId", response.data.data[0].user_id);
+          localStorage.setItem("saveId", user_id);
+        } else {
+          localStorage.removeItem("saveId");
         }
       }
       localStorage.setItem("saveId", response.data.data[0].user_id);
@@ -86,6 +91,7 @@ export default function Login({ setIsLoggedIn }) {
             <input
               type="checkbox"
               id="remember-check"
+              checked={rememberId}
               onChange={handleRememberId}
             />
             ID 저장

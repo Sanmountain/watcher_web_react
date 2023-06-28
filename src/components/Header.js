@@ -7,18 +7,25 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const [branExp, setBranExp] = useState("");
 
   useEffect(() => {
-    const isloggedIn = localStorage.getItem("saveId");
-    setIsLoggedIn(isloggedIn);
+    const isloggedIn = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(isloggedIn === "true" ? true : false);
 
-    const savedBranExp = localStorage.getItem("bran_exp");
-    setBranExp(savedBranExp);
-  });
+    if (isloggedIn === "true") {
+      const savedBranExp = localStorage.getItem("bran_exp");
+      setBranExp(savedBranExp);
+    }
+  }, []);
 
   const onLogout = () => {
-    localStorage.removeItem("saveId");
+    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("saveSaId");
     localStorage.removeItem("saveAcId");
     localStorage.removeItem("bran_exp");
+
+    if (localStorage.getItem("rememberId") !== "true") {
+      localStorage.removeItem("saveId");
+    }
+
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -46,13 +53,13 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         VASS
       </div>
       <div>
-        <div className="branExp">{branExp}</div>
+        {isLoggedIn && <div className="branExp">{branExp}</div>}
         <button
           type="button"
           className="logoutBtn"
           onClick={isLoggedIn ? onLogout : () => navigate("/")}
         >
-          {localStorage.getItem("saveId") === null ? "로그인" : "로그아웃"}
+          {isLoggedIn ? "Logout" : "Login"}
         </button>
       </div>
     </div>
