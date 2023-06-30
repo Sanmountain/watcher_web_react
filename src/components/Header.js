@@ -2,42 +2,38 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Headers.css";
 
-export default function Header({ isLoggedIn, setIsLoggedIn }) {
+export default function Header() {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [branExp, setBranExp] = useState("");
 
   useEffect(() => {
-    const isloggedIn = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(isloggedIn === "true" ? true : false);
+    const useUserId = localStorage.getItem("saveId");
+    const localBranExp = localStorage.getItem("bran_exp");
 
-    if (isloggedIn === "true") {
-      const savedBranExp = localStorage.getItem("bran_exp");
-      setBranExp(savedBranExp);
-    }
-  }, []);
+    setIsLoggedIn(useUserId ? true : false);
+    setBranExp(localBranExp ? localBranExp : "");
+  });
 
   const onLogout = () => {
-    localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("saveSaId");
     localStorage.removeItem("saveAcId");
     localStorage.removeItem("bran_exp");
-
-    if (localStorage.getItem("rememberId") !== "true") {
-      localStorage.removeItem("saveId");
-    }
+    localStorage.removeItem("saveId");
 
     setIsLoggedIn(false);
+    setBranExp("");
     navigate("/");
   };
 
   const goPage1 = () => {
-    if (isLoggedIn) {
+    if (isLoggedIn === true) {
       navigate("/work");
     }
   };
 
   const goPage2 = () => {
-    if (isLoggedIn) {
+    if (isLoggedIn === true) {
       navigate("/vass");
     }
   };
@@ -57,7 +53,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         <button
           type="button"
           className="logoutBtn"
-          onClick={isLoggedIn ? onLogout : () => navigate("/")}
+          onClick={isLoggedIn ? onLogout : null}
         >
           {isLoggedIn ? "Logout" : "Login"}
         </button>
