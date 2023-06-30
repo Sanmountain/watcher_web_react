@@ -117,3 +117,61 @@
 .tableContent :last-child {
   width: 70%;
 }
+
+/* 송장번호 조회 모달창 */
+.modalBcd {
+  width: 70%;
+}
+.modalBcd .modal-content {
+  width: 180%;
+}
+.modalBcd .modal-content .modal-body {
+  width: 90%;
+}
+
+.cardTable2 {
+  width: 100%;
+  margin: 0 auto;
+}
+#ulTable2 {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+  width: 110%;
+}
+
+#ulTable2 > li:first-child {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #f8f9fa;
+}
+
+#ulTable2 > li:first-child > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+  padding-left: 30px;
+  margin: 0;
+}
+
+#ulTable2 > li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+
+#ulTable2 > li > ul {
+  display: flex;
+  list-style-type: none;
+  gap: 100px;
+  padding-left: 30px;
+  margin: 0;
+}

@@ -9,6 +9,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [checkedId, setCheckedId] = useState(false);
 
+  /* 로그인 시 실행 */
   const handleSignIn = async (e) => {
     e.preventDefault();
 
@@ -32,13 +33,13 @@ export default function Login() {
         localStorage.setItem("saveSaId", response.data.data[0].sa_id);
         localStorage.setItem("saveAcId", response.data.data[0].account_id);
         localStorage.setItem("bran_exp", response.data.data[0].bran_exp);
+        /* id 저장 체크했을 때만 "id" 저장 */
         if (checkedId) {
           localStorage.setItem("id", response.data.data[0].user_id);
         } else {
           localStorage.removeItem("id");
           localStorage.removeItem("checkboxChecked");
         }
-        console.log(localStorage.getItem("id"));
         navigate("/work");
         console.log(
           "saveId:" +
@@ -57,6 +58,7 @@ export default function Login() {
     }
   };
 
+  /* id 저장 체크 시 실행 */
   const handleRememberIdChange = (e) => {
     setCheckedId(e.target.checked);
     localStorage.setItem("checkboxChecked", e.target.checked);

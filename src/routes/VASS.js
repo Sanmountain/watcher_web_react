@@ -12,9 +12,15 @@ export default function VASS() {
   const [endDate, setEndDate] = useState(new Date());
   const [snNumber, setSnNumber] = useState("");
   const [apiResponse, setApiResponse] = useState([]);
+  const [searchOption1, setSearchOption1] = useState("receive");
   const [searchOption2, setSearchOption2] = useState("scandate");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  /* 배송입고, 집하출고 선택 */
+  const handleSearchOptionChange1 = (e) => {
+    setSearchOption1(e.target.value);
+  };
 
   /* 송장번호,스캔일자 선택 */
   const handleSearchOptionChange2 = (e) => {
@@ -37,13 +43,18 @@ export default function VASS() {
   };
 
   const handleApiCall = () => {
-    if (searchOption2 === "scandate") {
+    if (searchOption2 === "scandate" && searchOption1 === "receive") {
       handleScanDateApiCall();
-    } else {
+    } else if (searchOption2 === "serialnum" && searchOption1 === "receive") {
       handleInvoiceNumberApiCall();
+    } else if (searchOption2 === "scandate" && searchOption1 === "delivery") {
+      handleDeliveryDateApiCall();
+    } else {
+      handleDeliveryNbApiCall();
     }
   };
 
+  /* 배송입고, 스캔일자 선택 시 */
   const handleScanDateApiCall = async () => {
     setIsLoading(true);
     try {
@@ -62,6 +73,7 @@ export default function VASS() {
     }
   };
 
+  /* 배송입고, 송장번호 선택 시 */
   const handleInvoiceNumberApiCall = async () => {
     try {
       const bran_cd = localStorage.getItem("saveId");
@@ -76,6 +88,54 @@ export default function VASS() {
         alert("송장번호를 입력해주세요.");
       } else {
         setApiResponse(response.data.data);
+        alert("조회 성공");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /* 집하출고, 스캔일자 선택 시 */
+  const handleDeliveryDateApiCall = async () => {
+    setIsLoading(true);
+    try {
+      const bran_cd = localStorage.getItem("saveId");
+      const response = await dvInAll({
+        start_time: startDate,
+        end_time: endDate,
+        bran_cd: bran_cd,
+        longTime: "",
+      });
+      setIsLoading(false);
+      console.log(response.data);
+
+      const filteredData = response.data.data.filter(
+        (item) => item.tm_dv !== "60"
+      );
+      setApiResponse(filteredData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /* 집하출고, 송장번호 선택 시 */
+  const handleDeliveryNbApiCall = async () => {
+    try {
+      const bran_cd = localStorage.getItem("saveId");
+      const response = await dvInAll({
+        barcode: snNumber,
+        bran_cd: bran_cd,
+        longTime: "",
+      });
+      console.log(response.data);
+
+      if (response.data.result === "10") {
+        alert("송장번호를 입력해주세요.");
+      } else {
+        const filteredData = response.data.data.filter(
+          (item) => item.tm_dv !== "60"
+        );
+        setApiResponse(filteredData);
         alert("조회 성공");
       }
     } catch (error) {
@@ -114,7 +174,7 @@ export default function VASS() {
     <>
       <div className="container">
         <div className="card-header">
-          <select>
+          <select onChange={handleSearchOptionChange1}>
             <option value="receive">배송입고</option>
             <option value="delivery">집하출고</option>
           </select>
@@ -170,7 +230,7 @@ export default function VASS() {
                 <li key={video.id}>
                   <ul>
                     <li>{apiResponse.length - index}</li>
-                    <li>업무</li>
+                    <li>{video.tm_dv}</li>
                     <li>{video.scan_total_time}</li>
                     <li>{video.car_num}</li>
                     <li>{video.barcode}</li>
