@@ -5,11 +5,9 @@ import { caminfo, camModify } from "../api/API";
 import "../styles/VassCam.css";
 import { Dropdown, DropdownButton, Modal, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import dayjs from "dayjs";
 import { dvInAll } from "../api/API";
 import Loding from "../components/work/Loading";
+import dayjs from "dayjs";
 
 const videosPerPage = 4;
 
@@ -25,11 +23,9 @@ export default function VassCam() {
   const playerRefs = useRef([]);
   const [showModal, setShowModal] = useState(false);
   const [showModalBcd, setShowModalBcd] = useState(false);
-  const [searchOption2, setSearchOption2] = useState("scandate");
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [snNumber, setSnNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [modalResponse, setModalResponse] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -89,7 +85,7 @@ export default function VassCam() {
       }
     };
     videoView();
-  }, []);
+  }, [refreshKey]);
 
   const totalPages = Math.ceil(apiResponse.length / videosPerPage);
 
@@ -132,11 +128,6 @@ export default function VassCam() {
     setShowModal(true);
   };
 
-  /* 송장번호 조회 (모달창 띄움)*/
-  const handleOption3 = () => {
-    setShowModalBcd(true);
-  };
-
   /* 모달창 닫기 */
   const handleCloseModal = () => {
     setShowModal(false);
@@ -150,19 +141,19 @@ export default function VassCam() {
     }
     const items = Array.from(changeApiResponse);
 
-    // Get the reordered item and the item at the destination index
+    // 재배열된 항목 및 대상 인덱스의 항목 가져오기
     const reorderedItem = items[result.source.index];
     const destinationItem = items[result.destination.index];
 
-    // Swap the cam_seq values
+    // cam_seq 값을 스왑
     const tempSeq = reorderedItem.cam_seq;
     reorderedItem.cam_seq = destinationItem.cam_seq;
     destinationItem.cam_seq = tempSeq;
 
-    // Remove the reordered item from its original position
+    // 정렬된 항목을 원래 위치에서 제거
     items.splice(result.source.index, 1);
 
-    // Insert the reordered item into its new position
+    // 정렬된 항목을 새 위치에 삽입
     items.splice(result.destination.index, 0, reorderedItem);
 
     setChgApiResponse(items);
@@ -202,56 +193,25 @@ export default function VassCam() {
   };
 
   /****** 송장번호 조회 탭 (모달창) *******/
-  /* 송장번호,스캔일자 선택 */
-  const handleSearchOptionChange2 = (e) => {
-    setSearchOption2(e.target.value);
-  };
 
-  /* 스캔일자 선택 시 실행되는 날짜변형함수 */
-  const handleStartDateChange = (date) => {
-    const startDate = dayjs(date).format("YYYY-MM-DD 00:00:00");
-    setStartDate(startDate);
-    console.log("handleStartDateChange start date :" + startDate);
-    const endDate = dayjs(date).format("YYYY-MM-DD 23:59:59");
-    setEndDate(endDate);
-    console.log("handleStartDateChange end data :" + endDate);
-  };
-
-  /* 송장번호 입력 시 실행함수 */
   const handleSnNumChange = (e) => {
-    setSnNumber(e.target.value);
+    localStorage.setItem("barcode", e.target.value);
   };
 
-  const handleApiCall = () => {
-    if (searchOption2 === "scandate") {
-      handleScanDateApiCall();
-    } else {
-      handleInvoiceNumberApiCall();
-    }
-  };
-  const handleScanDateApiCall = async () => {
-    setIsLoading(true);
-    try {
-      const bran_cd = localStorage.getItem("saveId");
-      const response = await dvInAll({
-        start_time: startDate,
-        end_time: endDate,
-        bran_cd: bran_cd,
-        longTime: "",
-      });
-      setIsLoading(false);
-      console.log(response.data);
-      setApiResponse(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
+  /* 송장번호 조회 (모달창 띄움)*/
+  const handleOption3 = () => {
+    handleInvoiceNumberApiCall();
   };
 
   const handleInvoiceNumberApiCall = async () => {
     try {
+      setShowModalBcd(true);
+
       const bran_cd = localStorage.getItem("saveId");
+      const snNumValue = localStorage.getItem("barcode");
+
       const response = await dvInAll({
-        barcode: snNumber,
+        barcode: snNumValue,
         bran_cd: bran_cd,
         longTime: "",
       });
@@ -260,12 +220,29 @@ export default function VassCam() {
       if (response.data.result === "10") {
         alert("송장번호를 입력해주세요.");
       } else {
-        setApiResponse(response.data.data);
+        setModalResponse(response.data.data);
         alert("조회 성공");
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  /* 캠 조회 화면으로 이동 */
+  const handleClick = (id, scan_total_time, barcode) => {
+    const formattedStartDate = dayjs(scan_total_time).format("YYYYMMDDHHmmss");
+    console.log("formattedStartDate ::" + formattedStartDate);
+    const formattedEndDate = dayjs(scan_total_time)
+      .add(30, "minutes")
+      .format("YYYYMMDDHHmmss");
+    console.log("formattedEndDate ::" + formattedEndDate);
+    localStorage.setItem("formattedStartDate", formattedStartDate);
+    localStorage.setItem("formattedEndDate", formattedEndDate);
+    localStorage.setItem("barcode", barcode);
+
+    setRefreshKey(refreshKey + 1);
+    /*모달창닫히는거 */
+    setShowModalBcd(false);
   };
 
   return (
@@ -275,9 +252,7 @@ export default function VassCam() {
           <button className="videoMenuBtn" onClick={handleOption3}>
             송장번호 조회
           </button>
-          <input value={camBarcode} readOnly></input>
-          <button className="videoMenuBtn">이전 송장 조회</button>
-          <input></input>
+          <input className="videoMenuInput" value={camBarcode} readOnly></input>
         </div>
         <div className="content-wrapper">
           <div className="video-grid">
@@ -396,43 +371,29 @@ export default function VassCam() {
               <Modal.Title>송장 조회</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className="card-header">
+              <div className="card-header hide-scrollbar">
                 <select>
                   <option value="receive">배송입고</option>
                   <option value="delivery">집하출고</option>
                 </select>
-                <select onChange={handleSearchOptionChange2}>
-                  <option value="scandate">스캔일자</option>
-                  <option value="serialnum">송장번호</option>
-                </select>
-
-                {searchOption2 === "scandate" ? (
-                  <div className="datepicker">
-                    <DatePicker
-                      dateFormat="yyyy-MM-dd"
-                      selected={dayjs(startDate).toDate()}
-                      onChange={handleStartDateChange}
-                    />
-                  </div>
-                ) : (
-                  <div className="datepicker">
-                    <input
-                      type="text"
-                      placeholder="송장번호 입력"
-                      onChange={handleSnNumChange}
-                    />
-                  </div>
-                )}
+                <div className="datepicker">
+                  <input
+                    type="text"
+                    placeholder="송장번호 입력"
+                    onChange={handleSnNumChange}
+                  />
+                </div>
                 {isLoading ? (
                   <Loding />
                 ) : (
-                  <button className="checkBtn" onClick={handleApiCall}>
+                  <button className="checkBtn" onClick={handleOption3}>
                     조회
                   </button>
                 )}
                 <span id="total_count">
                   {" "}
-                  조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
+                  조회량 :{modalResponse.length > 0 ? modalResponse.length : 0}
+                  건
                 </span>
               </div>
 
@@ -448,6 +409,31 @@ export default function VassCam() {
                       <li>화물추적</li>
                     </ul>
                   </li>
+                  {modalResponse &&
+                    modalResponse.map((video, index) => (
+                      <li key={video.id}>
+                        <ul>
+                          <li>{modalResponse.length - index}</li>
+                          <li>{video.tm_dv}</li>
+                          <li>{video.scan_total_time}</li>
+                          <li>{video.car_num}</li>
+                          <li>{video.barcode}</li>
+                          <li>
+                            <button
+                              onClick={() =>
+                                handleClick(
+                                  video.id,
+                                  video.scan_total_time,
+                                  video.barcode
+                                )
+                              }
+                            >
+                              조회
+                            </button>
+                          </li>
+                        </ul>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </Modal.Body>

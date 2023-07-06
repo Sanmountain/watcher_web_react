@@ -171,7 +171,22 @@
 #ulTable2 > li > ul {
   display: flex;
   list-style-type: none;
-  gap: 100px;
+  gap: 90px;
   padding-left: 30px;
   margin: 0;
+}
+
+/* 이전송장조회 css */
+.videoRowCon {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding-top: 20px;
+}
+
+.videoRow {
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 20px;
+  font-weight: bold;
 }

@@ -16,6 +16,7 @@ export default function VASS() {
   const [searchOption2, setSearchOption2] = useState("scandate");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   /* 배송입고, 집하출고 선택 */
   const handleSearchOptionChange1 = (e) => {
@@ -167,6 +168,7 @@ export default function VASS() {
     localStorage.setItem("formattedStartDate", formattedStartDate);
     localStorage.setItem("formattedEndDate", formattedEndDate);
     localStorage.setItem("barcode", barcode);
+    setRefreshKey(refreshKey + 1);
     navigate("/vasscam");
   };
 
