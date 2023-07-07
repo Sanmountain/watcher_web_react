@@ -194,29 +194,8 @@
 }
 
 /* VASS 내 테이블 */
-#ulTable3 {
-  margin-top: 10px;
-}
-#ulTable3 > div:first-child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  background-color: #f8f9fa;
-}
-#ulTable > div:first-child > li {
-  flex: 1;
-}
-#ulTable3 > div > li {
-  list-style-type: none;
-  flex: 1;
-}
-
 #ulTable3 > div {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -226,6 +205,16 @@
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: #ffffff;
+}
+#ulTable3 > div:first-child {
+  background-color: #f8f9fa;
+}
+#ulTable > div:first-child > li {
+  flex: 1;
+}
+#ulTable3 > div > li {
+  list-style-type: none;
+  flex: 1;
 }
 
 /* vass 목록 내 조회 버튼 */
