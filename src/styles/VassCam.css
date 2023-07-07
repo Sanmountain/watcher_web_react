@@ -197,63 +197,31 @@
 }
 #ulTable3 > div:first-child {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: #f8f9fa;
 }
+#ulTable > div:first-child > li {
+  flex: 1;
+}
 #ulTable3 > div > li {
-  display: flex;
   list-style-type: none;
+  flex: 1;
 }
 
 #ulTable3 > div {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: #ffffff;
-}
-#ulTable3 > div:first-child > li:first-child {
-  padding-left: 2%;
-}
-#ulTable3 > div:first-child > li:nth-child(2) {
-  padding-left: 3%;
-}
-#ulTable3 > div:first-child > li:nth-child(3) {
-  padding-left: 7%;
-}
-#ulTable3 > div:first-child > li:nth-child(4) {
-  padding-left: 8%;
-}
-#ulTable3 > div:first-child > li:nth-child(5) {
-  padding-left: 5%;
-}
-#ulTable3 > div:first-child > li:last-child {
-  padding-left: 7%;
-}
-
-#ulTable3 > div > li:first-child {
-  padding-left: 2%;
-}
-#ulTable3 > div > li:nth-child(2) {
-  padding-left: 3%;
-}
-#ulTable3 > div > li:nth-child(3) {
-  padding-left: 5%;
-}
-#ulTable3 > div > li:nth-child(4) {
-  padding-left: 5%;
-}
-#ulTable3 > div > li:nth-child(5) {
-  padding-left: 6%;
-}
-#ulTable3 > div > li:last-child {
-  padding-left: 6%;
 }
 
 /* vass 목록 내 조회 버튼 */
