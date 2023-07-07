@@ -55,46 +55,91 @@ body {
   margin: 0 auto;
 }
 #ulTable {
-  list-style-type: none;
-  padding: 0;
-  margin: 20px 0;
-  width: 110%;
+  margin-top: 10px;
 }
-
-#ulTable > li:first-child {
+#ulTable > div:first-child {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: #f8f9fa;
 }
-
-#ulTable > li:first-child > ul {
+#ulTable > div > li {
   display: flex;
   list-style-type: none;
-  gap: 100px;
-  padding-left: 30px;
-  margin: 0;
 }
 
-#ulTable > li {
+#ulTable > div {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 5px;
   background-color: #ffffff;
 }
+#ulTable > div:first-child > li:first-child {
+  padding-left: 2%;
+}
+#ulTable > div:first-child > li:nth-child(2) {
+  padding-left: 3%;
+}
+#ulTable > div:first-child > li:nth-child(3) {
+  padding-left: 4%;
+}
+#ulTable > div:first-child > li:nth-child(4) {
+  padding-left: 3%;
+}
+#ulTable > div:first-child > li:nth-child(5) {
+  padding-left: 4%;
+}
+#ulTable > div:first-child > li:nth-child(6) {
+  padding-left: 7%;
+}
+#ulTable > div:first-child > li:nth-child(7) {
+  padding-left: 11%;
+}
+#ulTable > div:first-child:first-child > li:nth-child(8) {
+  padding-left: 10%;
+}
+#ulTable > div:first-child > li:nth-child(9) {
+  padding-left: 10%;
+}
+#ulTable > div:first-child > li:last-child {
+  padding-left: 9%;
+}
 
-#ulTable > li > ul {
-  display: flex;
-  list-style-type: none;
-  gap: 100px;
-  padding-left: 30px;
-  margin: 0;
+#ulTable > div > li:first-child {
+  padding-left: 2%;
+}
+#ulTable > div > li:nth-child(2) {
+  padding-left: 3%;
+}
+#ulTable > div > li:nth-child(3) {
+  padding-left: 5%;
+}
+#ulTable > div > li:nth-child(4) {
+  padding-left: 5%;
+}
+#ulTable > div > li:nth-child(5) {
+  padding-left: 6%;
+}
+#ulTable > div > li:nth-child(6) {
+  padding-left: 7%;
+}
+#ulTable > div > li:nth-child(7) {
+  padding-left: 7%;
+}
+#ulTable > div > li:nth-child(8) {
+  padding-left: 7%;
+}
+#ulTable > div > li:nth-child(9) {
+  padding-left: 7%;
+}
+#ulTable > div > li:last-child {
+  padding-left: 7%;
 }
 
 .toggleSwitch {

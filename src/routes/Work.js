@@ -285,39 +285,35 @@ export default function Work() {
         </div>
 
         <div className="cardTable">
-          <ul id="ulTable">
-            <li>
-              <ul>
-                <li>No.</li>
-                <li>업무</li>
-                <li>영업소</li>
-                <li>상대영업소</li>
-                <li>차량</li>
-                <li>송장</li>
-                <li>상대</li>
-                <li>날짜</li>
-                <li>시간</li>
-                <li>사원</li>
-              </ul>
-            </li>
+          <div id="ulTable">
+            <div>
+              <li>No.</li>
+              <li>업무</li>
+              <li>영업소</li>
+              <li>상대영업소</li>
+              <li>차량</li>
+              <li>송장</li>
+              <li>상대</li>
+              <li>날짜</li>
+              <li>시간</li>
+              <li>사원</li>
+            </div>
             {apiResponse &&
               apiResponse.map((video, index) => (
-                <li key={video.id}>
-                  <ul>
-                    <li>{apiResponse.length - index}</li>
-                    <li>{video.tm_dv}</li>
-                    <li>{video.bran_cd}</li>
-                    <li>{video.tg_bran_cd}</li>
-                    <li>{video.car_num}</li>
-                    <li>{video.barcode}</li>
-                    <li>{video.pob}</li>
-                    <li>{video.scandate}</li>
-                    <li>{video.scantime}</li>
-                    <li>{video.emp_cd}</li>
-                  </ul>
-                </li>
+                <div key={video.id}>
+                  <li>{apiResponse.length - index}</li>
+                  <li>{video.tm_dv}</li>
+                  <li>{video.bran_cd}</li>
+                  <li>{video.tg_bran_cd}</li>
+                  <li>{video.car_num}</li>
+                  <li>{video.barcode}</li>
+                  <li>{video.pob}</li>
+                  <li>{video.scandate}</li>
+                  <li>{video.scantime}</li>
+                  <li>{video.emp_cd}</li>
+                </div>
               ))}
-          </ul>
+          </div>
         </div>
       </div>
     </>

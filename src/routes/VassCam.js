@@ -420,6 +420,7 @@ export default function VassCam() {
                           <li>{video.barcode}</li>
                           <li>
                             <button
+                              className="vassBtn"
                               onClick={() =>
                                 handleClick(
                                   video.id,

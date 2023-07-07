@@ -153,7 +153,7 @@
 #ulTable2 > li:first-child > ul {
   display: flex;
   list-style-type: none;
-  gap: 100px;
+  gap: 95px;
   padding-left: 30px;
   margin: 0;
 }
@@ -189,4 +189,81 @@
   padding: 10px;
   border-radius: 20px;
   font-weight: bold;
+}
+
+/* VASS 내 테이블 */
+#ulTable3 {
+  margin-top: 10px;
+}
+#ulTable3 > div:first-child {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #f8f9fa;
+}
+#ulTable3 > div > li {
+  display: flex;
+  list-style-type: none;
+}
+
+#ulTable3 > div {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+#ulTable3 > div:first-child > li:first-child {
+  padding-left: 2%;
+}
+#ulTable3 > div:first-child > li:nth-child(2) {
+  padding-left: 3%;
+}
+#ulTable3 > div:first-child > li:nth-child(3) {
+  padding-left: 7%;
+}
+#ulTable3 > div:first-child > li:nth-child(4) {
+  padding-left: 8%;
+}
+#ulTable3 > div:first-child > li:nth-child(5) {
+  padding-left: 5%;
+}
+#ulTable3 > div:first-child > li:last-child {
+  padding-left: 7%;
+}
+
+#ulTable3 > div > li:first-child {
+  padding-left: 2%;
+}
+#ulTable3 > div > li:nth-child(2) {
+  padding-left: 3%;
+}
+#ulTable3 > div > li:nth-child(3) {
+  padding-left: 5%;
+}
+#ulTable3 > div > li:nth-child(4) {
+  padding-left: 5%;
+}
+#ulTable3 > div > li:nth-child(5) {
+  padding-left: 6%;
+}
+#ulTable3 > div > li:last-child {
+  padding-left: 6%;
+}
+
+/* vass 목록 내 조회 버튼 */
+#ulTable3 .vassBtn,
+#ulTable2 .vassBtn {
+  margin: 0 3px;
+  padding: 1px 7px;
+  background-color: white;
+  color: #6a24fe;
+  border: 1px solid #6a24fe;
+  border-radius: 5px;
+  cursor: pointer;
 }
