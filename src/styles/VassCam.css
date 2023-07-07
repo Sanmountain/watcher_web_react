@@ -133,34 +133,14 @@
   width: 100%;
   margin: 0 auto;
 }
-#ulTable2 {
+#ulTable2 > div {
   list-style-type: none;
   padding: 0;
   margin: 20px 0;
   width: 110%;
-}
 
-#ulTable2 > li:first-child {
   display: flex;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  background-color: #f8f9fa;
-}
-
-#ulTable2 > li:first-child > ul {
-  display: flex;
-  list-style-type: none;
-  gap: 95px;
-  padding-left: 30px;
-  margin: 0;
-}
-
-#ulTable2 > li {
-  display: flex;
+  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 10px;
@@ -169,13 +149,15 @@
   margin-bottom: 5px;
   background-color: #ffffff;
 }
-
-#ulTable2 > li > ul {
-  display: flex;
+#ulTable2 > div:first-child {
+  background-color: #f8f9fa;
+}
+#ulTable2 > div:first-child > li {
+  flex: 1;
+}
+#ulTable2 > div > li {
   list-style-type: none;
-  gap: 90px;
-  padding-left: 30px;
-  margin: 0;
+  flex: 1;
 }
 
 /* 이전송장조회 css */

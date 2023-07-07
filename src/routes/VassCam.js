@@ -398,44 +398,40 @@ export default function VassCam() {
               </div>
 
               <div className="cardTable2">
-                <ul id="ulTable2">
-                  <li>
-                    <ul>
-                      <li>No.</li>
-                      <li>업무</li>
-                      <li>날짜&시간</li>
-                      <li>차량번호</li>
-                      <li>송장번호</li>
-                      <li>화물추적</li>
-                    </ul>
-                  </li>
+                <div id="ulTable2">
+                  <div>
+                    <li>No.</li>
+                    <li>업무</li>
+                    <li>날짜&시간</li>
+                    <li>차량번호</li>
+                    <li>송장번호</li>
+                    <li>화물추적</li>
+                  </div>
                   {modalResponse &&
                     modalResponse.map((video, index) => (
-                      <li key={video.id}>
-                        <ul>
-                          <li>{modalResponse.length - index}</li>
-                          <li>{video.tm_dv}</li>
-                          <li>{video.scan_total_time}</li>
-                          <li>{video.car_num}</li>
-                          <li>{video.barcode}</li>
-                          <li>
-                            <button
-                              className="vassBtn"
-                              onClick={() =>
-                                handleClick(
-                                  video.id,
-                                  video.scan_total_time,
-                                  video.barcode
-                                )
-                              }
-                            >
-                              조회
-                            </button>
-                          </li>
-                        </ul>
-                      </li>
+                      <div key={video.id}>
+                        <li>{modalResponse.length - index}</li>
+                        <li>{video.tm_dv}</li>
+                        <li>{video.scan_total_time}</li>
+                        <li>{video.car_num}</li>
+                        <li>{video.barcode}</li>
+                        <li>
+                          <button
+                            className="vassBtn"
+                            onClick={() =>
+                              handleClick(
+                                video.id,
+                                video.scan_total_time,
+                                video.barcode
+                              )
+                            }
+                          >
+                            조회
+                          </button>
+                        </li>
+                      </div>
                     ))}
-                </ul>
+                </div>
               </div>
             </Modal.Body>
             <Modal.Footer>
