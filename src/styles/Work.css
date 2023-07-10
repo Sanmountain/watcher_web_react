@@ -33,7 +33,7 @@ body {
 }
 .checkBtn,
 .sendBtn {
-  background-color: #6a24fe;
+  background-color: #1d74e6;
   color: white;
   padding: 8px 15px;
   border: none;
@@ -43,7 +43,7 @@ body {
   height: 35px;
 }
 .checkBtn:hover {
-  background-color: #531cc9;
+  background-color: #1a60bd;
 }
 
 #total_count {
@@ -97,11 +97,11 @@ body {
   left: 9px;
   transform: translateY(-50%);
   border-radius: 50%;
-  background: #6a24fe;
+  background: #1d74e6;
 }
 
 #toggle:checked ~ .toggleSwitch {
-  background: #6a24fe;
+  background: #1d74e6;
 }
 
 #toggle:checked ~ .toggleSwitch .toggleButton {

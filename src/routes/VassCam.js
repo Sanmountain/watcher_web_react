@@ -183,6 +183,7 @@ export default function VassCam() {
       if (response.data.result === "00") {
         console.log(response.data);
         setApiResponse(changeApiResponse);
+        alert("저장 완료");
       } else {
         alert("조회 실패");
         console.log(response.data);
@@ -293,8 +294,11 @@ export default function VassCam() {
             <button className="btn1" onClick={handleForwardVideos}>
               +10초
             </button>
-            <DropdownButton title="설정" variant="secondary">
-              <Dropdown.Item>재생 간격 변경</Dropdown.Item>
+            <DropdownButton
+              title="설정"
+              variant="secondary"
+              className="camDropBtn"
+            >
               <Dropdown.Item onClick={handleOption2}>
                 재생 순서 변경
               </Dropdown.Item>

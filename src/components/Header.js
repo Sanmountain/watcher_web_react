@@ -41,13 +41,16 @@ export default function Header() {
   return (
     <div className="header">
       <div className="logoBig">WATCHER</div>
-      <div className="logoSmall">JHC</div>
-      <div className="titleHeader" onClick={goPage1}>
-        WORK
-      </div>
-      <div className="titleHeader" onClick={goPage2}>
-        VASS
-      </div>
+      {isLoggedIn && (
+        <div className="titleHeader" onClick={goPage1}>
+          송장조회
+        </div>
+      )}
+      {isLoggedIn && (
+        <div className="titleHeader" onClick={goPage2}>
+          영상조회
+        </div>
+      )}
       <div>
         {isLoggedIn && <div className="branExp">{branExp}</div>}
         <button

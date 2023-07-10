@@ -4,8 +4,7 @@
 }
 .containerVideo {
   display: grid;
-  grid-template-columns: 10% 90%;
-  margin-bottom: 2%;
+  grid-template-columns: 12% 88%;
 }
 
 /* 왼쪽 바 */
@@ -19,7 +18,7 @@
 }
 .video-menu button {
   margin-top: 10%;
-  background-color: #6a24fe;
+  background-color: #1d74e6;
   color: white;
   padding: 8px 15px;
   border: none;
@@ -33,12 +32,15 @@
   border: 1px solid grey;
   border-radius: 10px;
   height: 30px;
+  width: 118px;
+  text-align: center;
 }
 
 /* 비디오 화면 */
 .video-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 47% 47%;
+  justify-content: center;
 }
 .pagination {
   display: flex;
@@ -49,7 +51,7 @@
 .pagination .btn1 {
   margin: 0 5px;
   padding: 5px 10px;
-  background-color: #6a24fe;
+  background-color: #1d74e6;
   color: white;
   border: none;
   border-radius: 5px;
@@ -60,25 +62,32 @@
   margin: 0 5px;
   padding: 5px 10px;
   background-color: white;
-  color: #6a24fe;
-  border: 1px solid #6a24fe;
+  color: #1d74e6;
+  border: 1px solid #1d74e6;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .pagination button.active {
-  background-color: #3f16a1;
+  background-color: #1a60bd;
   color: white;
 }
 
+.react-player {
+  position: relative;
+}
 .videoCamname {
-  border: 1px solid #3f16a1;
+  color: white;
+  background-color: #1d74e680;
   width: 150px;
   text-align: center;
   border-radius: 10px;
   padding: 2px 5px;
-  margin-bottom: 8px;
   font-weight: bold;
+
+  margin-left: 29%;
+  position: absolute;
+  z-index: 1;
 }
 
 /* 비디오 순서 변경 모달창 */
@@ -205,8 +214,8 @@
   margin: 0 3px;
   padding: 1px 7px;
   background-color: white;
-  color: #6a24fe;
-  border: 1px solid #6a24fe;
+  color: #1d74e6;
+  border: 1px solid #1d74e6;
   border-radius: 5px;
   cursor: pointer;
 }

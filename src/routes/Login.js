@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Login.css";
 import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/JHC.png";
 
 export default function Login() {
   const [userId, setUserId] = useState("");
@@ -28,7 +29,6 @@ export default function Login() {
         alert("존재하지 않는 아이디입니다.");
         navigate("/");
       } else {
-        alert("로그인 성공");
         localStorage.setItem("saveId", response.data.data[0].user_id);
         localStorage.setItem("saveSaId", response.data.data[0].sa_id);
         localStorage.setItem("saveAcId", response.data.data[0].account_id);
@@ -75,7 +75,7 @@ export default function Login() {
   return (
     <>
       <div className="login-wrapper">
-        <h2>Watcher</h2>
+        <img src={logo} className="AppLogo" alt="React" />
         <form id="login-form" onSubmit={handleSignIn}>
           <input
             type="text"
