@@ -139,22 +139,20 @@ export default function VassCam() {
     if (!result.destination) {
       return;
     }
+
     const items = Array.from(changeApiResponse);
 
-    // 재배열된 항목 및 대상 인덱스의 항목 가져오기
+    // 재배열된 항목 가져오기
     const reorderedItem = items[result.source.index];
-    const destinationItem = items[result.destination.index];
-
-    // cam_seq 값을 스왑
-    const tempSeq = reorderedItem.cam_seq;
-    reorderedItem.cam_seq = destinationItem.cam_seq;
-    destinationItem.cam_seq = tempSeq;
 
     // 정렬된 항목을 원래 위치에서 제거
     items.splice(result.source.index, 1);
 
     // 정렬된 항목을 새 위치에 삽입
     items.splice(result.destination.index, 0, reorderedItem);
+
+    // 각 항목의 cam_seq를 해당 항목의 인덱스 + 1로 설정
+    items.map((item, index) => (item.cam_seq = index + 1));
 
     setChgApiResponse(items);
 
