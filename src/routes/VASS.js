@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import Loding from "../components/work/Loading";
+import Swal from "sweetalert2";
 
 export default function VASS() {
   const [startDate, setStartDate] = useState(new Date());
@@ -86,10 +87,18 @@ export default function VASS() {
       console.log(response.data);
 
       if (response.data.result === "10") {
-        alert("송장번호를 입력해주세요.");
+        Swal.fire({
+          icon: "warning",
+          title: "송장번호를 입력해주세요.",
+          confirmButtonText: "확인",
+        });
       } else {
         setApiResponse(response.data.data);
-        alert("조회 성공");
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -131,13 +140,21 @@ export default function VASS() {
       console.log(response.data);
 
       if (response.data.result === "10") {
-        alert("송장번호를 입력해주세요.");
+        Swal.fire({
+          icon: "warning",
+          title: "송장번호를 입력해주세요.",
+          confirmButtonText: "확인",
+        });
       } else {
         const filteredData = response.data.data.filter(
           (item) => item.tm_dv !== "60"
         );
         setApiResponse(filteredData);
-        alert("조회 성공");
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
       }
     } catch (error) {
       console.error(error);

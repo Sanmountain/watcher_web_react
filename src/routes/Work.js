@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import Loding from "../components/work/Loading";
+import Swal from "sweetalert2";
 
 export default function Work() {
   const [startDate, setStartDate] = useState(new Date());
@@ -85,10 +86,18 @@ export default function Work() {
       console.log(response.data);
 
       if (response.data.result === "10") {
-        alert("송장번호를 입력해주세요.");
+        Swal.fire({
+          icon: "warning",
+          title: "송장번호를 입력해주세요.",
+          confirmButtonText: "확인",
+        });
       } else {
         setApiResponse(response.data.data);
-        alert("조회 성공");
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -130,13 +139,21 @@ export default function Work() {
       console.log(response.data);
 
       if (response.data.result === "10") {
-        alert("송장번호를 입력해주세요.");
+        Swal.fire({
+          icon: "warning",
+          title: "송장번호를 입력해주세요.",
+          confirmButtonText: "확인",
+        });
       } else {
         const filteredData = response.data.data.filter(
           (item) => item.tm_dv !== "60"
         );
         setApiResponse(filteredData);
-        alert("조회 성공");
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -158,9 +175,17 @@ export default function Work() {
       console.log(response.data);
 
       if (response.data.result === "00") {
-        alert("전송완료");
+        Swal.fire({
+          icon: "success",
+          title: "전송완료",
+          confirmButtonText: "확인",
+        });
       } else {
-        alert("통신오류");
+        Swal.fire({
+          icon: "warning",
+          title: "통신오류",
+          confirmButtonText: "확인",
+        });
       }
       setIsLoading(false);
     } catch (error) {
@@ -194,7 +219,11 @@ export default function Work() {
           }
           console.log("toggleState 값 :::", toggleState);
         } else {
-          alert("조회 실패");
+          Swal.fire({
+            icon: "warning",
+            title: "조회 실패",
+            confirmButtonText: "확인",
+          });
         }
       } catch (error) {
         console.error(error);

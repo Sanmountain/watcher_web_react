@@ -8,6 +8,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { dvInAll } from "../api/API";
 import Loding from "../components/work/Loading";
 import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 const videosPerPage = 4;
 
@@ -47,7 +48,11 @@ export default function VassCam() {
           setApiResponse(sortedApiResponse);
           setChgApiResponse(response.data.data);
         } else {
-          alert("조회 실패");
+          Swal.fire({
+            icon: "warning",
+            title: "조회 실패",
+            confirmButtonText: "확인",
+          });
           console.log(response.data);
         }
       } catch (error) {
@@ -78,7 +83,11 @@ export default function VassCam() {
           console.log(response.data);
           setVideoList(response.data.cam_list);
         } else {
-          alert("조회 실패");
+          Swal.fire({
+            icon: "warning",
+            title: "조회 실패",
+            confirmButtonText: "확인",
+          });
           console.log(response.data);
         }
       } catch (error) {
@@ -212,9 +221,17 @@ export default function VassCam() {
       if (response.data.result === "00") {
         console.log(response.data);
         setApiResponse(changeApiResponse);
-        alert("저장 완료");
+        Swal.fire({
+          icon: "success",
+          title: "저장 완료",
+          confirmButtonText: "확인",
+        });
       } else {
-        alert("조회 실패");
+        Swal.fire({
+          icon: "warning",
+          title: "저장 실패",
+          confirmButtonText: "확인",
+        });
         console.log(response.data);
       }
     } catch (error) {
