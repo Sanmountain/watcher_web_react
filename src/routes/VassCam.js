@@ -26,6 +26,7 @@ export default function VassCam() {
   const [isLoading, setIsLoading] = useState(false);
   const [modalResponse, setModalResponse] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [editing, setEditing] = useState([]);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -132,6 +133,36 @@ export default function VassCam() {
   const handleCloseModal = () => {
     setShowModal(false);
     setShowModalBcd(false);
+  };
+
+  /* 카메라 이름 변경 */
+  // 더블 클릭 이벤트를 처리하고 해당 카메라의 편집 가능 상태를 변경
+  const handleDoubleClick = (cam_id) => {
+    setEditing((prevEditing) => ({ ...prevEditing, [cam_id]: true }));
+  };
+
+  // 입력 이벤트를 처리하고 카메라 이름을 변경
+  const handleChange = (cam_id, event) => {
+    setChgApiResponse((prevChgApiResponse) =>
+      prevChgApiResponse.map((item) =>
+        item.cam_id === cam_id
+          ? { ...item, cam_name: event.target.value }
+          : item
+      )
+    );
+  };
+
+  // 입력 필드에서 포커스를 잃을 때 편집 가능한 상태를 다시 false로 변경
+  const handleBlur = (cam_id) => {
+    setEditing((prevEditing) => ({ ...prevEditing, [cam_id]: false }));
+
+    // 로컬 스토리지 업데이트
+    const ids = changeApiResponse.map((item) => item.id);
+    const seqs = changeApiResponse.map((item) => item.cam_seq);
+    const names = changeApiResponse.map((item) => item.cam_name);
+    localStorage.setItem("tempIds", JSON.stringify(ids));
+    localStorage.setItem("tempSeqs", JSON.stringify(seqs));
+    localStorage.setItem("tempNames", JSON.stringify(names));
   };
 
   /* 드래그 */
@@ -344,7 +375,26 @@ export default function VassCam() {
                               {...provided.dragHandleProps}
                             >
                               <div className="tableTd">{item.cam_seq}</div>
-                              <div className="tableTd">{item.cam_name}</div>
+                              <div className="tableTd">
+                                {editing[item.cam_id] ? (
+                                  <input
+                                    value={item.cam_name}
+                                    onChange={(event) =>
+                                      handleChange(item.cam_id, event)
+                                    }
+                                    onBlur={() => handleBlur(item.cam_id)}
+                                    autoFocus
+                                  />
+                                ) : (
+                                  <span
+                                    onDoubleClick={() =>
+                                      handleDoubleClick(item.cam_id)
+                                    }
+                                  >
+                                    {item.cam_name}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           )}
                         </Draggable>
