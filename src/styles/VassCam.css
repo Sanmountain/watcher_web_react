@@ -219,8 +219,3 @@
   border-radius: 5px;
   cursor: pointer;
 }
-
-/* alert창 */
-.swal2-confirm {
-  background-color: #1a60bd;
-}

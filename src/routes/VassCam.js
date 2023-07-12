@@ -6,9 +6,8 @@ import "../styles/VassCam.css";
 import { Dropdown, DropdownButton, Modal, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { dvInAll } from "../api/API";
-import Loding from "../components/work/Loading";
-import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
 
 const videosPerPage = 4;
 
@@ -18,16 +17,14 @@ export default function VassCam() {
   const [apiResponse, setApiResponse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [videoPlaying, setVideoPlaying] = useState(true);
-  const [camBarcode, setCamBarcode] = useState("");
   const startIndex = (currentPage - 1) * videosPerPage;
   const endIndex = startIndex + videosPerPage;
   const playerRefs = useRef([]);
   const [showModal, setShowModal] = useState(false);
-  const [showModalBcd, setShowModalBcd] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [modalResponse, setModalResponse] = useState([]);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [editing, setEditing] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [camBarcode, setCamBarcode] = useState("");
+  const [barApiResponse, setBarApiResponse] = useState([]);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -70,8 +67,6 @@ export default function VassCam() {
         const endDate = localStorage.getItem("formattedEndDate");
         const saId = localStorage.getItem("saveSaId");
         const accountId = localStorage.getItem("saveAcId");
-        const barcode = localStorage.getItem("barcode");
-        setCamBarcode(barcode);
 
         const response = await getRecordVideoList({
           sa_id: saId,
@@ -99,25 +94,29 @@ export default function VassCam() {
 
   const totalPages = Math.ceil(apiResponse.length / videosPerPage);
 
-  /* 페이지 이동(후) */
+  /* 페이지 관련 */
+
+  // 페이지 이동(후)
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
-  /* 페이지 이동(전) */
+  // 페이지 이동(전)
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  /* 영상 일시정지 */
+  /* 재생 관련 */
+
+  // 영상 일시정지
   const handlePauseVideos = () => {
     setVideoPlaying((prevState) => !prevState);
   };
 
-  /* 영상 10초 후 */
+  // 영상 10초 후
   const handleRewindVideos = () => {
     playerRefs.current.forEach((player) => {
       const currentTime = player.getCurrentTime();
@@ -125,7 +124,7 @@ export default function VassCam() {
     });
   };
 
-  /* 영상 10초 후 */
+  // 영상 10초 후
   const handleForwardVideos = () => {
     playerRefs.current.forEach((player) => {
       const currentTime = player.getCurrentTime();
@@ -133,15 +132,16 @@ export default function VassCam() {
     });
   };
 
-  /* 재생 순서 변경 (모달창 띄움)*/
+  /* 카메라 설정 관련 */
+
+  // 설정 버튼 (모달창 띄움)
   const handleOption2 = () => {
     setShowModal(true);
   };
 
-  /* 모달창 닫기 */
+  // 모달창 닫기
   const handleCloseModal = () => {
     setShowModal(false);
-    setShowModalBcd(false);
   };
 
   /* 카메라 이름 변경 */
@@ -174,7 +174,7 @@ export default function VassCam() {
     localStorage.setItem("tempNames", JSON.stringify(names));
   };
 
-  /* 드래그 */
+  /* 카메라 드래그 순서 변경 */
   const onDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -204,7 +204,7 @@ export default function VassCam() {
     localStorage.setItem("tempNames", JSON.stringify(names));
   };
 
-  /* 드래그 후 저장 */
+  // 드래그 후 저장
   const handleVideoSeq = async () => {
     const ids = JSON.parse(localStorage.getItem("tempIds"));
     const seqs = JSON.parse(localStorage.getItem("tempSeqs"));
@@ -239,67 +239,66 @@ export default function VassCam() {
     }
   };
 
-  /****** 송장번호 조회 탭 (모달창) *******/
+  /* 송장번호 조회 */
 
-  const handleSnNumChange = (e) => {
-    localStorage.setItem("barcode", e.target.value);
-  };
+  // const handleInputBarChange = (e) => {
+  //   localStorage.setItem("barcode2", e.target.value);
+  //   console.log(localStorage.getItem("barcode2"));
+  // };
 
-  /* 송장번호 조회 (모달창 띄움)*/
-  const handleOption3 = () => {
-    handleInvoiceNumberApiCall();
-  };
+  // const handleInvoiceNumberApiCall = async () => {
+  //   try {
+  //     const bran_cd = localStorage.getItem("saveId");
+  //     const snNumValue = localStorage.getItem("barcode2");
 
-  const handleInvoiceNumberApiCall = async () => {
-    try {
-      setShowModalBcd(true);
+  //     const response = await dvInAll({
+  //       barcode: snNumValue,
+  //       bran_cd: bran_cd,
+  //       longTime: "",
+  //     });
+  //     console.log(response.data);
 
-      const bran_cd = localStorage.getItem("saveId");
-      const snNumValue = localStorage.getItem("barcode");
-
-      const response = await dvInAll({
-        barcode: snNumValue,
-        bran_cd: bran_cd,
-        longTime: "",
-      });
-      console.log(response.data);
-
-      if (response.data.result === "10") {
-        alert("송장번호를 입력해주세요.");
-      } else {
-        setModalResponse(response.data.data);
-        alert("조회 성공");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  /* 캠 조회 화면으로 이동 */
-  const handleClick = (id, scan_total_time, barcode) => {
-    const formattedStartDate = dayjs(scan_total_time).format("YYYYMMDDHHmmss");
-    console.log("formattedStartDate ::" + formattedStartDate);
-    const formattedEndDate = dayjs(scan_total_time)
-      .add(30, "minutes")
-      .format("YYYYMMDDHHmmss");
-    console.log("formattedEndDate ::" + formattedEndDate);
-    localStorage.setItem("formattedStartDate", formattedStartDate);
-    localStorage.setItem("formattedEndDate", formattedEndDate);
-    localStorage.setItem("barcode", barcode);
-
-    setRefreshKey(refreshKey + 1);
-    /*모달창닫히는거 */
-    setShowModalBcd(false);
-  };
+  //     if (response.data.result === "10") {
+  //       Swal.fire({
+  //         icon: "warning",
+  //         title: "송장번호를 입력해주세요.",
+  //         confirmButtonText: "확인",
+  //       });
+  //     } else {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "조회 성공",
+  //         confirmButtonText: "확인",
+  //       });
+  //       setBarApiResponse(response.data.data);
+  //       console.log("@22" + barApiResponse);
+  //       const formattedStartDate = dayjs(barApiResponse.scan_total_time).format(
+  //         "YYYYMMDDHHmmss"
+  //       );
+  //       console.log("barformattedStartDate ::" + formattedStartDate);
+  //       const formattedEndDate = dayjs(barApiResponse.scan_total_time)
+  //         .add(30, "minutes")
+  //         .format("YYYYMMDDHHmmss");
+  //       console.log("barformattedEndDate ::" + formattedEndDate);
+  //       localStorage.setItem("formattedStartDate", formattedStartDate);
+  //       localStorage.setItem("formattedEndDate", formattedEndDate);
+  //       localStorage.setItem("barcode", snNumValue);
+  //       setRefreshKey(refreshKey + 1);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <>
       <div className="containerVideo">
         <div className="video-menu">
-          <button className="videoMenuBtn" onClick={handleOption3}>
-            송장번호 조회
-          </button>
-          <input className="videoMenuInput" value={camBarcode} readOnly></input>
+          <button className="videoMenuBtn">송장번호 조회</button>
+          <input
+            className="videoMenuInput"
+            placeholder="송장번호를 입력해주세요"
+          ></input>
         </div>
         <div className="content-wrapper">
           <div className="video-grid">
@@ -426,84 +425,6 @@ export default function VassCam() {
               <Button variant="secondary" onClick={handleVideoSeq}>
                 저장
               </Button>
-              <Button variant="secondary" onClick={handleCloseModal}>
-                닫기
-              </Button>
-            </Modal.Footer>
-          </Modal>
-          <Modal
-            show={showModalBcd}
-            onHide={handleCloseModal}
-            className="modalBcd"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>송장 조회</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="card-header hide-scrollbar">
-                <select>
-                  <option value="receive">배송입고</option>
-                  <option value="delivery">집하출고</option>
-                </select>
-                <div className="datepicker">
-                  <input
-                    type="text"
-                    placeholder="송장번호 입력"
-                    onChange={handleSnNumChange}
-                  />
-                </div>
-                {isLoading ? (
-                  <Loding />
-                ) : (
-                  <button className="checkBtn" onClick={handleOption3}>
-                    조회
-                  </button>
-                )}
-                <span id="total_count">
-                  {" "}
-                  조회량 :{modalResponse.length > 0 ? modalResponse.length : 0}
-                  건
-                </span>
-              </div>
-
-              <div className="cardTable2">
-                <div id="ulTable2">
-                  <div>
-                    <li>No.</li>
-                    <li>업무</li>
-                    <li>날짜&시간</li>
-                    <li>차량번호</li>
-                    <li>송장번호</li>
-                    <li>화물추적</li>
-                  </div>
-                  {modalResponse &&
-                    modalResponse.map((video, index) => (
-                      <div key={video.id}>
-                        <li>{modalResponse.length - index}</li>
-                        <li>{video.tm_dv}</li>
-                        <li>{video.scan_total_time}</li>
-                        <li>{video.car_num}</li>
-                        <li>{video.barcode}</li>
-                        <li>
-                          <button
-                            className="vassBtn"
-                            onClick={() =>
-                              handleClick(
-                                video.id,
-                                video.scan_total_time,
-                                video.barcode
-                              )
-                            }
-                          >
-                            조회
-                          </button>
-                        </li>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseModal}>
                 닫기
               </Button>

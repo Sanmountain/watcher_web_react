@@ -77,6 +77,7 @@ export default function VASS() {
 
   /* 배송입고, 송장번호 선택 시 */
   const handleInvoiceNumberApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
@@ -84,6 +85,7 @@ export default function VASS() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
 
       if (response.data.result === "10") {
@@ -130,6 +132,7 @@ export default function VASS() {
 
   /* 집하출고, 송장번호 선택 시 */
   const handleDeliveryNbApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
@@ -137,6 +140,7 @@ export default function VASS() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
 
       if (response.data.result === "10") {
@@ -176,7 +180,9 @@ export default function VASS() {
 
   /* 캠 조회 화면으로 이동 */
   const handleClick = (id, scan_total_time, barcode) => {
-    const formattedStartDate = dayjs(scan_total_time).format("YYYYMMDDHHmmss");
+    const formattedStartDate = dayjs(scan_total_time)
+      .subtract(10, "seconds")
+      .format("YYYYMMDDHHmmss");
     console.log("formattedStartDate ::" + formattedStartDate);
     const formattedEndDate = dayjs(scan_total_time)
       .add(30, "minutes")
