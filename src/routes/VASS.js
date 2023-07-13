@@ -44,6 +44,7 @@ export default function VASS() {
     setSnNumber(e.target.value);
   };
 
+  /* 조회 버튼 클릭 시 실행 */
   const handleApiCall = () => {
     if (searchOption2 === "scandate" && searchOption1 === "receive") {
       handleScanDateApiCall();
@@ -69,7 +70,10 @@ export default function VASS() {
       });
       setIsLoading(false);
       console.log(response.data);
-      setApiResponse(response.data.data);
+      const filteredData = response.data.data.filter(
+        (item) => item.tm_dv === "60"
+      );
+      setApiResponse(filteredData);
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +99,10 @@ export default function VASS() {
           confirmButtonText: "확인",
         });
       } else {
-        setApiResponse(response.data.data);
+        const filteredData = response.data.data.filter(
+          (item) => item.tm_dv === "60"
+        );
+        setApiResponse(filteredData);
         Swal.fire({
           icon: "success",
           title: "조회 성공",
@@ -122,7 +129,7 @@ export default function VASS() {
       console.log(response.data);
 
       const filteredData = response.data.data.filter(
-        (item) => item.tm_dv !== "60"
+        (item) => item.tm_dv === "30"
       );
       setApiResponse(filteredData);
     } catch (error) {
@@ -151,7 +158,7 @@ export default function VASS() {
         });
       } else {
         const filteredData = response.data.data.filter(
-          (item) => item.tm_dv !== "60"
+          (item) => item.tm_dv === "30"
         );
         setApiResponse(filteredData);
         Swal.fire({

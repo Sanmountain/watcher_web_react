@@ -68,7 +68,10 @@ export default function Work() {
       });
       setIsLoading(false);
       console.log(response.data);
-      setApiResponse(response.data.data);
+      const filteredData = response.data.data.filter(
+        (item) => item.tm_dv === "60"
+      );
+      setApiResponse(filteredData);
     } catch (error) {
       console.error(error);
     }
@@ -76,6 +79,7 @@ export default function Work() {
 
   /* 배송입고, 송장번호 선택 시 */
   const handleInvoiceNumberApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
@@ -83,6 +87,7 @@ export default function Work() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
 
       if (response.data.result === "10") {
@@ -92,7 +97,10 @@ export default function Work() {
           confirmButtonText: "확인",
         });
       } else {
-        setApiResponse(response.data.data);
+        const filteredData = response.data.data.filter(
+          (item) => item.tm_dv === "60"
+        );
+        setApiResponse(filteredData);
         Swal.fire({
           icon: "success",
           title: "조회 성공",
@@ -119,7 +127,7 @@ export default function Work() {
       console.log(response.data);
 
       const filteredData = response.data.data.filter(
-        (item) => item.tm_dv !== "60"
+        (item) => item.tm_dv === "30"
       );
       setApiResponse(filteredData);
     } catch (error) {
@@ -129,6 +137,7 @@ export default function Work() {
 
   /* 집하출고, 송장번호 선택 시 */
   const handleDeliveryNbApiCall = async () => {
+    setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
       const response = await dvInAll({
@@ -136,6 +145,7 @@ export default function Work() {
         bran_cd: bran_cd,
         longTime: "",
       });
+      setIsLoading(false);
       console.log(response.data);
 
       if (response.data.result === "10") {
@@ -146,7 +156,7 @@ export default function Work() {
         });
       } else {
         const filteredData = response.data.data.filter(
-          (item) => item.tm_dv !== "60"
+          (item) => item.tm_dv === "30"
         );
         setApiResponse(filteredData);
         Swal.fire({
