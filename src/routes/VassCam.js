@@ -77,6 +77,12 @@ export default function VassCam() {
         if (response.data.result === "00") {
           console.log(response.data);
           setVideoList(response.data.cam_list);
+        } else if (response.data.result === "11") {
+          Swal.fire({
+            icon: "warning",
+            title: "해당 지점은 영상 조회가 불가능합니다.",
+            confirmButtonText: "확인",
+          });
         } else {
           Swal.fire({
             icon: "warning",

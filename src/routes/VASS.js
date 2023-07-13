@@ -70,10 +70,24 @@ export default function VASS() {
       });
       setIsLoading(false);
       console.log(response.data);
-      const filteredData = response.data.data.filter(
-        (item) => item.tm_dv === "60"
-      );
-      setApiResponse(filteredData);
+
+      if (response.data.result === "00") {
+        const filteredData = response.data.data.filter(
+          (item) => item.tm_dv === "60"
+        );
+        setApiResponse(filteredData);
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "조회 실패",
+          confirmButtonText: "확인",
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -128,10 +142,23 @@ export default function VASS() {
       setIsLoading(false);
       console.log(response.data);
 
-      const filteredData = response.data.data.filter(
-        (item) => item.tm_dv === "30"
-      );
-      setApiResponse(filteredData);
+      if (response.data.result === "00") {
+        const filteredData = response.data.data.filter(
+          (item) => item.tm_dv === "30"
+        );
+        setApiResponse(filteredData);
+        Swal.fire({
+          icon: "success",
+          title: "조회 성공",
+          confirmButtonText: "확인",
+        });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "조회 실패",
+          confirmButtonText: "확인",
+        });
+      }
     } catch (error) {
       console.error(error);
     }
