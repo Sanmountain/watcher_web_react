@@ -20,20 +20,24 @@
   margin-top: 10%;
   background-color: #1d74e6;
   color: white;
-  padding: 8px 15px;
+  padding: 6px 15px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   height: 35px;
+  width: 80%;
+  font-weight: bold;
+  font-size: 1rem;
 }
 .video-menu input {
   margin-top: 5%;
   border: 1px solid grey;
   border-radius: 10px;
   height: 30px;
-  width: 118px;
+  width: 80%;
   text-align: center;
+  font-size: 0.8rem;
 }
 
 /* 비디오 화면 */

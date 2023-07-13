@@ -226,6 +226,7 @@ export default function VassCam() {
           title: "저장 완료",
           confirmButtonText: "확인",
         });
+        setShowModal(false);
       } else {
         Swal.fire({
           icon: "warning",
@@ -241,63 +242,66 @@ export default function VassCam() {
 
   /* 송장번호 조회 */
 
-  // const handleInputBarChange = (e) => {
-  //   localStorage.setItem("barcode2", e.target.value);
-  //   console.log(localStorage.getItem("barcode2"));
-  // };
+  const handleSnNumChange = (e) => {
+    setCamBarcode(e.target.value);
+  };
 
-  // const handleInvoiceNumberApiCall = async () => {
-  //   try {
-  //     const bran_cd = localStorage.getItem("saveId");
-  //     const snNumValue = localStorage.getItem("barcode2");
+  useEffect(() => {
+    const barcodeView = async () => {
+      try {
+        const bran_cd = localStorage.getItem("saveId");
+        const snNumValue = camBarcode;
 
-  //     const response = await dvInAll({
-  //       barcode: snNumValue,
-  //       bran_cd: bran_cd,
-  //       longTime: "",
-  //     });
-  //     console.log(response.data);
+        console.log("bran_cd??" + bran_cd);
+        console.log("snNumValue??" + snNumValue);
 
-  //     if (response.data.result === "10") {
-  //       Swal.fire({
-  //         icon: "warning",
-  //         title: "송장번호를 입력해주세요.",
-  //         confirmButtonText: "확인",
-  //       });
-  //     } else {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "조회 성공",
-  //         confirmButtonText: "확인",
-  //       });
-  //       setBarApiResponse(response.data.data);
-  //       console.log("@22" + barApiResponse);
-  //       const formattedStartDate = dayjs(barApiResponse.scan_total_time).format(
-  //         "YYYYMMDDHHmmss"
-  //       );
-  //       console.log("barformattedStartDate ::" + formattedStartDate);
-  //       const formattedEndDate = dayjs(barApiResponse.scan_total_time)
-  //         .add(30, "minutes")
-  //         .format("YYYYMMDDHHmmss");
-  //       console.log("barformattedEndDate ::" + formattedEndDate);
-  //       localStorage.setItem("formattedStartDate", formattedStartDate);
-  //       localStorage.setItem("formattedEndDate", formattedEndDate);
-  //       localStorage.setItem("barcode", snNumValue);
-  //       setRefreshKey(refreshKey + 1);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+        const response = await dvInAll({
+          barcode: snNumValue,
+          bran_cd: bran_cd,
+          longTime: "",
+        });
+        console.log(response.data);
+        setBarApiResponse(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    barcodeView();
+  }, [camBarcode]);
+
+  const handleInvoiceNumberApiCall = () => {
+    const firstItemScanTotalTime = barApiResponse[0].scan_total_time;
+    console.log("firstItemScanTotalTime ::" + firstItemScanTotalTime);
+
+    const formattedStartDate = dayjs(firstItemScanTotalTime)
+      .subtract(10, "seconds")
+      .format("YYYYMMDDHHmmss");
+
+    console.log("formattedStartDate ::" + formattedStartDate);
+
+    const formattedEndDate = dayjs(firstItemScanTotalTime)
+      .add(30, "minutes")
+      .format("YYYYMMDDHHmmss");
+
+    console.log("barformattedEndDate ::" + formattedEndDate);
+
+    localStorage.setItem("formattedStartDate", formattedStartDate);
+    localStorage.setItem("formattedEndDate", formattedEndDate);
+
+    setRefreshKey(refreshKey + 1);
+  };
 
   return (
     <>
       <div className="containerVideo">
         <div className="video-menu">
-          <button className="videoMenuBtn">송장번호 조회</button>
+          <button className="videoMenuBtn" onClick={handleInvoiceNumberApiCall}>
+            송장번호 조회
+          </button>
           <input
             className="videoMenuInput"
             placeholder="송장번호를 입력해주세요"
+            onChange={handleSnNumChange}
           ></input>
         </div>
         <div className="content-wrapper">
