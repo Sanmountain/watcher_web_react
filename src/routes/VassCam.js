@@ -5,7 +5,7 @@ import { caminfo, camModify } from "../api/API";
 import "../styles/VassCam.css";
 import { Dropdown, DropdownButton, Modal, Button } from "react-bootstrap";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { dvInAll } from "../api/API";
+import { barcode } from "../api/API";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
@@ -261,10 +261,9 @@ export default function VassCam() {
         console.log("bran_cd??" + bran_cd);
         console.log("snNumValue??" + snNumValue);
 
-        const response = await dvInAll({
+        const response = await barcode({
           barcode: snNumValue,
           bran_cd: bran_cd,
-          longTime: "",
         });
         console.log(response.data);
         setBarApiResponse(response.data.data);

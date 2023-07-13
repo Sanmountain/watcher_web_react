@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Work.css";
-import { dvInAll } from "../api/API";
+import { dvInAll, barcode } from "../api/API";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
@@ -98,10 +98,9 @@ export default function VASS() {
     setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
-      const response = await dvInAll({
+      const response = await barcode({
         barcode: snNumber,
         bran_cd: bran_cd,
-        longTime: "",
       });
       setIsLoading(false);
       console.log(response.data);
@@ -169,10 +168,9 @@ export default function VASS() {
     setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
-      const response = await dvInAll({
+      const response = await barcode({
         barcode: snNumber,
         bran_cd: bran_cd,
-        longTime: "",
       });
       setIsLoading(false);
       console.log(response.data);

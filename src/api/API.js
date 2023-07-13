@@ -50,3 +50,10 @@ export const camModify = (data) => {
     data: data,
   });
 };
+
+export const barcode = (data) => {
+  return axios.post(`${url}/lose`, {
+    api: "barcode",
+    data: [data],
+  });
+};
