@@ -28,7 +28,8 @@ export default function VassCam() {
 
   const [playbackRates, setPlaybackRates] = useState({});
   const [isPaused, setIsPaused] = useState({});
-  const [showShape, setShowShape] = useState(false);
+  const [blink, setBlink] = useState(false);
+  const [showVideoWrapper, setShowVideoWrapper] = useState(false);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -113,6 +114,19 @@ export default function VassCam() {
     setPlaybackRates(initialPlaybackRates);
     setIsPaused(initialPausedState);
   }, [refreshKey, videoList, currentPage]);
+
+  /* 블링크 효과 */
+  useEffect(() => {
+    if (blink) {
+      const timer = setInterval(() => {
+        setShowVideoWrapper((v) => !v);
+      }, 500); // 0.5초마다 깜박임
+
+      return () => clearInterval(timer);
+    } else {
+      setShowVideoWrapper(false);
+    }
+  }, [blink]);
 
   const totalPages = Math.ceil(apiResponse.length / videosPerPage);
 
@@ -336,6 +350,7 @@ export default function VassCam() {
           ></input>
         </div>
         <div className="content-wrapper">
+          {showVideoWrapper && <div className="videoWrapper"></div>}
           <div className="video-grid">
             {apiResponse &&
               apiResponse
@@ -372,7 +387,8 @@ export default function VassCam() {
                                 cam_id
                               ].getInternalPlayer().playbackRate = 0.5;
 
-                              setShowShape(true);
+                              // 여기서 깜박임을 시작
+                              setBlink(true);
                             }
                             if (
                               progress.playedSeconds >= 10 &&
@@ -385,6 +401,9 @@ export default function VassCam() {
                               playerRefs.current[cam_id]
                                 .getInternalPlayer()
                                 .pause();
+
+                              // 여기서 깜박임을 멈춤
+                              setBlink(false);
                             }
                           }}
                         />

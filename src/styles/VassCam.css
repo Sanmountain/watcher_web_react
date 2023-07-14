@@ -42,6 +42,7 @@
 
 /* 비디오 화면 */
 .video-grid {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 47% 47%;
   justify-content: center;
@@ -222,4 +223,16 @@
   border: 1px solid #1d74e6;
   border-radius: 5px;
   cursor: pointer;
+}
+
+/* 영상 시작 시 테두리 */
+.content-wrapper {
+  position: relative;
+}
+.videoWrapper {
+  position: absolute;
+  border: 3px solid red;
+  margin-left: 2%;
+  width: 91%;
+  height: 95%;
 }
