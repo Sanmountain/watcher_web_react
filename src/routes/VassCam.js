@@ -16,7 +16,6 @@ export default function VassCam() {
   const [videoList, setVideoList] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [videoPlaying, setVideoPlaying] = useState(true);
   const startIndex = (currentPage - 1) * videosPerPage;
   const endIndex = startIndex + videosPerPage;
   const playerRefs = useRef([]);
@@ -25,6 +24,11 @@ export default function VassCam() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [camBarcode, setCamBarcode] = useState("");
   const [barApiResponse, setBarApiResponse] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const [playbackRates, setPlaybackRates] = useState({});
+  const [isPaused, setIsPaused] = useState({});
+  const [showShape, setShowShape] = useState(false);
 
   /* 영상 순서 */
   useEffect(() => {
@@ -98,6 +102,18 @@ export default function VassCam() {
     videoView();
   }, [refreshKey]);
 
+  /* 영상 로드 시 5초부터 0.5배속, 10초에 일시정지 */
+  useEffect(() => {
+    const initialPlaybackRates = {};
+    const initialPausedState = {};
+    videoList.forEach((video) => {
+      initialPlaybackRates[video.id] = 1;
+      initialPausedState[video.id] = false;
+    });
+    setPlaybackRates(initialPlaybackRates);
+    setIsPaused(initialPausedState);
+  }, [refreshKey, videoList, currentPage]);
+
   const totalPages = Math.ceil(apiResponse.length / videosPerPage);
 
   /* 페이지 관련 */
@@ -117,11 +133,6 @@ export default function VassCam() {
 
   /* 재생 관련 */
 
-  // 영상 일시정지
-  const handlePauseVideos = () => {
-    setVideoPlaying((prevState) => !prevState);
-  };
-
   // 영상 10초 후
   const handleRewindVideos = () => {
     playerRefs.current.forEach((player) => {
@@ -136,6 +147,21 @@ export default function VassCam() {
       const currentTime = player.getCurrentTime();
       player.seekTo(currentTime + 10);
     });
+  };
+
+  // 모든 영상 재생 및 일시정지
+  const handlePlayVideos = () => {
+    for (let ref of playerRefs.current) {
+      if (ref) {
+        if (isPlaying) {
+          ref.getInternalPlayer().pause();
+        } else {
+          ref.getInternalPlayer().play();
+        }
+      }
+    }
+    // 재생 상태를 반전합니다.
+    setIsPlaying(!isPlaying);
   };
 
   /* 카메라 설정 관련 */
@@ -331,7 +357,36 @@ export default function VassCam() {
                           width="90%"
                           height="auto"
                           controls={true}
-                          playing={videoPlaying}
+                          playing={!isPaused[video.id]}
+                          onProgress={(progress) => {
+                            if (
+                              progress.playedSeconds > 5 &&
+                              progress.playedSeconds < 10 &&
+                              playbackRates[video.id] !== 0.5
+                            ) {
+                              setPlaybackRates((prevRates) => ({
+                                ...prevRates,
+                                [video.id]: 0.5,
+                              }));
+                              playerRefs.current[
+                                cam_id
+                              ].getInternalPlayer().playbackRate = 0.5;
+
+                              setShowShape(true);
+                            }
+                            if (
+                              progress.playedSeconds >= 10 &&
+                              !isPaused[video.id]
+                            ) {
+                              setIsPaused((prevPaused) => ({
+                                ...prevPaused,
+                                [video.id]: true,
+                              }));
+                              playerRefs.current[cam_id]
+                                .getInternalPlayer()
+                                .pause();
+                            }
+                          }}
                         />
                       ))}
                     </div>
@@ -342,8 +397,8 @@ export default function VassCam() {
             <button className="btn1" onClick={handleRewindVideos}>
               -10초
             </button>
-            <button className="btn1" onClick={handlePauseVideos}>
-              {videoPlaying ? "일시정지" : "재생"}
+            <button className="btn1" onClick={handlePlayVideos}>
+              {isPlaying ? "일시정지" : "재생"}
             </button>
             <button className="btn1" onClick={handleForwardVideos}>
               +10초

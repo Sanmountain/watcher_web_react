@@ -46,19 +46,19 @@ export default function VASS() {
 
   /* 조회 버튼 클릭 시 실행 */
   const handleApiCall = () => {
-    if (searchOption2 === "scandate" && searchOption1 === "receive") {
-      handleScanDateApiCall();
-    } else if (searchOption2 === "serialnum" && searchOption1 === "receive") {
-      handleInvoiceNumberApiCall();
-    } else if (searchOption2 === "scandate" && searchOption1 === "delivery") {
-      handleDeliveryDateApiCall();
-    } else {
-      handleDeliveryNbApiCall();
-    }
+    const handleType = {
+      receive_scandate: handleDateApiCall,
+      receive_serialnum: handleInvoiceNumberApiCall,
+      delivery_scandate: handleDateApiCall,
+      delivery_serialnum: handleInvoiceNumberApiCall,
+    };
+    const selectedHandler = handleType[`${searchOption1}_${searchOption2}`];
+
+    selectedHandler && selectedHandler();
   };
 
-  /* 배송입고, 스캔일자 선택 시 */
-  const handleScanDateApiCall = async () => {
+  /* 스캔일자 선택 시 */
+  const handleDateApiCall = async () => {
     setIsLoading(true);
     try {
       const bran_cd = localStorage.getItem("saveId");
@@ -68,32 +68,22 @@ export default function VASS() {
         bran_cd: bran_cd,
         longTime: "",
       });
-      setIsLoading(false);
-      console.log(response.data);
 
       if (response.data.result === "00") {
+        const tm_dv_filter = searchOption1 === "receive" ? "60" : "30";
         const filteredData = response.data.data.filter(
-          (item) => item.tm_dv === "60"
+          (item) => item.tm_dv === tm_dv_filter
         );
         setApiResponse(filteredData);
-        Swal.fire({
-          icon: "success",
-          title: "조회 성공",
-          confirmButtonText: "확인",
-        });
-      } else {
-        Swal.fire({
-          icon: "warning",
-          title: "조회 실패",
-          confirmButtonText: "확인",
-        });
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  /* 배송입고, 송장번호 선택 시 */
+  /* 송장번호 선택 시 */
   const handleInvoiceNumberApiCall = async () => {
     setIsLoading(true);
     try {
@@ -102,8 +92,6 @@ export default function VASS() {
         barcode: snNumber,
         bran_cd: bran_cd,
       });
-      setIsLoading(false);
-      console.log(response.data);
 
       if (response.data.result === "10") {
         Swal.fire({
@@ -112,88 +100,16 @@ export default function VASS() {
           confirmButtonText: "확인",
         });
       } else {
+        const tm_dv_filter = searchOption1 === "receive" ? "60" : "30";
         const filteredData = response.data.data.filter(
-          (item) => item.tm_dv === "60"
+          (item) => item.tm_dv === tm_dv_filter
         );
         setApiResponse(filteredData);
-        Swal.fire({
-          icon: "success",
-          title: "조회 성공",
-          confirmButtonText: "확인",
-        });
       }
     } catch (error) {
       console.error(error);
-    }
-  };
-
-  /* 집하출고, 스캔일자 선택 시 */
-  const handleDeliveryDateApiCall = async () => {
-    setIsLoading(true);
-    try {
-      const bran_cd = localStorage.getItem("saveId");
-      const response = await dvInAll({
-        start_time: startDate,
-        end_time: endDate,
-        bran_cd: bran_cd,
-        longTime: "",
-      });
+    } finally {
       setIsLoading(false);
-      console.log(response.data);
-
-      if (response.data.result === "00") {
-        const filteredData = response.data.data.filter(
-          (item) => item.tm_dv === "30"
-        );
-        setApiResponse(filteredData);
-        Swal.fire({
-          icon: "success",
-          title: "조회 성공",
-          confirmButtonText: "확인",
-        });
-      } else {
-        Swal.fire({
-          icon: "warning",
-          title: "조회 실패",
-          confirmButtonText: "확인",
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  /* 집하출고, 송장번호 선택 시 */
-  const handleDeliveryNbApiCall = async () => {
-    setIsLoading(true);
-    try {
-      const bran_cd = localStorage.getItem("saveId");
-      const response = await barcode({
-        barcode: snNumber,
-        bran_cd: bran_cd,
-      });
-      setIsLoading(false);
-      console.log(response.data);
-
-      if (response.data.result === "10") {
-        Swal.fire({
-          icon: "warning",
-          title: "송장번호를 입력해주세요.",
-          confirmButtonText: "확인",
-        });
-      } else {
-        const filteredData = response.data.data.filter(
-          (item) => item.tm_dv === "30"
-        );
-        setApiResponse(filteredData);
-        Swal.fire({
-          icon: "success",
-          title: "조회 성공",
-          confirmButtonText: "확인",
-        });
-      }
-    } catch (error) {
-      console.error(error);
     }
   };
 
