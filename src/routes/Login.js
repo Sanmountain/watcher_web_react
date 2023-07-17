@@ -113,10 +113,11 @@ export default function Login() {
                   id="remember-check"
                   onChange={handleRememberIdChange}
                   checked={checkedId}
+                  style={{ marginRight: "3px" }}
                 />
                 ID 저장
               </label>
-              <input type="submit" value="Login" />
+              <input type="submit" value="로그인" />
               <hr></hr>
               <img src={logo} className="bottomLogo" alt="React" />
               <div className="bottomCopy">Copyright © JHC 2021</div>
