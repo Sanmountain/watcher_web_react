@@ -3,6 +3,7 @@ import "../styles/Login.css";
 import { signIn } from "../api/API";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/JHC.png";
+import logo2 from "../assets/logen.png";
 import Swal from "sweetalert2";
 
 export default function Login() {
@@ -88,33 +89,38 @@ export default function Login() {
   return (
     <>
       <div className="login-wrapper">
-        <img src={logo} className="AppLogo" alt="React" />
-        <form id="login-form" onSubmit={handleSignIn}>
-          <input
-            type="text"
-            name="userName"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            placeholder="ID"
-          />
-          <input
-            type="password"
-            name="userPassword"
-            value={userPw}
-            onChange={(e) => setUserPw(e.target.value)}
-            placeholder="Password"
-          />
-          <label>
+        <div className="loginBox">
+          <img src={logo2} className="AppLogo" alt="React" />
+          <form id="login-form" onSubmit={handleSignIn}>
             <input
-              type="checkbox"
-              id="remember-check"
-              onChange={handleRememberIdChange}
-              checked={checkedId}
+              type="text"
+              name="userName"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              placeholder="ID"
             />
-            ID 저장
-          </label>
-          <input type="submit" value="Login" />
-        </form>
+            <input
+              type="password"
+              name="userPassword"
+              value={userPw}
+              onChange={(e) => setUserPw(e.target.value)}
+              placeholder="Password"
+            />
+            <label>
+              <input
+                type="checkbox"
+                id="remember-check"
+                onChange={handleRememberIdChange}
+                checked={checkedId}
+              />
+              ID 저장
+            </label>
+            <input type="submit" value="Login" />
+            <hr></hr>
+            <img src={logo} className="bottomLogo" alt="React" />
+            <div className="bottomCopy">Copyright © JHC 2021</div>
+          </form>
+        </div>
       </div>
     </>
   );

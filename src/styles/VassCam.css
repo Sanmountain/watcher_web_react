@@ -2,6 +2,9 @@
   padding: 0;
   margin: 0;
 }
+.container {
+  background-color: #ffffff;
+}
 .containerVideo {
   display: grid;
   grid-template-columns: 12% 88%;

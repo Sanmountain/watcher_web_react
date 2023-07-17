@@ -113,7 +113,7 @@ export default function VassCam() {
     });
     setPlaybackRates(initialPlaybackRates);
     setIsPaused(initialPausedState);
-  }, [refreshKey, videoList, currentPage]);
+  }, [refreshKey, videoList, currentPage, camBarcode]);
 
   /* 블링크 효과 */
   useEffect(() => {
@@ -169,6 +169,7 @@ export default function VassCam() {
       if (ref) {
         if (isPlaying) {
           ref.getInternalPlayer().pause();
+          setBlink(false);
         } else {
           ref.getInternalPlayer().play();
         }
@@ -375,8 +376,8 @@ export default function VassCam() {
                           playing={!isPaused[video.id]}
                           onProgress={(progress) => {
                             if (
-                              progress.playedSeconds > 5 &&
-                              progress.playedSeconds < 10 &&
+                              progress.playedSeconds > 6 &&
+                              progress.playedSeconds < 11 &&
                               playbackRates[video.id] !== 0.5
                             ) {
                               setPlaybackRates((prevRates) => ({
@@ -391,7 +392,7 @@ export default function VassCam() {
                               setBlink(true);
                             }
                             if (
-                              progress.playedSeconds >= 10 &&
+                              progress.playedSeconds >= 11 &&
                               !isPaused[video.id]
                             ) {
                               setIsPaused((prevPaused) => ({
