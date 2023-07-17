@@ -267,7 +267,7 @@ export default function Work() {
 
   return (
     <>
-      <div className="container">
+      <div className="container" style={{ backgroundColor: "white" }}>
         <div className="card-header">
           <select onChange={handleSearchOptionChange1}>
             <option value="receive">배송입고</option>

@@ -1,12 +1,19 @@
 * {
   padding: 0;
   margin: 0;
-  border: none;
 }
+html,
 body {
+  margin: 0;
+  padding: 0;
+}
+.loginBody {
+  margin-top: 0;
+  width: 100%;
+  height: 92vh;
   font-size: 14px;
   font-family: "Roboto", sans-serif;
-  background-color: #51535e;
+  background-color: #b0b3bb;
 }
 .login-wrapper {
   width: 23%;

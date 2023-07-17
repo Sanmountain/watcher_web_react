@@ -12,6 +12,7 @@
   background-color: #1d74e6;
   color: white;
   font-family: "Noto Sans KR", sans-serif;
+  margin-bottom: 0;
 }
 .header > div {
   float: left;
