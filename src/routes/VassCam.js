@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import ReactPlayer from "react-player";
 import { getRecordVideoList } from "../api/API_camera";
 import { caminfo, camModify } from "../api/API";
@@ -164,7 +164,7 @@ export default function VassCam() {
   };
 
   // 모든 영상 재생 및 일시정지
-  const handlePlayVideos = () => {
+  const handlePlayVideos = useCallback(() => {
     for (let ref of playerRefs.current) {
       if (ref) {
         if (isPlaying) {
@@ -177,7 +177,7 @@ export default function VassCam() {
     }
     // 재생 상태를 반전합니다.
     setIsPlaying(!isPlaying);
-  };
+  }, [isPlaying]);
 
   /* 카메라 설정 관련 */
 
@@ -336,6 +336,24 @@ export default function VassCam() {
 
     setRefreshKey(refreshKey + 1);
   };
+
+  useEffect(() => {
+    // 키다운 이벤트 리스너
+    const onKeyDown = (event) => {
+      if (event.code === "Space") {
+        // Space 바를 눌렀을 때
+        handlePlayVideos(); // 모든 영상 재생 또는 일시정지
+        event.preventDefault(); // 스페이스 바 기본 행동(스크롤 다운)을 방지
+      }
+    };
+    // 키다운 이벤트 리스너를 추가
+    document.addEventListener("keydown", onKeyDown);
+    // useEffect 클린업 함수
+    return () => {
+      // 컴포넌트가 언마운트될 때 리스너를 제거
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [handlePlayVideos]);
 
   return (
     <>
