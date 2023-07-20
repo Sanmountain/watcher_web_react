@@ -339,21 +339,23 @@ export default function VassCam() {
 
   useEffect(() => {
     // 키다운 이벤트 리스너
-    const onKeyDown = (event) => {
-      if (event.code === "Space") {
-        // Space 바를 눌렀을 때
-        handlePlayVideos(); // 모든 영상 재생 또는 일시정지
-        event.preventDefault(); // 스페이스 바 기본 행동(스크롤 다운)을 방지
-      }
-    };
-    // 키다운 이벤트 리스너를 추가
-    document.addEventListener("keydown", onKeyDown);
-    // useEffect 클린업 함수
-    return () => {
-      // 컴포넌트가 언마운트될 때 리스너를 제거
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [handlePlayVideos]);
+    if (!showModal) {
+      const onKeyDown = (event) => {
+        if (event.code === "Space") {
+          // Space 바를 눌렀을 때
+          handlePlayVideos(); // 모든 영상 재생 또는 일시정지
+          event.preventDefault(); // 스페이스 바 기본 행동(스크롤 다운)을 방지
+        }
+      };
+      // 키다운 이벤트 리스너를 추가
+      document.addEventListener("keydown", onKeyDown);
+      // useEffect 클린업 함수
+      return () => {
+        // 컴포넌트가 언마운트될 때 리스너를 제거
+        document.removeEventListener("keydown", onKeyDown);
+      };
+    }
+  }, [handlePlayVideos, showModal]);
 
   return (
     <>
