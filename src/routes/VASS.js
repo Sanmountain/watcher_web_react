@@ -18,6 +18,7 @@ export default function VASS() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [refreshKey, setRefreshKey] = useState(0);
+  const [beforeBar, setBeforeBar] = useState(null);
 
   /* 배송입고, 집하출고 선택 */
   const handleSearchOptionChange1 = (e) => {
@@ -74,6 +75,7 @@ export default function VASS() {
         const filteredData = response.data.data.filter(
           (item) => item.tm_dv === tm_dv_filter
         );
+
         setApiResponse(filteredData);
       }
     } catch (error) {
@@ -127,7 +129,7 @@ export default function VASS() {
   }, []);
 
   /* 캠 조회 화면으로 이동 */
-  const handleClick = (id, scan_total_time, barcode) => {
+  const handleClick = (id, scan_total_time, barcode, nextBarcode) => {
     const formattedStartDate = dayjs(scan_total_time)
       .subtract(10, "seconds")
       .format("YYYYMMDDHHmmss");
@@ -139,36 +141,37 @@ export default function VASS() {
     localStorage.setItem("formattedStartDate", formattedStartDate);
     localStorage.setItem("formattedEndDate", formattedEndDate);
     localStorage.setItem("barcode", barcode);
+    localStorage.setItem("beforeBarcode", nextBarcode);
     setRefreshKey(refreshKey + 1);
     navigate("/vasscam");
   };
 
   return (
     <>
-      <div className="container">
-        <div className="card-header">
+      <div className='container'>
+        <div className='card-header'>
           <select onChange={handleSearchOptionChange1}>
-            <option value="receive">배송입고</option>
-            <option value="delivery">집하출고</option>
+            <option value='receive'>배송입고</option>
+            <option value='delivery'>집하출고</option>
           </select>
           <select onChange={handleSearchOptionChange2}>
-            <option value="scandate">스캔일자</option>
-            <option value="serialnum">송장번호</option>
+            <option value='scandate'>스캔일자</option>
+            <option value='serialnum'>송장번호</option>
           </select>
 
           {searchOption2 === "scandate" ? (
-            <div className="datepicker">
+            <div className='datepicker'>
               <DatePicker
-                dateFormat="yyyy-MM-dd"
+                dateFormat='yyyy-MM-dd'
                 selected={dayjs(startDate).toDate()}
                 onChange={handleStartDateChange}
               />
             </div>
           ) : (
-            <div className="datepicker">
+            <div className='datepicker'>
               <input
-                type="text"
-                placeholder="송장번호 입력"
+                type='text'
+                placeholder='송장번호 입력'
                 onChange={handleSnNumChange}
               />
             </div>
@@ -176,18 +179,18 @@ export default function VASS() {
           {isLoading ? (
             <Loding />
           ) : (
-            <button className="checkBtn" onClick={handleApiCall}>
+            <button className='checkBtn' onClick={handleApiCall}>
               조회
             </button>
           )}
-          <span id="total_count">
+          <span id='total_count'>
             {" "}
             조회량 :{apiResponse.length > 0 ? apiResponse.length : 0}건
           </span>
         </div>
 
-        <div className="cardTable">
-          <div id="ulTable3">
+        <div className='cardTable'>
+          <div id='ulTable3'>
             <div>
               <li>No.</li>
               <li>업무</li>
@@ -206,12 +209,13 @@ export default function VASS() {
                   <li>{video.barcode}</li>
                   <li>
                     <button
-                      className="vassBtn"
+                      className='vassBtn'
                       onClick={() =>
                         handleClick(
                           video.id,
                           video.scan_total_time,
-                          video.barcode
+                          video.barcode,
+                          apiResponse[index - 1]?.barcode
                         )
                       }
                     >

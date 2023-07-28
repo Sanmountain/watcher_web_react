@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import axios from "axios";
 import ReactPlayer from "react-player";
 import { getRecordVideoList } from "../api/API_camera";
 import { caminfo, camModify } from "../api/API";
@@ -127,6 +128,33 @@ export default function VassCam() {
       setShowVideoWrapper(false);
     }
   }, [blink]);
+
+  /* 이전 송장번호 정보 출력 */
+  // const [firstLocationName, setFirstLocationName] = useState("");
+  // const [LastLocationName, setLastLocationName] = useState("");
+  const [manName, setManName] = useState("");
+  const [manState, setManState] = useState("");
+  useEffect(() => {
+    const beforeBar = localStorage.getItem("beforeBarcode");
+    axios
+      .get(
+        `https://apis.tracker.delivery/carriers/kr.logen/tracks/${beforeBar}`
+      )
+      .then((response) => {
+        // setFirstLocationName(response.data.progresses[0].location.name);
+        // setLastLocationName(
+        //   response.data.progresses[response.data.progresses.length - 1].location
+        //     .name
+        // );
+        const progresses =
+          response.data.progresses[response.data.progresses.length - 1]
+            .description;
+        const progressesArray = progresses.split(", ");
+        setManName(progressesArray);
+        setManState(response.data.state.text);
+      })
+      .catch((error) => console.error("Error:", error));
+  }, []);
 
   const totalPages = Math.ceil(apiResponse.length / videosPerPage);
 
@@ -299,9 +327,6 @@ export default function VassCam() {
         const bran_cd = localStorage.getItem("saveId");
         const snNumValue = camBarcode;
 
-        console.log("bran_cd??" + bran_cd);
-        console.log("snNumValue??" + snNumValue);
-
         const response = await barcode({
           barcode: snNumValue,
           bran_cd: bran_cd,
@@ -359,20 +384,38 @@ export default function VassCam() {
 
   return (
     <>
-      <div className="containerVideo">
-        <div className="video-menu">
-          <button className="videoMenuBtn" onClick={handleInvoiceNumberApiCall}>
+      <div className='containerVideo'>
+        <div className='video-menu'>
+          <button className='videoMenuBtn' onClick={handleInvoiceNumberApiCall}>
             송장번호 조회
           </button>
           <input
-            className="videoMenuInput"
-            placeholder="송장번호를 입력해주세요"
+            className='videoMenuInput'
+            placeholder='송장번호를 입력해주세요'
             onChange={handleSnNumChange}
           ></input>
+          <div className='barcodeMenu'>
+            <p>현재 송장번호</p>
+            <input
+              className='barcodeMenuInput'
+              placeholder={localStorage.getItem("barcode")}
+              readOnly
+            ></input>
+            <p>이전 송장번호</p>
+            <input
+              className='barcodeMenuInput barcodeMenuInput2'
+              placeholder={localStorage.getItem("beforeBarcode")}
+              readOnly
+            ></input>
+            {/* <div className='innerBarcodeMenu'>집하:{firstLocationName}</div>
+            <div className='innerBarcodeMenu'>배송출발:{LastLocationName}</div> */}
+            <div className='innerBarcodeMenu'>{manName[2]}</div>
+            <div className='innerBarcodeMenu'>{manState}</div>
+          </div>
         </div>
-        <div className="content-wrapper">
-          {showVideoWrapper && <div className="videoWrapper"></div>}
-          <div className="video-grid">
+        <div className='content-wrapper'>
+          {showVideoWrapper && <div className='videoWrapper'></div>}
+          <div className='video-grid'>
             {apiResponse &&
               apiResponse
                 .slice(startIndex, endIndex)
@@ -382,16 +425,16 @@ export default function VassCam() {
                   );
 
                   return (
-                    <div className="video-wrapper" key={apiResponse.cam_id}>
-                      <div className="videoCamname">{apiResponse.cam_name}</div>
+                    <div className='video-wrapper' key={apiResponse.cam_id}>
+                      <div className='videoCamname'>{apiResponse.cam_name}</div>
                       {videosWithSameCamId.map((video) => (
                         <ReactPlayer
                           key={video.id}
                           ref={(ref) => (playerRefs.current[cam_id] = ref)}
                           url={video.stream_url}
-                          className="react-player"
-                          width="90%"
-                          height="auto"
+                          className='react-player'
+                          width='90%'
+                          height='auto'
                           controls={true}
                           playing={!isPaused[video.id]}
                           onProgress={(progress) => {
@@ -433,20 +476,20 @@ export default function VassCam() {
                   );
                 })}
           </div>
-          <div className="pagination">
-            <button className="btn1" onClick={handleRewindVideos}>
+          <div className='pagination'>
+            <button className='btn1' onClick={handleRewindVideos}>
               -10초
             </button>
-            <button className="btn1" onClick={handlePlayVideos}>
+            <button className='btn1' onClick={handlePlayVideos}>
               {isPlaying ? "일시정지" : "재생"}
             </button>
-            <button className="btn1" onClick={handleForwardVideos}>
+            <button className='btn1' onClick={handleForwardVideos}>
               +10초
             </button>
             <DropdownButton
-              title="설정"
-              variant="secondary"
-              className="camDropBtn"
+              title='설정'
+              variant='secondary'
+              className='camDropBtn'
             >
               <Dropdown.Item onClick={handleOption2}>
                 재생 순서 변경
@@ -470,16 +513,16 @@ export default function VassCam() {
             </Modal.Header>
             <Modal.Body>
               <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="items">
+                <Droppable droppableId='items'>
                   {(provided) => (
                     <div
-                      className="custom-table"
+                      className='custom-table'
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
-                      <div className="tableHead">
-                        <div className="tableTh">No.</div>
-                        <div className="tableTh">카메라 위치</div>
+                      <div className='tableHead'>
+                        <div className='tableTh'>No.</div>
+                        <div className='tableTh'>카메라 위치</div>
                       </div>
                       {changeApiResponse.map((item, index) => (
                         <Draggable
@@ -489,13 +532,13 @@ export default function VassCam() {
                         >
                           {(provided) => (
                             <div
-                              className="tableContent"
+                              className='tableContent'
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <div className="tableTd">{item.cam_seq}</div>
-                              <div className="tableTd">
+                              <div className='tableTd'>{item.cam_seq}</div>
+                              <div className='tableTd'>
                                 {editing[item.cam_id] ? (
                                   <input
                                     value={item.cam_name}
@@ -526,10 +569,10 @@ export default function VassCam() {
               </DragDropContext>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleVideoSeq}>
+              <Button variant='secondary' onClick={handleVideoSeq}>
                 저장
               </Button>
-              <Button variant="secondary" onClick={handleCloseModal}>
+              <Button variant='secondary' onClick={handleCloseModal}>
                 닫기
               </Button>
             </Modal.Footer>
