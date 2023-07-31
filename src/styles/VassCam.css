@@ -42,6 +42,37 @@
   text-align: center;
   font-size: 0.8rem;
 }
+.video-menu .barcodeMenu {
+  border: none;
+  border-radius: 20px;
+  margin-top: 20px;
+  width: 80%;
+  height: 300px;
+}
+.barcodeMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.barcodeMenu > p {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+.barcodeMenu .barcodeMenuInput {
+  margin-top: 2px;
+}
+.barcodeMenu .barcodeMenuInput2 {
+  margin-bottom: 20px;
+}
+.barcodeMenu .innerBarcodeMenu {
+  color: red;
+  font-weight: 600;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+}
 
 /* 비디오 화면 */
 .video-grid {
