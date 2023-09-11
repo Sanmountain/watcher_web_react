@@ -6,7 +6,6 @@ export const Container = styled.div`
   justify-content: flex-end;
   width: 100%;
   height: 70px;
-  border: 1px solid red;
 `;
 
 export const ProfileButtonContainer = styled.div`
