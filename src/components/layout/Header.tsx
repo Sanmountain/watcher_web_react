@@ -1,3 +1,12 @@
+import * as S from "../../styles/layout/Header.styles";
+
 export default function Header() {
-  return <div style={{ border: "1px solid blue", height: "70px" }}></div>;
+  return (
+    <S.Container>
+      <S.ProfileButtonContainer>
+        <S.Profile>홍길동</S.Profile>
+        <S.LogOutButton>Logout</S.LogOutButton>
+      </S.ProfileButtonContainer>
+    </S.Container>
+  );
 }
