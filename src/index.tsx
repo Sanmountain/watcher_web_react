@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { router } from "./routes/router";
+import { GlobalStyles } from "./styles/globalStyles";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,6 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <QueryClientProvider client={queryClient}>
     <RecoilRoot>
+      <GlobalStyles />
       <RouterProvider router={router} />
     </RecoilRoot>
   </QueryClientProvider>,

@@ -26,6 +26,7 @@ export const GlobalStyles = createGlobalStyle`
 		margin: 0;
 		padding: 0;
 		border: 0;
+		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
 	}
@@ -36,8 +37,6 @@ export const GlobalStyles = createGlobalStyle`
 	}
 	body {
 		line-height: 1;
-		width: 100%;
-		height: 100%;
 	}
 	ol, ul {
 		list-style: none;
@@ -67,5 +66,9 @@ export const GlobalStyles = createGlobalStyle`
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	&::-webkit-scrollbar {
+		display: none;
 	}
 `;
