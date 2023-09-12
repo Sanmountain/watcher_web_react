@@ -1,3 +1,5 @@
+import Filter from "../../components/common/Filter";
+
 export default function Vass() {
-  return <></>;
+  return <Filter></Filter>;
 }

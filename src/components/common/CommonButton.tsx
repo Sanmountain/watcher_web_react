@@ -20,6 +20,10 @@ export default function CommonButton({
 }
 
 const Button = styled.button<{ $isRound?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 16px;
   font-weight: 600;
   background-color: ${colors.blue[200]};
