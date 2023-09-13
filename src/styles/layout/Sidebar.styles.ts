@@ -20,6 +20,7 @@ export const LogoContainer = styled.div`
   width: 100%;
   height: 70px;
   margin-top: 30px;
+  cursor: pointer;
 `;
 
 export const Image = styled.img`
@@ -56,12 +57,37 @@ export const MenuButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: fit-content;
   font-size: ${font.fontSize[100]};
   font-weight: 700;
   background-color: transparent;
   border: none;
+  position: relative;
   cursor: pointer;
+
+  &.current {
+    &::before {
+      width: 100%; // 항상 보이게 설정
+      transition: none; // 트랜지션 효과를 제거
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: ${colors.blue[200]};
+    transition: width 0.3s ease;
+  }
+
+  // .current 클래스가 없을 때만 hover 효과 적용
+  &:not(.current):hover::before {
+    width: 100%;
+  }
 `;
 
 export const ShoppingMallContainer = styled.div`
