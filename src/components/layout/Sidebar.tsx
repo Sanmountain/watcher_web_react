@@ -2,8 +2,9 @@ import * as S from "../../styles/layout/Sidebar.styles";
 import VassIcon from "../../assets/images/sidebar/icon_vass.png";
 import shoppingMallIcon from "../../assets/images/sidebar/icon_shoppingMall.png";
 import S4Image from "../../assets/images/sidebar/img_S4.png";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import CommonButton from "../common/CommonButton";
+import { useEffect, useState } from "react";
 
 export default function Sidebar() {
   const menuList = [
@@ -12,22 +13,41 @@ export default function Sidebar() {
     { label: "VASS", path: "/vass" },
   ];
 
+  const [currentMenu, setCurrentMenu] = useState("");
+
+  const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
 
+  // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
+  useEffect(() => {
+    if (!params.invoiceNumber) {
+      setCurrentMenu(`${location.pathname}`);
+    }
+  }, [params, location]);
+
+  const onClickLogo = () => {
+    navigate("/");
+  };
+
   const onClickMenu = (path: string) => {
     navigate(path);
+    setCurrentMenu(path);
   };
 
   return (
     <S.Container>
-      <S.LogoContainer>
+      <S.LogoContainer onClick={onClickLogo}>
         <S.Image src={VassIcon} />
       </S.LogoContainer>
       <S.MenuContainer>
         <S.MenuTitle>MENU</S.MenuTitle>
         {menuList.map((menu) => (
-          <S.MenuButton key={menu.label} onClick={() => onClickMenu(menu.path)}>
+          <S.MenuButton
+            key={menu.label}
+            onClick={() => onClickMenu(menu.path)}
+            className={menu.path === currentMenu ? "current" : ""}
+          >
             {menu.label}
           </S.MenuButton>
         ))}
