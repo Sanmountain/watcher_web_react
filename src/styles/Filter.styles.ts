@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { font } from "./typography";
+import { colors } from "./palette";
 
 export const Container = styled.div`
   display: grid;
@@ -7,6 +8,9 @@ export const Container = styled.div`
   align-items: center;
   width: 99.4%;
   height: 65px;
+  position: sticky;
+  top: 70px;
+  background-color: ${colors.black[1000]};
 `;
 
 export const FilterContainer = styled.div`

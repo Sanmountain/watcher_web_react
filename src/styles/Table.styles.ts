@@ -23,6 +23,8 @@ export const TitleContainer = styled.div<{ columns: number }>`
   height: 40px;
   margin-bottom: 5px;
   border-radius: 5px;
+  position: sticky;
+  top: 135px;
 `;
 
 export const Title = styled.div`
@@ -42,6 +44,8 @@ export const ContentsList = styled.div`
   align-items: center;
 
   width: 100%;
+  height: 730px;
+  gap: 10px;
   overflow-y: scroll;
 `;
 
@@ -53,8 +57,7 @@ export const ContentsContainer = styled.div<{ columns: number }>`
 
   border: 1px solid ${colors.black[500]};
   width: 99.5%;
-  height: 40px;
-  gap: 10px;
+  min-height: 40px;
   border-radius: 5px;
 `;
 
@@ -66,4 +69,9 @@ export const Contents = styled.div`
   width: 100%;
   height: 100%;
   font-size: ${font.fontSize[200]};
+`;
+
+export const CommonButtonContainer = styled.div`
+  width: fit-content;
+  height: fit-content;
 `;

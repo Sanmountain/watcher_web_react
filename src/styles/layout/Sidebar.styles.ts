@@ -14,6 +14,10 @@ export const Container = styled.div`
   box-shadow: 4px 0 3px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   padding: 10px;
+  position: fixed;
+  top: 5px;
+  left: 0;
+  z-index: 3;
 `;
 
 export const LogoContainer = styled.div`

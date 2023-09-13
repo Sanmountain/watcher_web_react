@@ -56,7 +56,7 @@ export const GlobalStyles = createGlobalStyle`
 	html {
         font-family: "Roboto";
         font-size: 62.5%;
-		overflow-y: scroll;
+		overflow-y: hidden;
 		overflow-x: hidden;
 	}
 	img {
@@ -66,9 +66,5 @@ export const GlobalStyles = createGlobalStyle`
 	a {
 		text-decoration: none;
 		color: inherit;
-	}
-
-	&::-webkit-scrollbar {
-		display: none;
 	}
 `;
