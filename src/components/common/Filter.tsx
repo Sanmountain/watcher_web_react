@@ -1,7 +1,6 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import * as S from "../../styles/Filter.styles";
 import CommonButton from "./CommonButton";
-import Toggle from "./Toggle";
 import { useLocation } from "react-router";
 import { getVassPage, getWorkPage } from "../../utils/getLocationPath";
 import { IFilterProps } from "../../types/Filter.types";
@@ -14,7 +13,6 @@ export default function Filter({
   dateMutate,
   invoiceMutate,
 }: IFilterProps) {
-  const [isOn, setIsOn] = useState(false);
   const workList = useRecoilValue(workListState);
 
   const location = useLocation();
@@ -28,10 +26,6 @@ export default function Filter({
     const { name, value } = e.target;
 
     setFilterOption({ ...filterOption, [name]: value });
-  };
-
-  const onClickToggle = () => {
-    setIsOn(!isOn);
   };
 
   const onClickDateSearch = () => {
@@ -93,8 +87,6 @@ export default function Filter({
               onClickFn={() => console.log("ddd")}
             />
           </S.SubmitButtonContainer>
-          <S.FilterTitle>{isOn ? "자동" : "수동"}</S.FilterTitle>
-          <Toggle onClick={onClickToggle} $isOn={isOn} />
         </S.FilterContainer>
       )}
     </S.Container>
