@@ -49,6 +49,7 @@ export const getLogin = (userId: string, userPassword: string) => {
             isLogin: true,
             userId: data.data[0].user_id,
             branchName: data.data[0].bran_exp,
+            branchCode: data.data[0].bran_cd,
           });
 
           navigate("/");

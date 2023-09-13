@@ -3,6 +3,7 @@ export interface ILoginState {
   isUserIdStored: boolean;
   userId: string;
   branchName: string;
+  branchCode: string;
   localIP: string;
 }
 
