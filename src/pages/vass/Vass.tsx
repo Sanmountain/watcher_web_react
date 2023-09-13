@@ -1,8 +1,10 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import Filter from "../../components/common/Filter";
 import Table from "../../components/common/Table";
-import { vassFilterState } from "../../stores/vassFilterState";
-import { workListState } from "../../stores/work/workListState";
+import { vassFilterState } from "../../stores/vass/vassFilterState";
+import { vassListState } from "../../stores/vass/vassListState";
+import { getVassDateList } from "../../api/vass/getVassDateList";
+import { getVassInvoiceList } from "../../api/vass/getVassInvoiceList";
 
 export default function Vass() {
   const title = [
@@ -15,23 +17,29 @@ export default function Vass() {
   ];
 
   const [filterOption, setFilterOption] = useRecoilState(vassFilterState);
-  // NOTE 임시
-  const workList = useRecoilValue(workListState);
+  const vassList = useRecoilValue(vassListState);
+
+  const { mutate: vassDateListMutate, isLoading: isDateMutateLoading } =
+    getVassDateList();
+  const {
+    mutate: vassInvoiceNumberListMutate,
+    isLoading: isInvoiceNumberMutateLoading,
+  } = getVassInvoiceList();
 
   return (
     <>
       <Filter
         filterOption={filterOption}
         setFilterOption={setFilterOption}
-        dateMutate={console.log("ddd")}
-        invoiceMutate={console.log("dddd")}
+        dateMutate={vassDateListMutate}
+        invoiceMutate={vassInvoiceNumberListMutate}
       />
       <Table
         title={title}
-        contents={workList}
+        contents={vassList}
         columns={6}
-        dateLoading={false}
-        invoiceLoading={false}
+        dateLoading={isDateMutateLoading}
+        invoiceLoading={isInvoiceNumberMutateLoading}
       />
     </>
   );

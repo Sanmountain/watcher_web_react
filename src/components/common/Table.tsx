@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import * as S from "../../styles/Table.styles";
 import { ITableProps } from "../../types/Table.types";
 import CommonButton from "./CommonButton";
@@ -10,7 +11,12 @@ export default function Table({
   dateLoading,
   invoiceLoading,
 }: ITableProps) {
-  console.log("contents", contents);
+  const navigate = useNavigate();
+
+  const onClickMoveToDetail = () => {
+    navigate("/vass/:invoiceNumber");
+  };
+
   return (
     <S.Container>
       <S.TitleContainer columns={columns}>
@@ -30,10 +36,12 @@ export default function Table({
                   {!el.value ? (
                     index + 1
                   ) : el.value === "button" ? (
-                    <CommonButton
-                      contents="상세"
-                      onClickFn={() => console.log("dddd")}
-                    />
+                    <S.CommonButtonContainer>
+                      <CommonButton
+                        contents="조회"
+                        onClickFn={onClickMoveToDetail}
+                      />
+                    </S.CommonButtonContainer>
                   ) : (
                     item[el.value]
                   )}

@@ -1,19 +1,20 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { loginState } from "../stores/loginState";
+import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
-import { IWorkListResponse } from "../types/Work.types";
-import { instance } from "./instance";
-import { workFilterState } from "../stores/work/workFilterState";
+import { IWorkListResponse } from "../../types/Work.types";
+import { instance } from "../instance";
 import dayjs from "dayjs";
-import { workListState } from "../stores/work/workListState";
+import { vassFilterState } from "../../stores/vass/vassFilterState";
+import { vassListState } from "../../stores/vass/vassListState";
+import Swal from "sweetalert2";
 
-export const getWorkDateList = () => {
+export const getVassDateList = () => {
   const login = useRecoilValue(loginState);
-  const filterOption = useRecoilValue(workFilterState);
-  const setWorkList = useSetRecoilState(workListState);
+  const filterOption = useRecoilValue(vassFilterState);
+  const setWorkList = useSetRecoilState(vassListState);
 
   return useMutation<IWorkListResponse, unknown, void, unknown>(
-    "getWorkDateList",
+    "getVassDateList",
     () =>
       instance.post("/lose", {
         api: "dvInAll",
@@ -45,6 +46,11 @@ export const getWorkDateList = () => {
           }
 
           setWorkList(filteringData);
+          Swal.fire({
+            icon: "success",
+            title: "조회 성공",
+            confirmButtonText: "확인",
+          });
         }
       },
       onError: (error) => {

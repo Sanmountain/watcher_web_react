@@ -6,6 +6,7 @@ import { getVassPage, getWorkPage } from "../../utils/getLocationPath";
 import { IFilterProps } from "../../types/Filter.types";
 import { useRecoilValue } from "recoil";
 import { workListState } from "../../stores/work/workListState";
+import { vassListState } from "../../stores/vass/vassListState";
 
 export default function Filter({
   filterOption,
@@ -14,6 +15,7 @@ export default function Filter({
   invoiceMutate,
 }: IFilterProps) {
   const workList = useRecoilValue(workListState);
+  const vassList = useRecoilValue(vassListState);
 
   const location = useLocation();
 
@@ -40,7 +42,8 @@ export default function Filter({
     <S.Container>
       <S.FilterContainer>
         <S.FilterTitle>조회량</S.FilterTitle>{" "}
-        {(WORK_PAGE && workList.length) || 0} 건{" "}
+        {(WORK_PAGE && workList.length) || (VASS_PAGE && vassList.length) || 0}{" "}
+        건{" "}
         <S.SelectBox
           name="receivingShipment"
           defaultValue={filterOption.receivingShipment}

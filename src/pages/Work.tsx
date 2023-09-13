@@ -2,9 +2,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import Filter from "../components/common/Filter";
 import Table from "../components/common/Table";
 import { workFilterState } from "../stores/work/workFilterState";
-import { getWorkDateList } from "../api/getWorkDateList";
+import { getWorkDateList } from "../api/work/getWorkDateList";
 import { workListState } from "../stores/work/workListState";
-import { getWorkInvoiceList } from "../api/getWorkInvoiceList";
+import { getWorkInvoiceList } from "../api/work/getWorkInvoiceList";
 
 export default function Work() {
   const title = [

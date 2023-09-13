@@ -70,3 +70,8 @@ export const Contents = styled.div`
   height: 100%;
   font-size: ${font.fontSize[200]};
 `;
+
+export const CommonButtonContainer = styled.div`
+  width: fit-content;
+  height: fit-content;
+`;

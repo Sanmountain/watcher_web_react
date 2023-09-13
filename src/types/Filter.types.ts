@@ -1,3 +1,4 @@
+import { UseMutateFunction } from "react-query";
 import { SetterOrUpdater } from "recoil";
 
 export interface IFilterState {
@@ -9,6 +10,6 @@ export interface IFilterState {
 export interface IFilterProps {
   filterOption: IFilterState;
   setFilterOption: SetterOrUpdater<IFilterState>;
-  dateMutate: any;
-  invoiceMutate: any;
+  dateMutate: UseMutateFunction<any, unknown, void, unknown>;
+  invoiceMutate: UseMutateFunction<any, unknown, void, unknown>;
 }
