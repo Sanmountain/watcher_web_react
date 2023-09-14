@@ -3,6 +3,10 @@ import * as S from "../../styles/Table.styles";
 import { ITableProps } from "../../types/Table.types";
 import CommonButton from "./CommonButton";
 import Loading from "./Loading";
+import { useSetRecoilState } from "recoil";
+import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
+import { IWorkListData } from "../../types/Work.types";
+import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 
 export default function Table({
   title,
@@ -11,10 +15,15 @@ export default function Table({
   dateLoading,
   invoiceLoading,
 }: ITableProps) {
+  const setNowVassDetail = useSetRecoilState(nowVassDetailState);
+  const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
+
   const navigate = useNavigate();
 
-  const onClickMoveToDetail = (invoiceNumber: string) => {
-    navigate(`/vass/${invoiceNumber}`);
+  const onClickMoveToDetail = (item: IWorkListData, index: number) => {
+    navigate(`/vass/${item.barcode}`);
+    setNowVassDetail(item);
+    setPrevVassDetail(contents[index + 1]);
   };
 
   return (
@@ -39,7 +48,7 @@ export default function Table({
                     <S.CommonButtonContainer>
                       <CommonButton
                         contents="조회"
-                        onClickFn={() => onClickMoveToDetail(item.barcode)}
+                        onClickFn={() => onClickMoveToDetail(item, index)}
                       />
                     </S.CommonButtonContainer>
                   ) : (

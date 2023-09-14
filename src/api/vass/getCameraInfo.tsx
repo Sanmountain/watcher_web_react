@@ -28,8 +28,6 @@ export const getCameraInfo = (
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          console.log("data", data);
-
           const sortedData = data.data.sort(
             (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
           );

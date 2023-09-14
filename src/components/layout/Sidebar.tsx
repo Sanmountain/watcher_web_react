@@ -5,6 +5,10 @@ import S4Image from "../../assets/images/sidebar/img_S4.png";
 import { useLocation, useNavigate, useParams } from "react-router";
 import CommonButton from "../common/CommonButton";
 import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { vassDeliveryState } from "../../stores/vass/vassDeliveryState";
+import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
+import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 
 export default function Sidebar() {
   const menuList = [
@@ -14,10 +18,34 @@ export default function Sidebar() {
   ];
 
   const [currentMenu, setCurrentMenu] = useState("");
+  const vassDelivery = useRecoilValue(vassDeliveryState);
+  const [nowVassDetail] = useRecoilState(nowVassDetailState);
+  const [prevVassDetail] = useRecoilState(prevVassDetailState);
 
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
+
+  // NOTE vassDelivery에서 배송담당자 이름 가져오기
+  const extractDeliveryManName = (description: string) => {
+    const keyword = "배송담당: ";
+    const startIndex = description.indexOf(keyword);
+
+    if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
+
+    const subStr = description.substring(startIndex + keyword.length).trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
+    const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
+
+    if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
+
+    return subStr.substring(0, endIndex);
+  };
+
+  const deliveryManName = extractDeliveryManName(
+    vassDelivery?.progresses[vassDelivery?.progresses.length - 1].description,
+  );
+
+  const deliveryState = vassDelivery?.state.text;
 
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
@@ -65,17 +93,19 @@ export default function Sidebar() {
 
           <S.InvoiceInfoContainer>
             <p>현재 송장번호</p>
-            <S.InvoiceInfo>36336157723</S.InvoiceInfo>
+            <S.InvoiceInfo>{nowVassDetail.barcode}</S.InvoiceInfo>
           </S.InvoiceInfoContainer>
 
           <S.InvoiceInfoContainer>
             <p>이전 송장번호</p>
-            <S.InvoiceInfo className="prev">36336157723</S.InvoiceInfo>
+            <S.InvoiceInfo className="prev">
+              {prevVassDetail.barcode}
+            </S.InvoiceInfo>
           </S.InvoiceInfoContainer>
 
           <S.TradeSubInfoContainer>
-            <p>담당직원 : 홍길동</p>
-            <p>배송출발</p>
+            <p>담당직원 :{deliveryManName}</p>
+            <p>{deliveryState}</p>
           </S.TradeSubInfoContainer>
         </S.ShoppingMallContainer>
       ) : (

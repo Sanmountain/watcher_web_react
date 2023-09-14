@@ -8,14 +8,15 @@ import { getVideoList } from "../../api/vass/getVideoList";
 import { IVideoListData } from "../../types/videoList.types";
 import { ICameraInfoData } from "../../types/cameraInfo.types";
 import { getCameraInfo } from "../../api/vass/getCameraInfo";
-import { useParams } from "react-router";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { vassListState } from "../../stores/vass/vassListState";
 import dayjs, { Dayjs } from "dayjs";
+import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
+import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
+import { vassDeliveryState } from "../../stores/vass/vassDeliveryState";
+import axios from "axios";
 
 export default function VassDetail() {
-  const params = useParams();
-
   // NOTE pagination
   const videosPerPage = 4;
   const [currentPage] = useState(1);
@@ -30,13 +31,11 @@ export default function VassDetail() {
 
   // NOTE player control
   const vassList = useRecoilValue(vassListState);
-  const findVassList = vassList.find(
-    (item) => item.barcode === params.invoiceNumber,
-  );
+  const nowVassDetail = useRecoilValue(nowVassDetailState);
   const [isPlaying, setIsPlaying] = useState(true);
   const [playTime, setPlayTime] = useState(0);
   const [pausedTime, setPausedTime] = useState<Dayjs | null>(
-    dayjs(findVassList?.scan_total_time),
+    dayjs(nowVassDetail.scan_total_time),
   );
 
   // NOTE 바코드 화면 상에 띄우기
@@ -44,8 +43,12 @@ export default function VassDetail() {
   const [displayedBarcodes, setDisplayedBarcodes] = useState<string[]>([]);
   //  isPlaying true -> false -> true가 됐을 때 시작시간 기록용
   const currentScanTimeRef = useRef<Dayjs | null | undefined>(
-    dayjs(findVassList?.scan_total_time),
+    dayjs(nowVassDetail.scan_total_time),
   );
+
+  // NOTE 담당직원, 배송상태
+  const prevVassDetail = useRecoilValue(prevVassDetailState);
+  const setVassDelivery = useSetRecoilState(vassDeliveryState);
 
   const outSide = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<(ReactPlayer | null)[]>([]);
@@ -62,6 +65,18 @@ export default function VassDetail() {
   // NOTE camera info 담기
   useEffect(() => {
     cameraInfoMutate();
+  }, []);
+
+  // NOTE 담당직원, 배송상태 담기
+  useEffect(() => {
+    axios
+      .get(
+        `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`,
+      )
+      .then((res) => {
+        setVassDelivery(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   // NOTE 화면상 바코드 띄우기
@@ -156,7 +171,7 @@ export default function VassDetail() {
 
     // isPlaying이 false일 때, pausedTime을 업데이트하고 함수 종료
     if (!isPlaying) {
-      const videoStartDate = dayjs(findVassList?.scan_total_time); // 비디오 시작 시간
+      const videoStartDate = dayjs(nowVassDetail.scan_total_time); // 비디오 시작 시간
       const videoStartDateMinusFive = videoStartDate.subtract(5, "second");
       const playTimeInMilliseconds: number = playTime * 1000; // 현재 재생시간
 
@@ -172,11 +187,11 @@ export default function VassDetail() {
     }
 
     // isPlaying이 true일 때, isPlaying이 false였다가 true로 된 경우와 첫 자동재생인 true인 경우 분기처리
-    if (pausedTime !== dayjs(findVassList?.scan_total_time)) {
+    if (pausedTime !== dayjs(nowVassDetail.scan_total_time)) {
       currentScanTimeRef.current = dayjs(pausedTime);
     } else {
       currentScanTimeRef.current = dayjs(
-        findVassList?.scan_total_time,
+        nowVassDetail.scan_total_time,
       ).subtract(11, "second");
     }
 
@@ -283,7 +298,7 @@ export default function VassDetail() {
 
                           const reversedIndex = vassList.length - originalIndex;
 
-                          if (barcode === findVassList?.barcode)
+                          if (barcode === nowVassDetail.barcode)
                             return (
                               <p className="sameBarcode" key={index}>
                                 `${reversedIndex}. ${barcode}`
