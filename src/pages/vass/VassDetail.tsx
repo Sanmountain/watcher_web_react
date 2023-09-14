@@ -19,15 +19,17 @@ import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 
 export default function VassDetail() {
-  // NOTE pagination
-  const videosPerPage = 4;
-  const [currentPage] = useState(1);
-  const videoStartIndex = (currentPage - 1) * videosPerPage;
-  const videoEndIndex = videoStartIndex + videosPerPage;
-  const [page, setPage] = useState(0);
-
   const [videoList, setVideoList] = useRecoilState(videoListState);
   const [cameraInfo, setCameraInfo] = useState<ICameraInfoData[]>([]);
+
+  // NOTE pagination
+  const videosPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(0);
+  const videoStartIndex = currentPage * videosPerPage;
+  const videoEndIndex = videoStartIndex + videosPerPage;
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   // NOTE 재생순서변경 모달
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -284,6 +286,13 @@ export default function VassDetail() {
     vassDetailInvoiceMutate();
   };
 
+  // NOTE cameraInfo와 videoList에서 cam_id가 일치하는 것만 필터링
+  const allFilteredVideos = cameraInfo
+    .map((camera) => {
+      return videoList.filter((video) => video.cam_id === camera.cam_id);
+    })
+    .flat();
+
   return (
     <>
       <S.ShoppingMallContainer>
@@ -342,67 +351,65 @@ export default function VassDetail() {
           </S.SettingContainer>
         </S.VideoControllerContainer>
         <S.VideoContainer>
-          {cameraInfo
+          {allFilteredVideos
             .slice(videoStartIndex, videoEndIndex)
-            .map((camera, cam_id) => {
-              const videoWithSameCamId = videoList.filter(
-                (video) => video.cam_id === camera.cam_id,
-              );
+            .map((video, index) => (
+              <S.Video key={video.cam_id}>
+                <ReactPlayer
+                  url={video.stream_url}
+                  ref={(ref) => (playerRef.current[index] = ref)}
+                  width="95%"
+                  height="95%"
+                  controls={true}
+                  muted={true}
+                  playing={isPlaying}
+                  onProgress={({ playedSeconds }) => {
+                    setPlayTime(playedSeconds);
+                  }}
+                />
+                <S.CameraInfo>{video.cam_name}</S.CameraInfo>
+                {videoStartIndex === 0 && index === 0 && (
+                  <S.InvoiceNumber>
+                    {displayedBarcodes.length < 1 ? (
+                      <p>No Barcode</p>
+                    ) : (
+                      displayedBarcodes.map((barcode, index) => {
+                        const originalIndex = vassList.findIndex(
+                          (video) => video.barcode === barcode,
+                        );
 
-              return videoWithSameCamId.map((video) => (
-                <S.Video key={camera.cam_id}>
-                  <ReactPlayer
-                    key={video.cam_id}
-                    url={video.stream_url}
-                    ref={(ref) => (playerRef.current[cam_id] = ref)}
-                    width="95%"
-                    height="95%"
-                    controls={true}
-                    muted={true}
-                    playing={isPlaying}
-                    onProgress={({ playedSeconds }) => {
-                      setPlayTime(playedSeconds);
-                    }}
-                  />
-                  <S.CameraInfo>{camera.cam_name}</S.CameraInfo>
-                  {videoStartIndex === 0 && cam_id === 1 && (
-                    <S.InvoiceNumber>
-                      {displayedBarcodes.length < 1 ? (
-                        <p>No Barcode</p>
-                      ) : (
-                        displayedBarcodes.map((barcode, index) => {
-                          const originalIndex = vassList.findIndex(
-                            (video) => video.barcode === barcode,
+                        const reversedIndex = vassList.length - originalIndex;
+
+                        if (barcode === nowVassDetail.barcode)
+                          return (
+                            <p className="sameBarcode" key={index}>
+                              {barcode
+                                ? `${reversedIndex}. ${barcode}`
+                                : barcode}
+                            </p>
                           );
-
-                          const reversedIndex = vassList.length - originalIndex;
-
-                          if (barcode === nowVassDetail.barcode)
-                            return (
-                              <p className="sameBarcode" key={index}>
-                                {barcode
-                                  ? `${reversedIndex}. ${barcode}`
-                                  : barcode}
-                              </p>
-                            );
-                          else
-                            return (
-                              <p key={index}>
-                                {barcode
-                                  ? `${reversedIndex}. ${barcode}`
-                                  : barcode}
-                              </p>
-                            );
-                        })
-                      )}
-                    </S.InvoiceNumber>
-                  )}
-                </S.Video>
-              ));
-            })}
+                        else
+                          return (
+                            <p key={index}>
+                              {barcode
+                                ? `${reversedIndex}. ${barcode}`
+                                : barcode}
+                            </p>
+                          );
+                      })
+                    )}
+                  </S.InvoiceNumber>
+                )}
+              </S.Video>
+            ))}
         </S.VideoContainer>
         <S.PaginationContainer>
-          <Pagination page={page} setPage={setPage} total={10} limit={5} />
+          <Pagination
+            page={currentPage}
+            setPage={paginate}
+            total={videoList.length}
+            limit={videosPerPage}
+          />
         </S.PaginationContainer>
       </S.Container>
       {isModalOpen && (

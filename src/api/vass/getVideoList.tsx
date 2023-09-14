@@ -8,25 +8,18 @@ import {
   IVideoListData,
   IVideoListResponse,
 } from "../../types/videoList.types";
-import { vassListState } from "../../stores/vass/vassListState";
-import { useParams } from "react-router";
+import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 
 export const getVideoList = (
   setVideoList: SetterOrUpdater<IVideoListData[]>,
 ) => {
   const login = useRecoilValue(loginState);
-  const vassList = useRecoilValue(vassListState);
+  const nowVassDetail = useRecoilValue(nowVassDetailState);
 
-  const params = useParams();
-
-  // NOTE 해당 detail vasslist 가져와서 startTime, endTime 가공
-  const findVassList = vassList.find(
-    (item) => item.barcode === params.invoiceNumber,
-  );
-  const startTime = dayjs(findVassList?.scan_total_time)
+  const startTime = dayjs(nowVassDetail?.scan_total_time)
     .subtract(5, "seconds")
     .format("YYYYMMDDHHmmss");
-  const endTime = dayjs(findVassList?.scan_total_time)
+  const endTime = dayjs(nowVassDetail?.scan_total_time)
     .add(30, "minutes")
     .format("YYYYMMDDHHmmss");
 
