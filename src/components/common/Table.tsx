@@ -13,8 +13,8 @@ export default function Table({
 }: ITableProps) {
   const navigate = useNavigate();
 
-  const onClickMoveToDetail = () => {
-    navigate("/vass/:invoiceNumber");
+  const onClickMoveToDetail = (invoiceNumber: string) => {
+    navigate(`/vass/${invoiceNumber}`);
   };
 
   return (
@@ -39,7 +39,7 @@ export default function Table({
                     <S.CommonButtonContainer>
                       <CommonButton
                         contents="조회"
-                        onClickFn={onClickMoveToDetail}
+                        onClickFn={() => onClickMoveToDetail(item.barcode)}
                       />
                     </S.CommonButtonContainer>
                   ) : (
