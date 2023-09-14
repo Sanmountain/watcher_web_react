@@ -23,7 +23,9 @@ export default function Login() {
 
   // NOTE 아이디 기억하기 계정인 경우 login state에서 id set해주기
   useEffect(() => {
-    if (login.isUserIdStored) setId(login.userId);
+    if (login.isUserIdStored && login.userId) {
+      setId(login.userId);
+    }
   }, [login.isUserIdStored, login.userId]);
 
   // NOTE 로그인 정보가 저장되어 있는 경우 메인 페이지로 이동
@@ -55,7 +57,11 @@ export default function Login() {
   };
 
   const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
-    setLogin({ ...login, isUserIdStored: e.target.checked });
+    if (e.target.checked) {
+      setLogin({ ...login, isUserIdStored: e.target.checked, userId: id });
+    } else {
+      setLogin({ ...login, isUserIdStored: e.target.checked });
+    }
   };
 
   const onClickLogin = () => {
