@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { SetterOrUpdater, useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
 import { videoInstance } from "../instance";
@@ -8,12 +8,11 @@ import {
   IVideoListData,
   IVideoListResponse,
 } from "../../types/videoList.types";
-import { Dispatch, SetStateAction } from "react";
 import { vassListState } from "../../stores/vass/vassListState";
 import { useParams } from "react-router";
 
 export const getVideoList = (
-  setVideoList: Dispatch<SetStateAction<IVideoListData[]>>,
+  setVideoList: SetterOrUpdater<IVideoListData[]>,
 ) => {
   const login = useRecoilValue(loginState);
   const vassList = useRecoilValue(vassListState);
@@ -44,8 +43,6 @@ export const getVideoList = (
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          console.log("data", data);
-
           setVideoList(data.cam_list);
         } else if (data.result === "11") {
           Swal.fire({
