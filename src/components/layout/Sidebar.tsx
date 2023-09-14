@@ -9,7 +9,7 @@ export default function Sidebar() {
   const menuList = [
     { label: "대시보드", path: "/" },
     { label: "송장조회", path: "/work" },
-    { label: "VASS", path: "/vass" },
+    { label: "화물추적", path: "/vass" },
   ];
 
   const [currentMenu, setCurrentMenu] = useState("");
