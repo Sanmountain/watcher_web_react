@@ -5,6 +5,10 @@ const blue = {
   400: "rgba(70, 109, 160, 0.5)",
 };
 
+const green = {
+  100: "#556B2F",
+};
+
 const black = {
   100: "rgba(128, 128, 128, 0.3)",
   200: "#8a8a8a",
@@ -20,5 +24,6 @@ const black = {
 
 export const colors = {
   blue,
+  green,
   black,
 };

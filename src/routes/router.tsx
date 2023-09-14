@@ -5,6 +5,7 @@ import Work from "../pages/Work";
 import Vass from "../pages/vass/Vass";
 import VassDetail from "../pages/vass/VassDetail";
 import Layout from "../components/layout";
+import LoginRoute from "./LoginRouter";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -12,27 +13,33 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout>
-        <Dashboard />
-      </Layout>
+      <LoginRoute>
+        <Layout>
+          <Dashboard />
+        </Layout>
+      </LoginRoute>
     ),
   },
 
   {
     path: "/work",
     element: (
-      <Layout>
-        <Work />
-      </Layout>
+      <LoginRoute>
+        <Layout>
+          <Work />
+        </Layout>
+      </LoginRoute>
     ),
   },
 
   {
     path: "/vass",
     element: (
-      <Layout>
-        <Outlet />
-      </Layout>
+      <LoginRoute>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </LoginRoute>
     ),
     children: [
       { path: "/vass", element: <Vass /> },

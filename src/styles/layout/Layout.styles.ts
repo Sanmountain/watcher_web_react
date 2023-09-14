@@ -11,8 +11,9 @@ export const Container = styled.div`
 export const ChildrenHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 250px);
+  width: calc(100% - 260px);
   min-height: 100vh;
+  margin-left: 250px;
 `;
 
 export const ChildrenContainer = styled.div`

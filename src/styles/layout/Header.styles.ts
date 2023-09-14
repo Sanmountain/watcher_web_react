@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import { font } from "../typography";
+import { colors } from "../palette";
 
 export const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
   height: 70px;
+  top: 0;
+  position: sticky;
+  background-color: ${colors.black[1000]};
+  z-index: 2;
 `;
 
 export const ProfileButtonContainer = styled.div`
