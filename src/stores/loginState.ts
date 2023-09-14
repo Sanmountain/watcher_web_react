@@ -13,6 +13,8 @@ export const loginState = atom<ILoginState>({
     branchName: "",
     branchCode: "",
     localIP: "",
+    saId: "",
+    accountId: "",
   },
   effects_UNSTABLE: [persistAtom],
 });

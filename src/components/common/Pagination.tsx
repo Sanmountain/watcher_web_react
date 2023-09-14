@@ -17,11 +17,6 @@ function Pagination({ total, limit, page, setPage }: IPaginationProps) {
     setCurrentPageGroup(Math.floor(page / pagesPerGroup));
   }, [page, pagesPerGroup]);
 
-  const onClickFirstButton = () => {
-    setPage(0);
-    setCurrentPageGroup(0);
-  };
-
   const onClickPrevButton = () => {
     if (
       page + 1 === currentPageGroup * pagesPerGroup + 1 &&
@@ -50,11 +45,6 @@ function Pagination({ total, limit, page, setPage }: IPaginationProps) {
     }
   };
 
-  const onClickLastButton = () => {
-    setPage(numPages - 1);
-    setCurrentPageGroup(numPageGroups - 1);
-  };
-
   const onClickPageButton = (index: number) => {
     const actualPageIndex = currentPageGroup * pagesPerGroup + index;
     setPage(actualPageIndex);
@@ -62,9 +52,6 @@ function Pagination({ total, limit, page, setPage }: IPaginationProps) {
 
   return (
     <S.Container>
-      <S.PaginationButton onClick={onClickFirstButton} disabled={page === 0}>
-        <S.FirstIcon />
-      </S.PaginationButton>
       <S.PaginationButton onClick={onClickPrevButton} disabled={page === 0}>
         <S.PrevIcon />
       </S.PaginationButton>
@@ -75,17 +62,13 @@ function Pagination({ total, limit, page, setPage }: IPaginationProps) {
           (currentPageGroup + 1) * pagesPerGroup,
         )
         .map((_, index) => {
-          const actualPageNumber = index + currentPageGroup * pagesPerGroup + 1;
-
           return (
             <S.PaginationButton
-              key={actualPageNumber}
-              onClick={() =>
-                onClickPageButton(index + currentPageGroup * pagesPerGroup)
-              }
-              aria-current={page + 1 === actualPageNumber ? "page" : undefined}
+              key={index}
+              onClick={() => onClickPageButton(index)}
+              aria-current={page + 1 === index + 1 ? "page" : undefined}
             >
-              {actualPageNumber}
+              {index + 1}
             </S.PaginationButton>
           );
         })}
@@ -94,12 +77,6 @@ function Pagination({ total, limit, page, setPage }: IPaginationProps) {
         disabled={page === numPages - 1}
       >
         <S.NextIcon />
-      </S.PaginationButton>
-      <S.PaginationButton
-        onClick={onClickLastButton}
-        disabled={page === numPages - 1}
-      >
-        <S.LastIcon />
       </S.PaginationButton>
     </S.Container>
   );

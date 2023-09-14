@@ -3,7 +3,6 @@ import VassIcon from "../../assets/images/sidebar/icon_vass.png";
 import shoppingMallIcon from "../../assets/images/sidebar/icon_shoppingMall.png";
 import S4Image from "../../assets/images/sidebar/img_S4.png";
 import { useLocation, useNavigate, useParams } from "react-router";
-import CommonButton from "../common/CommonButton";
 import { useEffect, useState } from "react";
 
 export default function Sidebar() {
@@ -54,30 +53,7 @@ export default function Sidebar() {
       </S.MenuContainer>
 
       {params.invoiceNumber ? (
-        <S.ShoppingMallContainer>
-          <S.InvoiceButtonContainer>
-            <CommonButton
-              contents="송장번호 조회"
-              onClickFn={() => console.log("ddd")}
-            />
-          </S.InvoiceButtonContainer>
-          <S.InvoiceInput placeholder="송장번호를 입력해주세요" />
-
-          <S.InvoiceInfoContainer>
-            <p>현재 송장번호</p>
-            <S.InvoiceInfo>36336157723</S.InvoiceInfo>
-          </S.InvoiceInfoContainer>
-
-          <S.InvoiceInfoContainer>
-            <p>이전 송장번호</p>
-            <S.InvoiceInfo className="prev">36336157723</S.InvoiceInfo>
-          </S.InvoiceInfoContainer>
-
-          <S.TradeSubInfoContainer>
-            <p>담당직원 : 홍길동</p>
-            <p>배송출발</p>
-          </S.TradeSubInfoContainer>
-        </S.ShoppingMallContainer>
+        <S.MarginContainer></S.MarginContainer>
       ) : (
         <S.ShoppingMallContainer>
           <S.ShoppingMallLogoContainer>

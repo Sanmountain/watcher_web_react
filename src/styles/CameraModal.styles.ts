@@ -68,13 +68,23 @@ export const TableTitle = styled.div`
   }
 `;
 
+export const TableBodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  gap: 5px;
+`;
+
 export const TableContentsList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   width: 100%;
-  gap: 10px;
 `;
 
 export const TableContentsContainer = styled.div`
@@ -89,6 +99,20 @@ export const TableContentsContainer = styled.div`
 `;
 
 export const TableContents = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  font-size: ${font.fontSize[200]};
+
+  &:first-child {
+    border-right: 1px solid ${colors.black[400]};
+  }
+`;
+
+export const EditTableContents = styled.input`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -5,6 +5,8 @@ export interface ILoginState {
   branchName: string;
   branchCode: string;
   localIP: string;
+  saId: string;
+  accountId: string;
 }
 
 export interface ILoginData {

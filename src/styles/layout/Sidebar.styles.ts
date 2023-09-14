@@ -132,59 +132,6 @@ export const ProductImageContainer = styled.div`
   overflow: hidden;
 `;
 
-export const InvoiceButtonContainer = styled.div`
-  width: 90%;
-  height: 40px;
-  margin-bottom: -15px;
-`;
-
-export const InvoiceInput = styled.input`
-  width: 90%;
-  height: 30px;
-  border: 1px solid ${colors.black[300]};
-  border-radius: 10px;
-  text-align: center;
-`;
-
-export const InvoiceInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 90%;
-  height: 60px;
-  gap: 5px;
-  font-size: ${font.fontSize[200]};
-  font-weight: 700;
-`;
-
-export const InvoiceInfo = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 30px;
-  border: 1px solid ${colors.black[300]};
-  border-radius: 10px;
-  font-size: ${font.fontSize[300]};
-  font-weight: normal;
-
-  &.prev {
-    color: ${colors.black[300]};
-  }
-`;
-
-export const TradeSubInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 90%;
-  height: 70px;
-  color: red;
-  font-size: ${font.fontSize[200]};
-  font-weight: 700;
-  gap: 15px;
+export const MarginContainer = styled.div`
+  height: 300px;
 `;
