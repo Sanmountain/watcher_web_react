@@ -16,6 +16,7 @@ import axios from "axios";
 import { videoListState } from "../../stores/vass/videoListState";
 import CommonButton from "../../components/common/CommonButton";
 import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
+import { IEditing } from "../../types/CameraModal.types";
 
 export default function VassDetail() {
   // NOTE pagination
@@ -27,8 +28,13 @@ export default function VassDetail() {
 
   const [videoList, setVideoList] = useRecoilState(videoListState);
   const [cameraInfo, setCameraInfo] = useState<ICameraInfoData[]>([]);
+  // NOTE 재생순서변경 모달
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [changePlaySequence, setChangePlaySequence] = useState<
+    ICameraInfoData[]
+  >([]);
+  const [editing, setEditing] = useState<IEditing[]>([]);
 
   // NOTE player control
   const vassList = useRecoilValue(vassListState);
@@ -59,7 +65,10 @@ export default function VassDetail() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { mutate: videoListMutate } = getVideoList(setVideoList);
-  const { mutate: cameraInfoMutate } = getCameraInfo(setCameraInfo);
+  const { mutate: cameraInfoMutate } = getCameraInfo(
+    setCameraInfo,
+    setChangePlaySequence,
+  );
   const { mutate: vassDetailInvoiceMutate } = getVassDetailInvoice(
     searchInvoice,
     setRefetchList,
@@ -396,7 +405,16 @@ export default function VassDetail() {
           <Pagination page={page} setPage={setPage} total={10} limit={5} />
         </S.PaginationContainer>
       </S.Container>
-      {isModalOpen && <CameraModal setIsModalOpen={setIsModalOpen} />}
+      {isModalOpen && (
+        <CameraModal
+          setIsModalOpen={setIsModalOpen}
+          changePlaySequence={changePlaySequence}
+          setChangePlaySequence={setChangePlaySequence}
+          editing={editing}
+          setEditing={setEditing}
+          setCameraInfo={setCameraInfo}
+        />
+      )}
     </>
   );
 }

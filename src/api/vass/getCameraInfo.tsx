@@ -10,6 +10,7 @@ import {
 
 export const getCameraInfo = (
   setCameraInfo: Dispatch<SetStateAction<ICameraInfoData[]>>,
+  setChangePlaySequence: Dispatch<SetStateAction<ICameraInfoData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
 
@@ -32,6 +33,7 @@ export const getCameraInfo = (
             (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
           );
           setCameraInfo(sortedData);
+          setChangePlaySequence(data.data);
         }
       },
       onError: (error) => {
