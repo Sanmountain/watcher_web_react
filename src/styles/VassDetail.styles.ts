@@ -17,7 +17,7 @@ export const VideoControllerContainer = styled.div`
 
   width: 100%;
   gap: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 export const Controller = styled.button`
@@ -110,10 +110,11 @@ export const SettingMenu = styled.div`
 export const VideoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 375px);
   align-items: center;
   justify-items: center;
-  width: 100%;
+  width: 99.5%;
+  height: 750px;
 `;
 
 export const Video = styled.div`
@@ -127,14 +128,14 @@ export const Video = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   width: 100%;
 `;
 
 export const CameraInfo = styled.div`
   position: absolute;
-  top: 7px;
-  left: 71%;
+  top: 12px;
+  left: 67%;
 
   display: flex;
   align-items: center;
