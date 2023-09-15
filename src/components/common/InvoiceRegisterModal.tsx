@@ -1,31 +1,50 @@
-import { useRecoilValue } from "recoil";
 import * as S from "../../styles/InvoiceRegisterModal.styles";
 import { IInvoiceRegisterModalProps } from "../../types/InvoiceRegisterModal.types";
 import CommonButton from "./CommonButton";
-import { workFilterState } from "../../stores/work/workFilterState";
-import dayjs from "dayjs";
-import { loginState } from "../../stores/loginState";
-import { ChangeEvent, useState } from "react";
-import { IRegisteredData } from "../../types/registerInvoice.types";
-import { registerInvoice } from "../../api/work/registerInvoice";
+import { ChangeEvent, useEffect, useState } from "react";
 
+import { registerInvoice } from "../../api/work/registerInvoice";
+import {
+  IRegisterModalStatusData,
+  IRegisteredData,
+} from "../../types/registerInvoice.types";
+import { getRegisterModalStatus } from "../../api/work/getRegisterModalStatus";
+import { useRecoilValue } from "recoil";
+import { workFilterState } from "../../stores/work/workFilterState";
 export default function InvoiceRegisterModal({
   setIsDisplayRegisterModal,
 }: IInvoiceRegisterModalProps) {
-  const filterOption = useRecoilValue(workFilterState);
-  const login = useRecoilValue(loginState);
+  const [registerInfo, setRegisterInfo] = useState<IRegisterModalStatusData>({
+    bran_cd: "",
+    car_num: "",
+    emp_cd: "",
+    last_scan_time: "",
+    pob: "",
+    scandate: "",
+    tg_bran_cd: "",
+    tm_dv: "",
+  });
   const [registeredData, setRegisteredData] = useState<IRegisteredData>({
-    tm_dv: filterOption.receivingShipment === "receive" ? "21" : "20",
-    scandate: filterOption.date,
-    bran_cd: login.userId,
+    tm_dv: "",
+    scandate: "",
+    bran_cd: "",
     car_num: "",
     emp_cd: "",
     tg_bran_cd: "",
     pob: "",
     barcode: "",
   });
+  const filterOption = useRecoilValue(workFilterState);
 
+  const { mutate: registerModalStatus } = getRegisterModalStatus(
+    setRegisterInfo,
+    setRegisteredData,
+  );
   const { mutate: registerInvoiceMutate } = registerInvoice();
+
+  useEffect(() => {
+    registerModalStatus();
+  }, [filterOption]);
 
   const onClickCloseButton = () => {
     setIsDisplayRegisterModal(false);
@@ -121,60 +140,73 @@ export default function InvoiceRegisterModal({
         <S.LeftRightContainer>
           <S.TitleInputContainer>
             <S.Title>업무분류</S.Title>
-            <S.Info>{registeredData.tm_dv}</S.Info>
+            <S.Info>{registerInfo.tm_dv}</S.Info>
           </S.TitleInputContainer>
           <S.TitleInputContainer>
             <S.Title>날짜</S.Title>
-            <S.Info>
-              {dayjs(registeredData.scandate).format("YYYY-MM-DD")}
-            </S.Info>
+            <S.Info>{registerInfo.scandate}</S.Info>
           </S.TitleInputContainer>
           <S.TitleInputContainer>
             <S.Title>사업장</S.Title>
-            <S.Info>{registeredData.bran_cd}</S.Info>
+            <S.Info>{registerInfo.bran_cd}</S.Info>
           </S.TitleInputContainer>
         </S.LeftRightContainer>
         <S.LeftRightContainer>
           <S.TitleInputContainer>
             <S.Title>사원</S.Title>
-            {registeredData?.emp_cd ? (
-              <S.InfoSelectBox
-                name="emp_cd"
-                onChange={handleRegisteredData}
-              ></S.InfoSelectBox>
+            {registerInfo?.emp_cd ? (
+              <S.InfoSelectBox name="emp_cd" onChange={handleRegisteredData}>
+                {registerInfo.emp_cd.split(",").map((el, index) => (
+                  <option key={index} value={el}>
+                    {el}
+                  </option>
+                ))}
+              </S.InfoSelectBox>
             ) : (
               <S.InfoInput name="emp_cd" onChange={handleRegisteredData} />
             )}
           </S.TitleInputContainer>
           <S.TitleInputContainer>
             <S.Title>영업소</S.Title>
-            {registeredData?.tg_bran_cd ? (
+            {registerInfo?.tg_bran_cd ? (
               <S.InfoSelectBox
                 name="tg_bran_cd"
                 onChange={handleRegisteredData}
-              ></S.InfoSelectBox>
+              >
+                {registerInfo.tg_bran_cd.split(",").map((el, index) => (
+                  <option key={index} value={el}>
+                    {el}
+                  </option>
+                ))}
+              </S.InfoSelectBox>
             ) : (
               <S.InfoInput name="tg_bran_cd" onChange={handleRegisteredData} />
             )}
           </S.TitleInputContainer>
           <S.TitleInputContainer>
             <S.Title>상대</S.Title>
-            {registeredData?.pob ? (
-              <S.InfoSelectBox
-                name="pob"
-                onChange={handleRegisteredData}
-              ></S.InfoSelectBox>
+            {registerInfo?.pob ? (
+              <S.InfoSelectBox name="pob" onChange={handleRegisteredData}>
+                {registerInfo.pob.split(",").map((el, index) => (
+                  <option key={index} value={el}>
+                    {el}
+                  </option>
+                ))}
+              </S.InfoSelectBox>
             ) : (
               <S.InfoInput name="pob" onChange={handleRegisteredData} />
             )}
           </S.TitleInputContainer>
           <S.TitleInputContainer>
             <S.Title>차량번호</S.Title>
-            {registeredData?.car_num ? (
-              <S.InfoSelectBox
-                name="car_num"
-                onChange={handleRegisteredData}
-              ></S.InfoSelectBox>
+            {registerInfo?.car_num ? (
+              <S.InfoSelectBox name="car_num" onChange={handleRegisteredData}>
+                {registerInfo.car_num.split(",").map((el, index) => (
+                  <option key={index} value={el}>
+                    {el}
+                  </option>
+                ))}
+              </S.InfoSelectBox>
             ) : (
               <S.InfoInput name="car_num" onChange={handleRegisteredData} />
             )}
