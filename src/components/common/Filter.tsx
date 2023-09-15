@@ -8,6 +8,8 @@ import { useRecoilValue } from "recoil";
 import { workListState } from "../../stores/work/workListState";
 import { vassListState } from "../../stores/vass/vassListState";
 import InvoiceRegisterModal from "./InvoiceRegisterModal";
+import { sendInvoice } from "../../api/work/sendInvoice";
+import Loading from "./Loading";
 
 export default function Filter({
   filterOption,
@@ -25,6 +27,9 @@ export default function Filter({
   const WORK_PAGE = getWorkPage(location);
   const VASS_PAGE = getVassPage(location);
 
+  const { mutate: sendInvoiceMutate, isLoading: isSendInvoiceLoading } =
+    sendInvoice();
+
   const handleFilter = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -41,8 +46,14 @@ export default function Filter({
     invoiceMutate();
   };
 
+  // NOTE 송장등록
   const onClickRegisterInvoice = () => {
     setIsDisplayRegisterModal(true);
+  };
+
+  // NOTE i롯데 전송
+  const onClickSendInvoice = () => {
+    sendInvoiceMutate();
   };
 
   return (
@@ -97,7 +108,7 @@ export default function Filter({
             <S.SubmitButtonContainer>
               <CommonButton
                 contents="i롯데 전송"
-                onClickFn={() => console.log("ddd")}
+                onClickFn={onClickSendInvoice}
               />
             </S.SubmitButtonContainer>
           </S.FilterContainer>
@@ -108,6 +119,12 @@ export default function Filter({
         <InvoiceRegisterModal
           setIsDisplayRegisterModal={setIsDisplayRegisterModal}
         />
+      )}
+
+      {isSendInvoiceLoading && (
+        <S.LoadingContainer>
+          <Loading />
+        </S.LoadingContainer>
       )}
     </>
   );

@@ -48,3 +48,11 @@ export const SubmitButtonContainer = styled.div`
   width: 110px;
   height: 30px;
 `;
+
+export const LoadingContainer = styled.div`
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 1500px;
+  height: 900px;
+`;
