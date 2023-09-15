@@ -100,4 +100,12 @@ export const Chart = styled.div`
   width: 100%;
   height: 75%;
   margin-top: 50px;
+  position: relative;
+`;
+
+export const LoadingContainer = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  width: 100%;
 `;
