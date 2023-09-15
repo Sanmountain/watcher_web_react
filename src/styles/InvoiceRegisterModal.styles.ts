@@ -87,7 +87,7 @@ export const Info = styled.div`
 `;
 
 export const InfoInput = styled.input`
-  width: 60%;
+  width: 58%;
   height: 35px;
   background-color: ${colors.black[1000]};
   border: 1px solid ${colors.black[400]};

@@ -30,3 +30,20 @@ export interface IFinalRegisteredData extends IRegisteredData {
   dev_ver: string;
   dev_serial: string;
 }
+
+export interface IRegisterModalStatusData {
+  bran_cd: string;
+  car_num: string;
+  emp_cd: string;
+  last_scan_time: string;
+  pob: string;
+  scandate: string;
+  tg_bran_cd: string;
+  tm_dv: string;
+}
+
+export interface IRegisterModalStatusResponse {
+  message: string;
+  result: string;
+  data: IRegisterModalStatusData[];
+}
