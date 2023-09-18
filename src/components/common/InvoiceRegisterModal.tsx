@@ -54,7 +54,16 @@ export default function InvoiceRegisterModal({
   const handleRegisteredData = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name, value, tagName } = e.target;
+
+    if (name === "car_num" && tagName === "SELECT") {
+      // NOTE 차량번호는 selectBox와 input 두 개로 컨트롤 가능
+      setRegisteredData((prevState) => ({
+        ...prevState,
+        car_num: value,
+      }));
+      return;
+    }
 
     setRegisteredData({ ...registeredData, [name]: value });
   };
@@ -137,81 +146,83 @@ export default function InvoiceRegisterModal({
       </S.TopContainer>
 
       <S.InfoContainer>
-        <S.LeftRightContainer>
-          <S.TitleInputContainer>
-            <S.Title>업무분류</S.Title>
-            <S.Info>{registerInfo.tm_dv}</S.Info>
-          </S.TitleInputContainer>
-          <S.TitleInputContainer>
-            <S.Title>날짜</S.Title>
-            <S.Info>{registerInfo.scandate}</S.Info>
-          </S.TitleInputContainer>
-          <S.TitleInputContainer>
-            <S.Title>사업장</S.Title>
-            <S.Info>{registerInfo.bran_cd}</S.Info>
-          </S.TitleInputContainer>
-        </S.LeftRightContainer>
-        <S.LeftRightContainer>
-          <S.TitleInputContainer>
-            <S.Title>사원</S.Title>
-            {registerInfo?.emp_cd ? (
-              <S.InfoSelectBox name="emp_cd" onChange={handleRegisteredData}>
-                {registerInfo.emp_cd.split(",").map((el, index) => (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </S.InfoSelectBox>
-            ) : (
-              <S.InfoInput name="emp_cd" onChange={handleRegisteredData} />
-            )}
-          </S.TitleInputContainer>
-          <S.TitleInputContainer>
-            <S.Title>영업소</S.Title>
-            {registerInfo?.tg_bran_cd ? (
-              <S.InfoSelectBox
-                name="tg_bran_cd"
-                onChange={handleRegisteredData}
-              >
-                {registerInfo.tg_bran_cd.split(",").map((el, index) => (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </S.InfoSelectBox>
-            ) : (
-              <S.InfoInput name="tg_bran_cd" onChange={handleRegisteredData} />
-            )}
-          </S.TitleInputContainer>
-          <S.TitleInputContainer>
-            <S.Title>상대</S.Title>
-            {registerInfo?.pob ? (
-              <S.InfoSelectBox name="pob" onChange={handleRegisteredData}>
-                {registerInfo.pob.split(",").map((el, index) => (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </S.InfoSelectBox>
-            ) : (
-              <S.InfoInput name="pob" onChange={handleRegisteredData} />
-            )}
-          </S.TitleInputContainer>
-          <S.TitleInputContainer>
-            <S.Title>차량번호</S.Title>
-            {registerInfo?.car_num ? (
-              <S.InfoSelectBox name="car_num" onChange={handleRegisteredData}>
-                {registerInfo.car_num.split(",").map((el, index) => (
-                  <option key={index} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </S.InfoSelectBox>
-            ) : (
-              <S.InfoInput name="car_num" onChange={handleRegisteredData} />
-            )}
-          </S.TitleInputContainer>
-        </S.LeftRightContainer>
+        <S.InfoSelectContainer>
+          <S.LeftRightContainer>
+            <S.TitleInputContainer>
+              <S.Title>업무분류</S.Title>
+              <S.Info>{registerInfo?.tm_dv}</S.Info>
+            </S.TitleInputContainer>
+            <S.TitleInputContainer>
+              <S.Title>날짜</S.Title>
+              <S.Info>{registerInfo?.scandate}</S.Info>
+            </S.TitleInputContainer>
+            <S.TitleInputContainer>
+              <S.Title>사업장</S.Title>
+              <S.Info>{registerInfo?.bran_cd}</S.Info>
+            </S.TitleInputContainer>
+          </S.LeftRightContainer>
+          <S.LeftRightContainer>
+            <S.TitleInputContainer>
+              <S.Title>사원</S.Title>
+              {registerInfo?.emp_cd ? (
+                <S.InfoSelectBox name="emp_cd" onChange={handleRegisteredData}>
+                  {registerInfo.emp_cd.split(",").map((el, index) => (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  ))}
+                </S.InfoSelectBox>
+              ) : (
+                <S.InfoInput name="emp_cd" onChange={handleRegisteredData} />
+              )}
+            </S.TitleInputContainer>
+            <S.TitleInputContainer>
+              <S.Title>영업소</S.Title>
+              {registerInfo?.tg_bran_cd ? (
+                <S.InfoSelectBox
+                  name="tg_bran_cd"
+                  onChange={handleRegisteredData}
+                >
+                  {registerInfo.tg_bran_cd.split(",").map((el, index) => (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  ))}
+                </S.InfoSelectBox>
+              ) : (
+                <S.InfoInput
+                  name="tg_bran_cd"
+                  onChange={handleRegisteredData}
+                />
+              )}
+            </S.TitleInputContainer>
+            <S.TitleInputContainer>
+              <S.Title>상대</S.Title>
+              {registerInfo?.pob ? (
+                <S.InfoSelectBox name="pob" onChange={handleRegisteredData}>
+                  {registerInfo.pob.split(",").map((el, index) => (
+                    <option key={index} value={el}>
+                      {el}
+                    </option>
+                  ))}
+                </S.InfoSelectBox>
+              ) : (
+                <S.InfoInput name="pob" onChange={handleRegisteredData} />
+              )}
+            </S.TitleInputContainer>
+          </S.LeftRightContainer>
+        </S.InfoSelectContainer>
+        <S.CarContainer>
+          <S.CarTitle>차량번호</S.CarTitle>
+          <S.CarSelectBax name="car_num" onChange={handleRegisteredData}>
+            {registerInfo?.car_num.split(",").map((el, index) => (
+              <option key={index} value={el}>
+                {el}
+              </option>
+            ))}
+          </S.CarSelectBax>
+          <S.CarInfoInput name="car_num" onChange={handleRegisteredData} />
+        </S.CarContainer>
       </S.InfoContainer>
 
       <S.TextAreaInfoContainer>

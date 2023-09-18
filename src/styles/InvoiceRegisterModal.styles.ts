@@ -41,8 +41,15 @@ export const CloseIcon = styled(AiOutlineClose)`
 
 export const InfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 
+  width: 100%;
+`;
+
+export const InfoSelectContainer = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
 `;
 
@@ -52,7 +59,6 @@ export const LeftRightContainer = styled.div`
   align-items: center;
 
   width: 50%;
-  height: 220px;
   gap: 15px;
 `;
 
@@ -99,6 +105,43 @@ export const InfoInput = styled.input`
 export const InfoSelectBox = styled.select`
   width: 60%;
   height: 35px;
+  background-color: ${colors.black[1000]};
+  border: 1px solid ${colors.black[400]};
+  border-radius: 10px;
+  font-size: ${font.fontSize[200]};
+  text-align: center;
+`;
+
+export const CarTitle = styled.div`
+  font-size: ${font.fontSize[200]};
+  font-weight: 700;
+`;
+
+export const CarContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: calc(100% - 30px);
+  height: 35px;
+  padding: 0 15px;
+  gap: 15px;
+  margin: 15px 0;
+`;
+
+export const CarInfoInput = styled.input`
+  width: 23%;
+  height: 32px;
+  background-color: ${colors.black[1000]};
+  border: 1px solid ${colors.black[400]};
+  border-radius: 10px;
+  font-size: ${font.fontSize[200]};
+  text-align: center;
+`;
+
+export const CarSelectBax = styled.select`
+  width: 25%;
+  height: 100%;
   background-color: ${colors.black[1000]};
   border: 1px solid ${colors.black[400]};
   border-radius: 10px;
