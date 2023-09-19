@@ -4,6 +4,8 @@ import shoppingMallIcon from "../../assets/images/sidebar/icon_shoppingMall.png"
 import S4Image from "../../assets/images/sidebar/img_S4.png";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../stores/loginState";
 
 export default function Sidebar() {
   const menuList = [
@@ -13,6 +15,7 @@ export default function Sidebar() {
   ];
 
   const [currentMenu, setCurrentMenu] = useState("");
+  const login = useRecoilValue(loginState);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,8 +33,16 @@ export default function Sidebar() {
   };
 
   const onClickMenu = (path: string) => {
-    navigate(path);
-    setCurrentMenu(path);
+    if (login.camUsable === "2") {
+      navigate(path);
+      setCurrentMenu(path);
+    } else {
+      if (path === "/vass") {
+        navigate("/noCam");
+      } else {
+        navigate(path);
+      }
+    }
   };
 
   return (

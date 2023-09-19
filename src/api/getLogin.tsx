@@ -52,6 +52,7 @@ export const getLogin = (userId: string, userPassword: string) => {
             branchCode: data.data[0].bran_cd,
             saId: data.data[0].sa_id,
             accountId: data.data[0].account_id,
+            camUsable: data.data[0].cam_usable,
           });
 
           navigate("/");
