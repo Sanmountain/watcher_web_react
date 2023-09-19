@@ -6,6 +6,7 @@ import Vass from "../pages/vass/Vass";
 import VassDetail from "../pages/vass/VassDetail";
 import Layout from "../components/layout";
 import LoginRoute from "./LoginRouter";
+import NoCam from "../pages/NoCam";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -45,5 +46,16 @@ export const router = createBrowserRouter([
       { path: "/vass", element: <Vass /> },
       { path: "/vass/:invoiceNumber", element: <VassDetail /> },
     ],
+  },
+
+  {
+    path: "/noCam",
+    element: (
+      <LoginRoute>
+        <Layout>
+          <NoCam />
+        </Layout>
+      </LoginRoute>
+    ),
   },
 ]);

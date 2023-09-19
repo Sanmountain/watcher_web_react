@@ -15,6 +15,7 @@ export const loginState = atom<ILoginState>({
     localIP: "",
     saId: "",
     accountId: "",
+    camUsable: "",
   },
   effects_UNSTABLE: [persistAtom],
 });

@@ -7,6 +7,7 @@ export interface ILoginState {
   localIP: string;
   saId: string;
   accountId: string;
+  camUsable: string;
 }
 
 export interface ILoginData {
