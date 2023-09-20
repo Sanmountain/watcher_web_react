@@ -37,7 +37,6 @@ export const Container = styled.div<{ $isWorkPage: boolean }>`
 export const FilterContainer = styled.div`
   display: flex;
   align-items: center;
-
   width: 100%;
   height: 100%;
   gap: 20px;
