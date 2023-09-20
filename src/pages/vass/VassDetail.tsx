@@ -44,7 +44,7 @@ export default function VassDetail() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [playTime, setPlayTime] = useState(0);
   const [pausedTime, setPausedTime] = useState<any>(
-    dayjs(nowVassDetail.scan_total_time),
+    nowVassDetail.scan_total_time,
   );
 
   // NOTE 바코드 화면 상에 띄우기
