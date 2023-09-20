@@ -31,14 +31,14 @@ export default function Dashboard() {
       <S.TopContainer>
         <S.Date>{dayjs().format("YYYY-MM-DD")}</S.Date>
         <S.CountContainer>
-          배송 입고
+          발송
           <S.Count>
             <p>스캔 수량</p>
             <p>{numberWithCommas(shipmentCount?.length) || 0} 건</p>
           </S.Count>
         </S.CountContainer>
         <S.CountContainer>
-          집하 출고
+          도착
           <S.Count>
             <p>스캔 수량</p>
             <p>{numberWithCommas(receiveCount?.length) || 0} 건</p>

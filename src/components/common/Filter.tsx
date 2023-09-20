@@ -70,8 +70,8 @@ export default function Filter({
             defaultValue={filterOption.receivingShipment}
             onChange={handleFilter}
           >
-            <option value="shipment">배송입고</option>
-            <option value="receive">집하출고</option>
+            <option value="shipment">발송</option>
+            <option value="receive">도착</option>
           </S.SelectBox>
           <S.Input
             type="date"
