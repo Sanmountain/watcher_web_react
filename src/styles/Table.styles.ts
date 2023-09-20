@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { colors } from "./palette";
 import { font } from "./typography";
+import { breakPoints } from "./breakPoints";
+import { mediaQuery } from "./mediaQuery";
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +10,8 @@ export const Container = styled.div`
   align-items: center;
 
   width: 98%;
-  padding: 0 1%;
+  min-width: calc(${breakPoints.medium}px - 230px);
+  margin-left: 1%;
 `;
 
 export const TitleContainer = styled.div<{ columns: number }>`
@@ -38,15 +41,22 @@ export const Title = styled.div`
   font-weight: 600;
 `;
 
-export const ContentsList = styled.div`
+export const ContentsList = styled.div<{ $isWorkPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  width: 100%;
-  height: 730px;
+  margin-left: 1%;
+  width: 101%;
+  height: calc(100vh - 200px);
   gap: 10px;
   overflow-y: scroll;
+
+  ${(props) =>
+    props.$isWorkPage &&
+    mediaQuery.largeMedium(`
+      height: calc(100vh - 240px);
+  `)}
 `;
 
 export const ContentsContainer = styled.div<{ columns: number }>`

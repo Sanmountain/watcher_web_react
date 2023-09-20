@@ -8,7 +8,7 @@ export const Container = styled.div<{ $isWorkPage: boolean }>`
   display: grid;
   grid-template-columns: 1.3fr 1.1fr 1fr;
   align-items: center;
-  width: 97.8%;
+  width: 98%;
   min-width: calc(${breakPoints.medium}px - 230px);
   height: 65px;
   margin-left: 1%;
