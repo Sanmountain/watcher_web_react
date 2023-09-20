@@ -12,12 +12,14 @@ export const Container = styled.div<{ $isWorkPage: boolean }>`
   min-width: calc(${breakPoints.medium}px - 230px);
   height: 65px;
   margin-left: 1%;
+  padding-left: 1%;
   position: sticky;
   top: 70px;
   background-color: ${colors.black[1000]};
 
   ${mediaQuery.large(`
     grid-template-columns: 1.5fr 1.1fr 0.8fr;
+    padding-left: 0;
   `)}
 
   ${(props) =>
@@ -43,10 +45,12 @@ export const FilterContainer = styled.div`
 
   ${mediaQuery.large(`
     gap: 10px;
+    font-size: ${font.fontSize[300]};
   `)}
 
   ${mediaQuery.largeMedium(`
-      justify-content: center; 
+      padding-left: 2%;
+      width: 98%;
   `)}
 
   &.noDisplay {
@@ -73,20 +77,19 @@ export const FilterTitle = styled.div`
   ${mediaQuery.large(`
     font-size: ${font.fontSize[200]};
   `)}
-
-  margin-left: 2%;
 `;
 
 export const SelectBox = styled.select`
-  min-width: 120px;
+  min-width: 110px;
   height: 30px;
   border-radius: 5px;
 `;
 
 export const Input = styled.input`
-  min-width: 140px;
+  min-width: 110px;
   height: 27px;
   border-radius: 5px;
+  border-width: 1px;
 `;
 
 export const ButtonContainer = styled.div`
