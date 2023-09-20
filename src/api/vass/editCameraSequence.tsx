@@ -27,7 +27,7 @@ export const editCameraSequence = (
     () =>
       instance.post("/watcher/cam", {
         api: "camModify",
-        data: [modifyData],
+        data: modifyData,
       }),
     {
       onSuccess: (data) => {
