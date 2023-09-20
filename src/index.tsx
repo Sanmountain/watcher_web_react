@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { router } from "./routes/router";
 import { GlobalStyles } from "./styles/globalStyles";
+import "./styles/Swal.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
