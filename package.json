@@ -32,6 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "rmdir /s /q build",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
