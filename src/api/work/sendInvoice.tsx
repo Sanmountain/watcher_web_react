@@ -32,11 +32,20 @@ export const sendInvoice = () => {
     {
       onSuccess: (data) => {
         if (data.result === "00") {
-          Swal.fire({
-            icon: "success",
-            title: "전송완료",
-            confirmButtonText: "확인",
-          });
+          // NOTE fail난 경우 fail 사유 띄우기
+          if (data.data[0].fail_list.length > 0) {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: `${data.data[0].fail_list[0]}`,
+              confirmButtonText: "확인",
+            });
+          } else
+            Swal.fire({
+              icon: "success",
+              title: "전송완료",
+              confirmButtonText: "확인",
+            });
         } else {
           Swal.fire({
             icon: "warning",

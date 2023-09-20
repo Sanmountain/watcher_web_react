@@ -10,7 +10,7 @@ export interface IRegisterInvoiceData {
 export interface IRegisterInvoiceResponse {
   result: string;
   message: string;
-  data: IRegisterInvoiceData;
+  data: IRegisterInvoiceData[];
 }
 
 export interface IRegisteredData {
