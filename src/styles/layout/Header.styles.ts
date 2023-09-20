@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { font } from "../typography";
 import { colors } from "../palette";
+import { mediaQuery } from "../mediaQuery";
+import { breakPoints } from "../breakPoints";
 
 export const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+  min-width: calc(${breakPoints.medium}px - 210px);
   height: 70px;
   top: 0;
   position: sticky;
@@ -32,6 +35,10 @@ export const Profile = styled.div`
   font-weight: 600;
   width: fit-content;
   height: 100%;
+
+  ${mediaQuery.largeMedium(`
+    font-size: ${font.fontSize[300]}
+  `)}
 `;
 
 export const LogOutButton = styled.button`
