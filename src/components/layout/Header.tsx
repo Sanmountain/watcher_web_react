@@ -18,16 +18,13 @@ export default function Header() {
   const onClickLogout = () => {
     if (login.isUserIdStored) {
       setLogin({ ...login, isLogin: false, branchName: "", localIP: "" });
-      resetVassList();
-      resetNowVassDetail();
-      resetPrevVassDetail();
-    } else if (!login.isUserIdStored) {
+    } else {
       resetLogin();
-      resetVassList();
-      resetNowVassDetail();
-      resetPrevVassDetail();
     }
 
+    resetVassList();
+    resetNowVassDetail();
+    resetPrevVassDetail();
     navigate("/login");
   };
 
