@@ -58,7 +58,7 @@ export default function Filter({
 
   return (
     <>
-      <S.Container>
+      <S.Container $isWorkPage={WORK_PAGE}>
         <S.FilterContainer>
           <S.FilterTitle>조회량</S.FilterTitle>{" "}
           {(WORK_PAGE && workList.length) ||
@@ -98,20 +98,23 @@ export default function Filter({
         </S.FilterContainer>
 
         {!VASS_PAGE && (
-          <S.FilterContainer>
-            <S.SubmitButtonContainer>
-              <CommonButton
-                contents="송장 등록"
-                onClickFn={onClickRegisterInvoice}
-              />
-            </S.SubmitButtonContainer>
-            <S.SubmitButtonContainer>
-              <CommonButton
-                contents="i롯데 전송"
-                onClickFn={onClickSendInvoice}
-              />
-            </S.SubmitButtonContainer>
-          </S.FilterContainer>
+          <>
+            <S.FilterContainer className="noDisplay" />
+            <S.FilterContainer className="register">
+              <S.SubmitButtonContainer>
+                <CommonButton
+                  contents="송장 등록"
+                  onClickFn={onClickRegisterInvoice}
+                />
+              </S.SubmitButtonContainer>
+              <S.SubmitButtonContainer>
+                <CommonButton
+                  contents="i롯데 전송"
+                  onClickFn={onClickSendInvoice}
+                />
+              </S.SubmitButtonContainer>
+            </S.FilterContainer>
+          </>
         )}
       </S.Container>
 
