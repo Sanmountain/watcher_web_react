@@ -1,13 +1,18 @@
 import styled from "styled-components";
 import { colors } from "./palette";
 import { font } from "./typography";
+import { breakPoints } from "./breakPoints";
+import { mediaQuery } from "./mediaQuery";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
-  width: 99.4%;
+  width: 99%;
+  min-width: calc(${breakPoints.medium}px - 230px);
+  margin-left: 0.5%;
 `;
 
 export const TopContainer = styled.div`
@@ -37,6 +42,10 @@ export const CountContainer = styled.div`
   font-size: ${font.fontSize[100]};
   font-weight: 600;
   gap: 30px;
+
+  ${mediaQuery.largeMedium(`
+    gap: 20px;
+  `)}
 `;
 
 export const Count = styled.div`
@@ -52,6 +61,11 @@ export const Count = styled.div`
   width: 45%;
   height: 35px;
   padding: 5px 10px;
+
+  ${mediaQuery.largeMedium(`
+    width: 40%;
+    min-width: 200px;
+  `)}
 `;
 
 export const BottomContainer = styled.div`
@@ -60,7 +74,7 @@ export const BottomContainer = styled.div`
   align-items: center;
   justify-items: center;
 
-  width: 95%;
+  width: 100%;
 `;
 
 export const ChartContainer = styled.div`

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import * as S from "../../styles/Table.styles";
 import { ITableProps } from "../../types/Table.types";
 import CommonButton from "./CommonButton";
@@ -7,6 +7,7 @@ import { useSetRecoilState } from "recoil";
 import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { IWorkListData } from "../../types/Work.types";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
+import { getWorkPage } from "../../utils/getLocationPath";
 
 export default function Table({
   title,
@@ -19,6 +20,9 @@ export default function Table({
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const WORK_PAGE = getWorkPage(location);
 
   const onClickMoveToDetail = (item: IWorkListData, index: number) => {
     navigate(`/vass/${item.barcode}`);
@@ -34,7 +38,7 @@ export default function Table({
         ))}
       </S.TitleContainer>
 
-      <S.ContentsList>
+      <S.ContentsList $isWorkPage={WORK_PAGE}>
         {dateLoading || invoiceLoading ? (
           <Loading />
         ) : (
