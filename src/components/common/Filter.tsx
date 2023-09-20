@@ -60,7 +60,7 @@ export default function Filter({
     <>
       <S.Container $isWorkPage={WORK_PAGE}>
         <S.FilterContainer>
-          <S.FilterTitle>조회량</S.FilterTitle>{" "}
+          <S.FilterTitle>스캔수량</S.FilterTitle>{" "}
           {(WORK_PAGE && workList.length) ||
             (VASS_PAGE && vassList.length) ||
             0}{" "}
@@ -70,8 +70,8 @@ export default function Filter({
             defaultValue={filterOption.receivingShipment}
             onChange={handleFilter}
           >
-            <option value="shipment">발송</option>
-            <option value="receive">도착</option>
+            <option value="shipment">배송입고</option>
+            <option value="receive">집하출고</option>
           </S.SelectBox>
           <S.Input
             type="date"

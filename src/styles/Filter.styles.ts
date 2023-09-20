@@ -73,16 +73,20 @@ export const FilterTitle = styled.div`
   ${mediaQuery.large(`
     font-size: ${font.fontSize[200]};
   `)}
+
+  margin-left: 2%;
 `;
 
 export const SelectBox = styled.select`
   min-width: 120px;
   height: 30px;
+  border-radius: 5px;
 `;
 
 export const Input = styled.input`
-  min-width: 120px;
+  min-width: 140px;
   height: 27px;
+  border-radius: 5px;
 `;
 
 export const ButtonContainer = styled.div`

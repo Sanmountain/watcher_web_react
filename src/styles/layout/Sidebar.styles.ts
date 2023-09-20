@@ -21,7 +21,7 @@ export const Container = styled.div`
 `;
 
 export const LogoContainer = styled.div`
-  width: 100%;
+  width: 90%;
   height: 70px;
   margin-top: 30px;
   cursor: pointer;
