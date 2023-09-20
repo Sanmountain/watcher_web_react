@@ -9,7 +9,7 @@ import { ICameraInfoData } from "../../types/cameraInfo.types";
 import { getCameraInfo } from "../../api/vass/getCameraInfo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { vassListState } from "../../stores/vass/vassListState";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import axios from "axios";
@@ -43,7 +43,7 @@ export default function VassDetail() {
   const nowVassDetail = useRecoilValue(nowVassDetailState);
   const [isPlaying, setIsPlaying] = useState(true);
   const [playTime, setPlayTime] = useState(0);
-  const [pausedTime, setPausedTime] = useState<Dayjs | null>(
+  const [pausedTime, setPausedTime] = useState<any>(
     dayjs(nowVassDetail.scan_total_time),
   );
 
@@ -51,9 +51,7 @@ export default function VassDetail() {
   const [currentBarcodes, setCurrentBarcodes] = useState<string[]>([]);
   const [displayedBarcodes, setDisplayedBarcodes] = useState<string[]>([]);
   //  isPlaying true -> false -> true가 됐을 때 시작시간 기록용
-  const currentScanTimeRef = useRef<Dayjs | null | undefined>(
-    dayjs(nowVassDetail.scan_total_time),
-  );
+  const currentScanTimeRef = useRef<any>(dayjs(nowVassDetail.scan_total_time));
 
   // NOTE 담당직원, 배송상태
   const [searchInvoice, setSearchInvoice] = useState<number | null>(null);
@@ -64,7 +62,7 @@ export default function VassDetail() {
 
   const outSide = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<(ReactPlayer | null)[]>([]);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<any>(null);
 
   const { mutate: videoListMutate } = getVideoList(setVideoList);
   const { mutate: cameraInfoMutate } = getCameraInfo(
@@ -215,14 +213,15 @@ export default function VassDetail() {
 
     // isPlaying이 false일 때, pausedTime을 업데이트하고 함수 종료
     if (!isPlaying) {
-      const videoStartDate = dayjs(nowVassDetail.scan_total_time); // 비디오 시작 시간
-      const videoStartDateMinusFive = videoStartDate.subtract(5, "second");
-      const playTimeInMilliseconds: number = playTime * 1000; // 현재 재생시간
+      const videoStartDate = new Date(nowVassDetail.scan_total_time); // 비디오 시작 시간
+      videoStartDate.setSeconds(videoStartDate.getSeconds() - 7); // 비디오 시작 시간에서 씽크를 맞추기 위한 시간 빼주기
+
+      const playTimeInMilliseconds = playTime * 1000; // 현재 재생시간
 
       const pausedTimeInMilliseconds =
-        videoStartDateMinusFive.valueOf() + playTimeInMilliseconds;
+        videoStartDate.getTime() + playTimeInMilliseconds;
 
-      const updatedPausedTime = dayjs(pausedTimeInMilliseconds);
+      const updatedPausedTime = new Date(pausedTimeInMilliseconds);
 
       setPausedTime(updatedPausedTime);
       currentScanTimeRef.current = updatedPausedTime;
@@ -231,24 +230,27 @@ export default function VassDetail() {
     }
 
     // isPlaying이 true일 때, isPlaying이 false였다가 true로 된 경우와 첫 자동재생인 true인 경우 분기처리
-    if (pausedTime !== dayjs(nowVassDetail.scan_total_time)) {
-      currentScanTimeRef.current = dayjs(pausedTime);
+    if (pausedTime !== nowVassDetail.scan_total_time) {
+      currentScanTimeRef.current = new Date(pausedTime);
     } else {
-      currentScanTimeRef.current = dayjs(
-        nowVassDetail.scan_total_time,
-      ).subtract(11, "second");
+      currentScanTimeRef.current = new Date(nowVassDetail.scan_total_time);
+      currentScanTimeRef.current.setSeconds(
+        currentScanTimeRef.current.getSeconds() - 8,
+      );
     }
 
     const scanVideo = () => {
       // 1초마다 증가시키기
-      currentScanTimeRef.current = currentScanTimeRef.current?.add(1, "second");
+      currentScanTimeRef.current.setSeconds(
+        currentScanTimeRef.current.getSeconds() + 1,
+      );
 
       const matchedVideos = vassList.filter((video) => {
         const checkTimeInSeconds = Math.floor(
-          dayjs(video.scan_total_time).valueOf() / 1000,
+          new Date(video.scan_total_time).getTime() / 1000,
         );
-        const currentScanTimeInSeconds: number = Math.floor(
-          (currentScanTimeRef.current?.valueOf() as number) / 1000,
+        const currentScanTimeInSeconds = Math.floor(
+          currentScanTimeRef.current.getTime() / 1000,
         );
 
         return checkTimeInSeconds === currentScanTimeInSeconds;
@@ -263,7 +265,7 @@ export default function VassDetail() {
     scanVideo();
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current); // 컴포넌트 정리 시 타이머 제거
+      clearTimeout(timerRef.current); // 컴포넌트 정리 시 타이머 제거
     };
   };
 

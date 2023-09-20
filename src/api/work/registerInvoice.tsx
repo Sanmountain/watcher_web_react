@@ -15,7 +15,7 @@ export const registerInvoice = () => {
     "registerInvoice",
     (data) =>
       instance.post("/loin", {
-        api: "dvInAll",
+        api: "dvAll",
         data,
       }),
     {

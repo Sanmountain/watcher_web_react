@@ -43,7 +43,7 @@ export default function Table({
               {title.map((el) => (
                 <S.Contents key={el.label}>
                   {!el.value ? (
-                    index + 1
+                    contents.length - index
                   ) : el.value === "button" ? (
                     <S.CommonButtonContainer>
                       <CommonButton

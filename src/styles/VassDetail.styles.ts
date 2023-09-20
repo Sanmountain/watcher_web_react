@@ -234,12 +234,12 @@ export const PaginationContainer = styled.div`
 export const CameraInfo = styled.div`
   position: absolute;
   top: 12px;
-  left: 67%;
+  left: 64%;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: 170px;
   padding: 10px;
   background-color: ${colors.blue[400]};
   border-radius: 10px;
@@ -250,12 +250,14 @@ export const CameraInfo = styled.div`
 export const InvoiceNumber = styled.div`
   position: absolute;
   top: 47px;
-  left: 67%;
+  left: 64%;
 
   display: flex;
   flex-direction: column-reverse;
+  justify-content: center;
   align-items: center;
-  width: 150px;
+
+  width: 170px;
   gap: 5px;
   padding: 10px;
   background-color: ${colors.blue[400]};
@@ -267,6 +269,7 @@ export const InvoiceNumber = styled.div`
   > p {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 97%;
     height: 20px;
     padding: 0 10px;
