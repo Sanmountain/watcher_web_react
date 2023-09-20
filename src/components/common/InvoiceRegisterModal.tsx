@@ -11,6 +11,7 @@ import {
 import { getRegisterModalStatus } from "../../api/work/getRegisterModalStatus";
 import { useRecoilValue } from "recoil";
 import { workFilterState } from "../../stores/work/workFilterState";
+import { loginState } from "../../stores/loginState";
 export default function InvoiceRegisterModal({
   setIsDisplayRegisterModal,
 }: IInvoiceRegisterModalProps) {
@@ -35,6 +36,7 @@ export default function InvoiceRegisterModal({
     barcode: "",
   });
   const filterOption = useRecoilValue(workFilterState);
+  const login = useRecoilValue(loginState);
 
   const { mutate: registerModalStatus } = getRegisterModalStatus(
     setRegisterInfo,
@@ -150,22 +152,28 @@ export default function InvoiceRegisterModal({
           <S.LeftRightContainer>
             <S.TitleInputContainer>
               <S.Title>업무분류</S.Title>
-              <S.Info>{registerInfo?.tm_dv}</S.Info>
+              <S.Info>
+                {filterOption?.receivingShipment === "receive" ? "21" : "20"}
+              </S.Info>
             </S.TitleInputContainer>
             <S.TitleInputContainer>
               <S.Title>날짜</S.Title>
-              <S.Info>{registerInfo?.scandate}</S.Info>
+              <S.Info>{filterOption?.date}</S.Info>
             </S.TitleInputContainer>
             <S.TitleInputContainer>
               <S.Title>사업장</S.Title>
-              <S.Info>{registerInfo?.bran_cd}</S.Info>
+              <S.Info>{login?.branchCode}</S.Info>
             </S.TitleInputContainer>
           </S.LeftRightContainer>
           <S.LeftRightContainer>
             <S.TitleInputContainer>
               <S.Title>사원</S.Title>
               {registerInfo?.emp_cd ? (
-                <S.InfoSelectBox name="emp_cd" onChange={handleRegisteredData}>
+                <S.InfoSelectBox
+                  name="emp_cd"
+                  value={registeredData.emp_cd}
+                  onChange={handleRegisteredData}
+                >
                   {registerInfo.emp_cd.split(",").map((el, index) => (
                     <option key={index} value={el}>
                       {el}
@@ -173,7 +181,11 @@ export default function InvoiceRegisterModal({
                   ))}
                 </S.InfoSelectBox>
               ) : (
-                <S.InfoInput name="emp_cd" onChange={handleRegisteredData} />
+                <S.InfoInput
+                  name="emp_cd"
+                  onChange={handleRegisteredData}
+                  value={registeredData.emp_cd}
+                />
               )}
             </S.TitleInputContainer>
             <S.TitleInputContainer>
@@ -181,6 +193,7 @@ export default function InvoiceRegisterModal({
               {registerInfo?.tg_bran_cd ? (
                 <S.InfoSelectBox
                   name="tg_bran_cd"
+                  value={registeredData.tg_bran_cd}
                   onChange={handleRegisteredData}
                 >
                   {registerInfo.tg_bran_cd.split(",").map((el, index) => (
@@ -192,6 +205,7 @@ export default function InvoiceRegisterModal({
               ) : (
                 <S.InfoInput
                   name="tg_bran_cd"
+                  value={registeredData.tg_bran_cd}
                   onChange={handleRegisteredData}
                 />
               )}
@@ -199,7 +213,11 @@ export default function InvoiceRegisterModal({
             <S.TitleInputContainer>
               <S.Title>상대</S.Title>
               {registerInfo?.pob ? (
-                <S.InfoSelectBox name="pob" onChange={handleRegisteredData}>
+                <S.InfoSelectBox
+                  name="pob"
+                  value={registeredData.pob}
+                  onChange={handleRegisteredData}
+                >
                   {registerInfo.pob.split(",").map((el, index) => (
                     <option key={index} value={el}>
                       {el}
@@ -207,21 +225,33 @@ export default function InvoiceRegisterModal({
                   ))}
                 </S.InfoSelectBox>
               ) : (
-                <S.InfoInput name="pob" onChange={handleRegisteredData} />
+                <S.InfoInput
+                  name="pob"
+                  value={registeredData.pob}
+                  onChange={handleRegisteredData}
+                />
               )}
             </S.TitleInputContainer>
           </S.LeftRightContainer>
         </S.InfoSelectContainer>
         <S.CarContainer>
           <S.CarTitle>차량번호</S.CarTitle>
-          <S.CarSelectBax name="car_num" onChange={handleRegisteredData}>
+          <S.CarSelectBax
+            name="car_num"
+            value={registeredData.car_num}
+            onChange={handleRegisteredData}
+          >
             {registerInfo?.car_num.split(",").map((el, index) => (
               <option key={index} value={el}>
                 {el}
               </option>
             ))}
           </S.CarSelectBax>
-          <S.CarInfoInput name="car_num" onChange={handleRegisteredData} />
+          <S.CarInfoInput
+            name="car_num"
+            value={registeredData.car_num}
+            onChange={handleRegisteredData}
+          />
         </S.CarContainer>
       </S.InfoContainer>
 

@@ -45,7 +45,18 @@ export const getRegisterModalStatus = (
             barcode: "",
           };
 
-          if (filterOption.receivingShipment === "receive") {
+          if (!data.data[0]) {
+            setData = {
+              tm_dv: filterOption.receivingShipment === "receive" ? "21" : "20",
+              scandate: filterOption.date,
+              bran_cd: login.branchCode,
+              car_num: "",
+              emp_cd: "",
+              tg_bran_cd: "",
+              pob: "",
+              barcode: "",
+            };
+          } else if (filterOption.receivingShipment === "receive") {
             const filteredData = data.data.filter(
               (item) => item.tm_dv === "21",
             )[0] || {
