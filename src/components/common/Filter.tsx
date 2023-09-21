@@ -10,6 +10,7 @@ import { vassListState } from "../../stores/vass/vassListState";
 import InvoiceRegisterModal from "./InvoiceRegisterModal";
 import { sendInvoice } from "../../api/work/sendInvoice";
 import Loading from "./Loading";
+import { numberWithCommas } from "../../utils/numberWithCommas";
 
 export default function Filter({
   filterOption,
@@ -61,8 +62,8 @@ export default function Filter({
       <S.Container $isWorkPage={WORK_PAGE}>
         <S.FilterContainer>
           <S.FilterTitle>스캔수량</S.FilterTitle>{" "}
-          {(WORK_PAGE && workList.length) ||
-            (VASS_PAGE && vassList.length) ||
+          {(WORK_PAGE && numberWithCommas(workList.length)) ||
+            (VASS_PAGE && numberWithCommas(vassList.length)) ||
             0}{" "}
           건{" "}
           <S.SelectBox
