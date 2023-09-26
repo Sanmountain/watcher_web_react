@@ -17,6 +17,8 @@ import { videoListState } from "../../stores/vass/videoListState";
 import CommonButton from "../../components/common/CommonButton";
 import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
+import { getImage } from "../../api/vass/getImage";
+import ImageModal from "../../components/common/ImageModal";
 
 export default function VassDetail() {
   const [videoList, setVideoList] = useRecoilState(videoListState);
@@ -60,6 +62,10 @@ export default function VassDetail() {
   const [refetchList, setRefetchList] = useState(0);
   const prevVassDetail = useRecoilValue(prevVassDetailState);
 
+  // NOTE 이미지
+  const [imageUrl, setImageUrl] = useState("");
+  const [isDisplayImageModal, setIsDisplayImageModal] = useState(false);
+
   const outSide = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<(ReactPlayer | null)[]>([]);
   const timerRef = useRef<any>(null);
@@ -73,6 +79,7 @@ export default function VassDetail() {
     searchInvoice,
     setRefetchList,
   );
+  const { mutate: imageMutate } = getImage(setImageUrl, setIsDisplayImageModal);
 
   // NOTE video list 담기
   useEffect(() => {
@@ -82,6 +89,11 @@ export default function VassDetail() {
   // NOTE camera info 담기
   useEffect(() => {
     cameraInfoMutate();
+  }, []);
+
+  // NOTE 이미지
+  useEffect(() => {
+    imageMutate();
   }, []);
 
   // NOTE 담당직원, 배송상태 담기
@@ -414,6 +426,14 @@ export default function VassDetail() {
           />
         </S.PaginationContainer>
       </S.Container>
+
+      {isDisplayImageModal && (
+        <ImageModal
+          imageUrl={imageUrl}
+          setIsDisplayImageModal={setIsDisplayImageModal}
+        />
+      )}
+
       {isModalOpen && (
         <CameraModal
           setIsModalOpen={setIsModalOpen}
