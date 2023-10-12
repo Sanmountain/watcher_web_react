@@ -9,6 +9,7 @@ export const loginState = atom<ILoginState>({
   default: {
     isLogin: false,
     isUserIdStored: false,
+    company: "",
     userId: "",
     branchName: "",
     branchCode: "",
