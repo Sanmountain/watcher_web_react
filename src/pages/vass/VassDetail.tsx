@@ -335,6 +335,7 @@ export default function VassDetail() {
             contents="송장번호 조회"
             onClickFn={onClickSearchInvoice}
             height="35px"
+            backgroundColor="#010163"
           />
         </S.InvoiceButtonContainer>
         <S.InvoiceInput
