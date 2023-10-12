@@ -102,14 +102,14 @@ export default function Filter({
             )}
             {login.company === "LOTTE" && (
               <>
-                <option value="shipment">발송</option>
                 <option value="receive">도착</option>
+                <option value="shipment">발송</option>
               </>
             )}
             {login.company === "HANJIN" && (
               <>
-                <option value="shipment">간선하차</option>
                 <option value="receive">간선상차</option>
+                <option value="shipment">간선하차</option>
               </>
             )}
           </S.SelectBox>

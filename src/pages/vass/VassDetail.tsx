@@ -19,8 +19,10 @@ import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 import { getImage } from "../../api/vass/getImage";
 import ImageModal from "../../components/common/ImageModal";
+import { loginState } from "../../stores/loginState";
 
 export default function VassDetail() {
+  const login = useRecoilValue(loginState);
   const [videoList, setVideoList] = useRecoilState(videoListState);
   const [cameraInfo, setCameraInfo] = useState<ICameraInfoData[]>([]);
 
@@ -98,37 +100,62 @@ export default function VassDetail() {
 
   // NOTE 담당직원, 배송상태 담기
   useEffect(() => {
+    let url = "";
+    if (login.company === "LOGEN")
+      url = `https://apis.tracker.delivery/carriers/kr.logen/tracks/${prevVassDetail.barcode}`;
+    else if (login.company === "LOTTE")
+      url = `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`;
+    else if (login.company === "HANJIN")
+      url = `https://apis.tracker.delivery/carriers/kr.hanjin/tracks/${prevVassDetail.barcode}`;
+
     axios
-      .get(
-        `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`,
-      )
+      .get(url)
       .then((res) => {
-        const vassDelivery = res.data;
+        // NOTE 로젠
+        if (login.company === "LOGEN") {
+          const progresses =
+            res.data.progresses[res.data.progresses.length - 1].description;
+          const progressesArray = progresses.split(", ");
+          setDeliveryManName(progressesArray);
+          setDeliveryState(res.data.state.text);
+        }
+        // NOTE 롯데
+        else if (login.company === "LOTTE") {
+          const vassDelivery = res.data;
 
-        const extractDeliveryManName = (description: string) => {
-          const keyword = "배송담당: ";
-          const startIndex = description.indexOf(keyword);
+          const extractDeliveryManName = (description: string) => {
+            const keyword = "배송담당: ";
+            const startIndex = description.indexOf(keyword);
 
-          if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
+            if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
 
-          const subStr = description
-            .substring(startIndex + keyword.length)
-            .trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
-          const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
+            const subStr = description
+              .substring(startIndex + keyword.length)
+              .trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
+            const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
 
-          if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
+            if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
 
-          return subStr.substring(0, endIndex);
-        };
+            return subStr.substring(0, endIndex);
+          };
 
-        setDeliveryManName(
-          extractDeliveryManName(
-            vassDelivery?.progresses[vassDelivery?.progresses.length - 1]
-              .description,
-          ),
-        );
+          setDeliveryManName(
+            extractDeliveryManName(
+              vassDelivery?.progresses[vassDelivery?.progresses.length - 1]
+                .description,
+            ),
+          );
 
-        setDeliveryState(vassDelivery?.state.text);
+          setDeliveryState(vassDelivery?.state.text);
+        }
+        // NOTE 한진
+        else if (login.company === "HANJIN") {
+          const progresses =
+            res.data.progresses[res.data.progresses.length - 1].description;
+          const progressesArray = progresses.split(", ");
+          setDeliveryManName(progressesArray);
+          setDeliveryState(res.data.state.text);
+        }
       })
       .catch((err) => console.log(err));
   }, [refetchList, nowVassDetail, prevVassDetail]);
