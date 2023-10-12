@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 export const TopContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1.3fr;
+  grid-template-columns: 1.5fr 1.3fr 1.3fr;
   align-items: center;
   justify-items: center;
 
@@ -57,7 +57,7 @@ export const Count = styled.div`
   color: ${colors.black[1000]};
   border-radius: 10px;
   min-width: 220px;
-  width: 45%;
+  width: 50%;
   height: 35px;
   padding: 5px 10px;
 
@@ -73,7 +73,7 @@ export const BottomContainer = styled.div`
   align-items: center;
   justify-items: center;
 
-  width: 100%;
+  width: 90%;
 `;
 
 export const ChartContainer = styled.div`
@@ -82,7 +82,7 @@ export const ChartContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 720px;
+  height: 700px;
   gap: 20px;
 `;
 
@@ -112,7 +112,7 @@ export const ChartCount = styled.div`
 export const Chart = styled.div`
   width: 100%;
   height: 75%;
-  margin-top: 50px;
+  margin-top: 40px;
   position: relative;
 `;
 
