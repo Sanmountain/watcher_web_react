@@ -120,7 +120,11 @@ export default function Filter({
             onChange={handleFilter}
           />
           <S.ButtonContainer>
-            <CommonButton contents="검색" onClickFn={onClickDateSearch} />
+            <CommonButton
+              contents="검색"
+              onClickFn={onClickDateSearch}
+              height="100%"
+            />
           </S.ButtonContainer>
         </S.FilterContainer>
 
@@ -133,7 +137,11 @@ export default function Filter({
             onChange={handleFilter}
           />
           <S.ButtonContainer>
-            <CommonButton contents="검색" onClickFn={onClickInvoiceSearch} />
+            <CommonButton
+              contents="검색"
+              onClickFn={onClickInvoiceSearch}
+              height="100%"
+            />
           </S.ButtonContainer>
         </S.FilterContainer>
 
