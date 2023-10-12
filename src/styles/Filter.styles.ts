@@ -12,7 +12,7 @@ export const Container = styled.div<{ $isWorkPage: boolean }>`
   min-width: calc(${breakPoints.medium}px - 230px);
   height: 65px;
   margin-left: 1%;
-  padding-left: 1%;
+  padding-left: 0.5%;
   position: sticky;
   top: 70px;
   background-color: ${colors.black[1000]};
