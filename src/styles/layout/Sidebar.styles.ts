@@ -2,16 +2,19 @@ import styled from "styled-components";
 import { colors } from "../palette";
 import { font } from "../typography";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isDetailPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
-  width: 14%;
+  min-width: 220px;
+  width: 13%;
   height: 88vh;
+  gap: 20px;
   background-color: ${colors.black[1000]};
-  box-shadow: 4px 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: ${(props) =>
+    props.$isDetailPage ? "0" : "4px 0 3px rgba(0, 0, 0, 0.1)"};
   border-radius: 20px;
   padding: 10px;
   margin-top: 5px;
@@ -37,7 +40,7 @@ export const MenuContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 250px;
+  height: 220px;
   gap: 20px;
 
   border-bottom: 1px solid black;
@@ -62,8 +65,8 @@ export const MenuButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  font-size: ${font.fontSize[200]};
-  font-weight: 600;
+  font-size: ${font.fontSize[100]};
+  font-weight: 550;
   background-color: white;
   border: none;
 
@@ -80,6 +83,11 @@ export const MenuButton = styled.button`
     background-color: ${colors.black[100]};
     transition: 0.5s;
   }
+
+  &.current {
+    width: 100%;
+    background-color: ${colors.black[100]};
+  }
 `;
 
 export const ShoppingMallContainer = styled.div`
@@ -88,7 +96,7 @@ export const ShoppingMallContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  gap: 30px;
+  gap: 20px;
 `;
 
 export const ShoppingMallLogoContainer = styled.div`

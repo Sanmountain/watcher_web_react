@@ -17,6 +17,6 @@ export const ChildrenHeaderContainer = styled.div`
 `;
 
 export const ChildrenContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 250px);
   min-height: calc(100vh - 70px);
 `;
