@@ -3,10 +3,15 @@ const blue = {
   200: "rgb(1, 1, 99)",
   300: "#1d74e6",
   400: "rgba(70, 109, 160, 0.5)",
+  500: "#010163",
 };
 
 const green = {
   100: "#556B2F",
+};
+
+const yellow = {
+  100: "#FFB437",
 };
 
 const black = {
@@ -20,10 +25,12 @@ const black = {
   800: "#f1f1f1",
   900: "#f8f9fa",
   1000: "#ffffff",
+  1100: "#DADADA",
 };
 
 export const colors = {
   blue,
   green,
   black,
+  yellow,
 };

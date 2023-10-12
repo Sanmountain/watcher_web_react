@@ -76,6 +76,7 @@ export default function Table({
                         <CommonButton
                           contents="조회"
                           onClickFn={() => onClickMoveToDetail(item, index)}
+                          backgroundColor="#010163"
                         />
                       </S.CommonButtonContainer>
                     ) : (
@@ -89,6 +90,7 @@ export default function Table({
                       <CommonButton
                         contents="조회"
                         onClickFn={() => onClickImage(item)}
+                        backgroundColor="#010163"
                       />
                     </S.CommonButtonContainer>
                   </S.Contents>
