@@ -1,6 +1,7 @@
 export interface ILoginState {
   isLogin: boolean;
   isUserIdStored: boolean;
+  company: string;
   userId: string;
   branchName: string;
   branchCode: string;

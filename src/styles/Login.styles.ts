@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { colors } from "./palette";
 import { font } from "./typography";
 import { BiShow, BiHide } from "react-icons/bi";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export const Container = styled.div`
   display: flex;
@@ -83,6 +84,70 @@ export const HiddenIcon = styled(BiHide)`
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+`;
+
+export const SelectBox = styled.div<{ $isSelectBoxOpen: boolean }>`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${colors.black[600]};
+  border: 1px solid ${colors.black[700]};
+  border-bottom: ${(props) => props.$isSelectBoxOpen && "none"};
+  border-radius: ${(props) =>
+    props.$isSelectBoxOpen ? "20px 20px 0 0" : "20px"};
+  width: 100%;
+  height: 48px;
+  padding: 0 10px;
+  font-size: ${font.fontSize[300]};
+  color: ${colors.black[200]};
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const ArrowDown = styled(IoIosArrowDown)`
+  width: 15px;
+  height: 15px;
+`;
+
+export const ArrowUp = styled(IoIosArrowUp)`
+  width: 15px;
+  height: 15px;
+`;
+
+export const OptionContainer = styled.div<{ $isSelectBoxOpen: boolean }>`
+  position: absolute;
+  top: 48px;
+  left: -1px;
+  display: flex;
+  flex-direction: column;
+  background-color: ${colors.black[600]};
+  border: 1px solid ${colors.black[700]};
+  border-top: ${(props) => props.$isSelectBoxOpen && "none"};
+  border-radius: 0 0 20px 20px;
+
+  padding: 10px 0;
+  width: 100%;
+  gap: 5px;
+`;
+
+export const Option = styled.div`
+  display: flex;
+  align-items: center;
+  width: calc(100% - 20px);
+  height: 30px;
+  padding: 3px 10px;
+  font-size: ${font.fontSize[300]};
+  color: ${colors.black[200]};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${colors.black[500]};
+    font-weight: 700;
+  }
 `;
 
 export const SaveContainer = styled.div`
