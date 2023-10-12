@@ -12,9 +12,9 @@ export const getAutoChange = (
   const login = useRecoilValue(loginState);
 
   if (login.company === "LOGEN") {
-    return useMutation<IAutoChangeResponse, unknown, void, unknown>(
+    return useMutation<IAutoChangeResponse, unknown, string, unknown>(
       "getAutoChange",
-      (auto) =>
+      (auto: string) =>
         LogenInstance.post("/autoChange", {
           bran_cd: login.branchCode,
           auto,
@@ -32,7 +32,7 @@ export const getAutoChange = (
     );
   }
 
-  return useMutation<IAutoChangeResponse, unknown, void, unknown>(
+  return useMutation<IAutoChangeResponse, unknown, string, unknown>(
     "getAutoChange",
     () => {
       throw new Error("Invalid company");
