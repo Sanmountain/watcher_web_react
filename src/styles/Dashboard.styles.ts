@@ -10,9 +10,8 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  width: 99%;
+  width: 100%;
   min-width: calc(${breakPoints.medium}px - 230px);
-  margin-left: 0.5%;
 `;
 
 export const TopContainer = styled.div`
@@ -22,14 +21,14 @@ export const TopContainer = styled.div`
   justify-items: center;
 
   width: 95%;
-  height: 70px;
+  height: 95px;
   border-bottom: 3px solid ${colors.black[300]};
   margin-bottom: 30px;
 `;
 
 export const Date = styled.div`
-  font-size: 2.6rem;
-  font-weight: 700;
+  font-size: 3.3rem;
+  font-weight: 900;
 `;
 
 export const CountContainer = styled.div`
