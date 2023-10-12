@@ -12,17 +12,15 @@ import { vassListState } from "../../stores/vass/vassListState";
 import dayjs from "dayjs";
 import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
-import axios from "axios";
 import { videoListState } from "../../stores/vass/videoListState";
 import CommonButton from "../../components/common/CommonButton";
 import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 import { getImage } from "../../api/vass/getImage";
 import ImageModal from "../../components/common/ImageModal";
-import { loginState } from "../../stores/loginState";
 
 export default function VassDetail() {
-  const login = useRecoilValue(loginState);
+  // const login = useRecoilValue(loginState);
   const [videoList, setVideoList] = useRecoilState(videoListState);
   const [cameraInfo, setCameraInfo] = useState<ICameraInfoData[]>([]);
 
@@ -59,8 +57,8 @@ export default function VassDetail() {
 
   // NOTE 담당직원, 배송상태
   const [searchInvoice, setSearchInvoice] = useState<number | null>(null);
-  const [deliveryManName, setDeliveryManName] = useState<string | null>("");
-  const [deliveryState, setDeliveryState] = useState("");
+  // const [deliveryManName, setDeliveryManName] = useState<string | null>("");
+  // const [deliveryState, setDeliveryState] = useState("");
   const [refetchList, setRefetchList] = useState(0);
   const prevVassDetail = useRecoilValue(prevVassDetailState);
 
@@ -99,66 +97,66 @@ export default function VassDetail() {
   }, []);
 
   // NOTE 담당직원, 배송상태 담기
-  useEffect(() => {
-    let url = "";
-    if (login.company === "LOGEN")
-      url = `https://apis.tracker.delivery/carriers/kr.logen/tracks/${prevVassDetail.barcode}`;
-    else if (login.company === "LOTTE")
-      url = `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`;
-    else if (login.company === "HANJIN")
-      url = `https://apis.tracker.delivery/carriers/kr.hanjin/tracks/${prevVassDetail.barcode}`;
+  // useEffect(() => {
+  //   let url = "";
+  //   if (login.company === "LOGEN")
+  //     url = `https://apis.tracker.delivery/carriers/kr.logen/tracks/${prevVassDetail.barcode}`;
+  //   else if (login.company === "LOTTE")
+  //     url = `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`;
+  //   else if (login.company === "HANJIN")
+  //     url = `https://apis.tracker.delivery/carriers/kr.hanjin/tracks/${prevVassDetail.barcode}`;
 
-    axios
-      .get(url)
-      .then((res) => {
-        // NOTE 로젠
-        if (login.company === "LOGEN") {
-          const progresses =
-            res.data.progresses[res.data.progresses.length - 1].description;
-          const progressesArray = progresses.split(", ");
-          setDeliveryManName(progressesArray);
-          setDeliveryState(res.data.state.text);
-        }
-        // NOTE 롯데
-        else if (login.company === "LOTTE") {
-          const vassDelivery = res.data;
+  //   axios
+  //     .get(url)
+  //     .then((res) => {
+  //       // NOTE 로젠
+  //       if (login.company === "LOGEN") {
+  //         const progresses =
+  //           res.data.progresses[res.data.progresses.length - 1].description;
+  //         const progressesArray = progresses.split(", ");
+  //         setDeliveryManName(progressesArray);
+  //         setDeliveryState(res.data.state.text);
+  //       }
+  //       // NOTE 롯데
+  //       else if (login.company === "LOTTE") {
+  //         const vassDelivery = res.data;
 
-          const extractDeliveryManName = (description: string) => {
-            const keyword = "배송담당: ";
-            const startIndex = description.indexOf(keyword);
+  //         const extractDeliveryManName = (description: string) => {
+  //           const keyword = "배송담당: ";
+  //           const startIndex = description.indexOf(keyword);
 
-            if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
+  //           if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
 
-            const subStr = description
-              .substring(startIndex + keyword.length)
-              .trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
-            const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
+  //           const subStr = description
+  //             .substring(startIndex + keyword.length)
+  //             .trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
+  //           const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
 
-            if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
+  //           if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
 
-            return subStr.substring(0, endIndex);
-          };
+  //           return subStr.substring(0, endIndex);
+  //         };
 
-          setDeliveryManName(
-            extractDeliveryManName(
-              vassDelivery?.progresses[vassDelivery?.progresses.length - 1]
-                .description,
-            ),
-          );
+  //         setDeliveryManName(
+  //           extractDeliveryManName(
+  //             vassDelivery?.progresses[vassDelivery?.progresses.length - 1]
+  //               .description,
+  //           ),
+  //         );
 
-          setDeliveryState(vassDelivery?.state.text);
-        }
-        // NOTE 한진
-        else if (login.company === "HANJIN") {
-          const progresses =
-            res.data.progresses[res.data.progresses.length - 1].description;
-          const progressesArray = progresses.split(", ");
-          setDeliveryManName(progressesArray);
-          setDeliveryState(res.data.state.text);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [refetchList, nowVassDetail, prevVassDetail]);
+  //         setDeliveryState(vassDelivery?.state.text);
+  //       }
+  //       // NOTE 한진
+  //       else if (login.company === "HANJIN") {
+  //         const progresses =
+  //           res.data.progresses[res.data.progresses.length - 1].description;
+  //         const progressesArray = progresses.split(", ");
+  //         setDeliveryManName(progressesArray);
+  //         setDeliveryState(res.data.state.text);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [refetchList, nowVassDetail, prevVassDetail]);
 
   // NOTE 화면상 바코드 띄우기
   useEffect(() => {
@@ -355,10 +353,10 @@ export default function VassDetail() {
           </S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
-        <S.TradeSubInfoContainer>
+        {/* <S.TradeSubInfoContainer>
           <p>담당직원 :{deliveryManName}</p>
           <p>{deliveryState}</p>
-        </S.TradeSubInfoContainer>
+        </S.TradeSubInfoContainer> */}
       </S.ShoppingMallContainer>
 
       <S.Container>
