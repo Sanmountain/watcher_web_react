@@ -18,9 +18,9 @@ export default function Layout({ children }: ILayoutProps) {
     <S.Container>{children}</S.Container>
   ) : (
     <S.Container>
-      <Sidebar />
+      <Header />
       <S.ChildrenHeaderContainer>
-        <Header />
+        <Sidebar />
         <S.ChildrenContainer>{children}</S.ChildrenContainer>
       </S.ChildrenHeaderContainer>
     </S.Container>

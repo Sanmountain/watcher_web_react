@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 
   width: 100%;
@@ -10,10 +11,9 @@ export const Container = styled.div`
 
 export const ChildrenHeaderContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: calc(100% - 260px);
+  flex-direction: row;
+  width: 100vw;
   min-height: 100vh;
-  margin-left: 250px;
 `;
 
 export const ChildrenContainer = styled.div`

@@ -26,10 +26,10 @@ const Button = styled.button<{ $isRound?: boolean }>`
 
   font-size: 16px;
   font-weight: 600;
-  background-color: ${colors.blue[200]};
+  background-color: ${colors.blue[300]};
   color: ${colors.black[1000]};
   padding: 5px 15px;
-  border: 1px solid ${colors.blue[200]};
+  border: 1px solid ${colors.blue[300]};
   border-radius: ${(props) => (props.$isRound ? "20px" : "10px")};
   width: 100%;
   height: 100%;
@@ -37,6 +37,6 @@ const Button = styled.button<{ $isRound?: boolean }>`
 
   &:hover {
     background-color: ${colors.black[1000]};
-    color: ${colors.blue[200]};
+    color: ${colors.blue[300]};
   }
 `;
