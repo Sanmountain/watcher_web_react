@@ -94,4 +94,16 @@ export const sendInvoice = () => {
       },
     );
   }
+
+  return useMutation<IRegisterInvoiceResponse, unknown, void, unknown>(
+    "sendInvoice",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

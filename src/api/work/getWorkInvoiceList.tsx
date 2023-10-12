@@ -134,4 +134,16 @@ export const getWorkInvoiceList = () => {
       },
     );
   }
+
+  return useMutation<IWorkListResponse, unknown, void, unknown>(
+    "getWorkInvoiceList",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

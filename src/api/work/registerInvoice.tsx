@@ -62,4 +62,21 @@ export const registerInvoice = () => {
       },
     );
   }
+
+  return useMutation<
+    IRegisterInvoiceResponse,
+    unknown,
+    IFinalRegisteredData[],
+    unknown
+  >(
+    "registerInvoice",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

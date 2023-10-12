@@ -198,4 +198,16 @@ export const getLogin = (userId: string, userPassword: string) => {
       },
     );
   }
+
+  return useMutation<ILoginResponse, unknown, void, unknown>(
+    "getLogin",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

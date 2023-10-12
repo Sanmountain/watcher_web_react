@@ -235,4 +235,16 @@ export const getRegisterModalStatus = (
       },
     );
   }
+
+  return useMutation<IRegisterModalStatusResponse, unknown, void, unknown>(
+    "getRegisterModalStatus",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

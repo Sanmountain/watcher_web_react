@@ -120,4 +120,16 @@ export const getAmount = (
       },
     );
   }
+
+  return useMutation<IWorkListResponse, unknown, void, unknown>(
+    "getAmount",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

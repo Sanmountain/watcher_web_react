@@ -110,4 +110,16 @@ export const editCameraSequence = (
       },
     );
   }
+
+  return useMutation<ICameraInfoResponse, unknown, void, unknown>(
+    "defaultCameraSequence",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

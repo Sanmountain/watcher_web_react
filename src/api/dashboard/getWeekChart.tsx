@@ -108,4 +108,16 @@ export const getWeekChart = (
       },
     );
   }
+
+  return useMutation<IWeekChartResponse, unknown, void, unknown>(
+    "getWeekChart",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

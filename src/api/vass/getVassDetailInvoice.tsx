@@ -170,4 +170,16 @@ export const getVassDetailInvoice = (
       },
     );
   }
+
+  return useMutation<IWorkListResponse, unknown, void, unknown>(
+    "getVassDetailInvoice",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

@@ -160,4 +160,16 @@ export const getWorkDateList = () => {
       },
     );
   }
+
+  return useMutation<IWorkListResponse, unknown, void, unknown>(
+    "getWorkDateList",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

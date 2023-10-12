@@ -100,4 +100,16 @@ export const getImage = (
       },
     );
   }
+
+  return useMutation<IImageResponse, unknown, void, unknown>(
+    "getImage",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

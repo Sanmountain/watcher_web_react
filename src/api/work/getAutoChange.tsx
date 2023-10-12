@@ -31,4 +31,16 @@ export const getAutoChange = (
       },
     );
   }
+
+  return useMutation<IAutoChangeResponse, unknown, void, unknown>(
+    "getAutoChange",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

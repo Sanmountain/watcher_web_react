@@ -31,4 +31,16 @@ export const getAutoCheck = (setIsOn: Dispatch<SetStateAction<boolean>>) => {
       },
     );
   }
+
+  return useMutation<IAutoCheckResponse, unknown, void, unknown>(
+    "getAutoCheck",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };

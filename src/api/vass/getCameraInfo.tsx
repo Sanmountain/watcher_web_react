@@ -104,4 +104,16 @@ export const getCameraInfo = (
       },
     );
   }
+
+  return useMutation<ICameraInfoResponse, unknown, void, unknown>(
+    "getCameraInfo",
+    () => {
+      throw new Error("Invalid company");
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
 };
