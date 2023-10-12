@@ -5,7 +5,7 @@ import { IFilterState } from "../../types/Filter.types";
 export const vassFilterState = atom<IFilterState>({
   key: "vassFilterState",
   default: {
-    receivingShipment: "shipment",
+    receivingShipment: "receive",
     date: dayjs().format("YYYY-MM-DD"),
     invoiceNumber: "",
   },
