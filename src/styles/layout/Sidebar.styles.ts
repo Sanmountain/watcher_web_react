@@ -2,28 +2,30 @@ import styled from "styled-components";
 import { colors } from "../palette";
 import { font } from "../typography";
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isDetailPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
-  width: 230px;
-  height: 97vh;
+  min-width: 220px;
+  width: 13%;
+  height: 88vh;
+  gap: 20px;
   background-color: ${colors.black[1000]};
-  box-shadow: 4px 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: ${(props) =>
+    props.$isDetailPage ? "0" : "4px 0 3px rgba(0, 0, 0, 0.1)"};
   border-radius: 20px;
   padding: 10px;
-  position: fixed;
-  top: 5px;
+  margin-top: 5px;
   left: 0;
-  z-index: 3;
+  z-index: 1;
 `;
 
 export const LogoContainer = styled.div`
-  width: 90%;
+  width: 70%;
   height: 70px;
-  margin-top: 30px;
+  margin-top: 40px;
   cursor: pointer;
 `;
 
@@ -38,8 +40,10 @@ export const MenuContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 300px;
-  gap: 40px;
+  height: 220px;
+  gap: 20px;
+
+  border-bottom: 1px solid black;
 `;
 
 export const MenuTitle = styled.div`
@@ -49,7 +53,7 @@ export const MenuTitle = styled.div`
 
   background-color: ${colors.black[100]};
   color: ${colors.black[1000]};
-  font-size: ${font.fontSize[100]};
+  font-size: ${font.fontSize[700]};
   font-weight: 700;
   width: 100%;
   height: 35px;
@@ -61,36 +65,28 @@ export const MenuButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: fit-content;
   font-size: ${font.fontSize[100]};
-  font-weight: 700;
-  background-color: transparent;
+  font-weight: 550;
+  background-color: white;
   border: none;
-  position: relative;
+
   cursor: pointer;
 
-  &.current {
-    &::before {
-      width: 100%; // 항상 보이게 설정
-      transition: none; // 트랜지션 효과를 제거
-    }
-  }
-
   &::before {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background-color: ${colors.blue[200]};
-    transition: width 0.3s ease;
+    content: "•";
+    padding-right: 8px;
   }
 
-  // .current 클래스가 없을 때만 hover 효과 적용
-  &:not(.current):hover::before {
+  &:hover {
     width: 100%;
+
+    background-color: ${colors.black[100]};
+    transition: 0.5s;
+  }
+
+  &.current {
+    width: 100%;
+    background-color: ${colors.black[100]};
   }
 `;
 
@@ -100,7 +96,7 @@ export const ShoppingMallContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  gap: 30px;
+  gap: 20px;
 `;
 
 export const ShoppingMallLogoContainer = styled.div`
@@ -108,9 +104,9 @@ export const ShoppingMallLogoContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 65%;
+  width: 63%;
   height: fit-content;
-  gap: 5px;
+
   cursor: pointer;
 `;
 
@@ -127,7 +123,7 @@ export const ShoppingMallButton = styled.div`
 
 export const ProductImageContainer = styled.div`
   width: 80%;
-  height: 270px;
+  height: 300px;
   border-radius: 10px;
   overflow: hidden;
 `;

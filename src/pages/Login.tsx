@@ -2,11 +2,20 @@ import * as S from "../styles/Login.styles";
 import LogoIcon from "../assets/images/sidebar/icon_vass.png";
 import JHCIcon from "../assets/images/icon_JHC.png";
 import CommonButton from "../components/common/CommonButton";
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getLogin } from "../api/getLogin";
 import { useRecoilState } from "recoil";
 import { loginState } from "../stores/loginState";
 import { useNavigate } from "react-router";
+import modalClose from "../utils/modalClose";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -15,11 +24,18 @@ export default function Login() {
     type: "password",
     isShow: false,
   });
+  const [isSelectBoxOpen, setIsSelectBoxOpen] = useState(false);
   const [login, setLogin] = useRecoilState(loginState);
+
+  const selectBoxOutside = useRef(null);
 
   const navigate = useNavigate();
 
   const { mutate: loginMutate } = getLogin(id, password);
+
+  useEffect(() => {
+    modalClose(isSelectBoxOpen, setIsSelectBoxOpen, selectBoxOutside);
+  }, [isSelectBoxOpen]);
 
   // NOTE 아이디 기억하기 계정인 경우 login state에서 id set해주기
   useEffect(() => {
@@ -56,6 +72,15 @@ export default function Login() {
       });
   };
 
+  const onClickSelectBox = (e: MouseEvent) => {
+    e.stopPropagation();
+    setIsSelectBoxOpen(!isSelectBoxOpen);
+  };
+
+  const handleCompany = (company: string) => {
+    setLogin({ ...login, company });
+  };
+
   const handleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setLogin({ ...login, isUserIdStored: e.target.checked, userId: id });
@@ -65,6 +90,15 @@ export default function Login() {
   };
 
   const onClickLogin = () => {
+    if (!login.company) {
+      Swal.fire({
+        icon: "warning",
+        title: "회사를 선택해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     loginMutate();
   };
 
@@ -99,6 +133,28 @@ export default function Login() {
               <S.HiddenIcon onClick={onClickPasswordIcon} />
             )}
           </S.PasswordContainer>
+          <S.SelectBox
+            ref={selectBoxOutside}
+            $isSelectBoxOpen={isSelectBoxOpen}
+            onClick={onClickSelectBox}
+          >
+            <p>{login.company || "회사 선택"}</p>
+            {isSelectBoxOpen ? <S.ArrowUp /> : <S.ArrowDown />}
+
+            {isSelectBoxOpen && (
+              <S.OptionContainer $isSelectBoxOpen={isSelectBoxOpen}>
+                <S.Option onClick={() => handleCompany("LOGEN")}>
+                  LOGEN
+                </S.Option>
+                <S.Option onClick={() => handleCompany("LOTTE")}>
+                  LOTTE
+                </S.Option>
+                <S.Option onClick={() => handleCompany("HANJIN")}>
+                  HANJIN
+                </S.Option>
+              </S.OptionContainer>
+            )}
+          </S.SelectBox>
         </S.InputContainer>
 
         <S.SaveContainer>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 
   width: 100%;
@@ -10,13 +11,12 @@ export const Container = styled.div`
 
 export const ChildrenHeaderContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: calc(100% - 260px);
+  flex-direction: row;
+  width: 100vw;
   min-height: 100vh;
-  margin-left: 250px;
 `;
 
 export const ChildrenContainer = styled.div`
-  width: 100%;
+  width: calc(100% - 250px);
   min-height: calc(100vh - 70px);
 `;

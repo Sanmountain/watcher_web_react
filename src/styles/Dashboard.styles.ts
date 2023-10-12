@@ -10,26 +10,25 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  width: 99%;
-  min-width: calc(${breakPoints.medium}px - 230px);
-  margin-left: 0.5%;
+  width: 100%;
+  min-width: calc(${breakPoints.medium}px - 250px);
 `;
 
 export const TopContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1.3fr;
+  grid-template-columns: 1.5fr 1.3fr 1.3fr;
   align-items: center;
   justify-items: center;
 
   width: 95%;
-  height: 70px;
+  height: 95px;
   border-bottom: 3px solid ${colors.black[300]};
   margin-bottom: 30px;
 `;
 
 export const Date = styled.div`
-  font-size: 2.6rem;
-  font-weight: 700;
+  font-size: 3.3rem;
+  font-weight: 900;
 `;
 
 export const CountContainer = styled.div`
@@ -58,7 +57,7 @@ export const Count = styled.div`
   color: ${colors.black[1000]};
   border-radius: 10px;
   min-width: 220px;
-  width: 45%;
+  width: 50%;
   height: 35px;
   padding: 5px 10px;
 
@@ -66,6 +65,12 @@ export const Count = styled.div`
     width: 40%;
     min-width: 200px;
   `)}
+
+  > p {
+    &.count {
+      font-size: 2.4rem;
+    }
+  }
 `;
 
 export const BottomContainer = styled.div`
@@ -74,7 +79,7 @@ export const BottomContainer = styled.div`
   align-items: center;
   justify-items: center;
 
-  width: 100%;
+  width: 90%;
 `;
 
 export const ChartContainer = styled.div`
@@ -83,7 +88,7 @@ export const ChartContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 720px;
+  height: 700px;
   gap: 20px;
 `;
 
@@ -113,7 +118,7 @@ export const ChartCount = styled.div`
 export const Chart = styled.div`
   width: 100%;
   height: 75%;
-  margin-top: 50px;
+  margin-top: 40px;
   position: relative;
 `;
 

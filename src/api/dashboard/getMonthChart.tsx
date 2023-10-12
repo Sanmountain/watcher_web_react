@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
-import { instance } from "../instance";
+import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
 import { Dispatch, SetStateAction } from "react";
 import {
   IWeekChartData,
@@ -15,29 +15,106 @@ export const getMonthChart = (
   const login = useRecoilValue(loginState);
   const setMonthTotal = useSetRecoilState(monthTotalState);
 
+  // NOTE 로젠
+  if (login.company === "LOGEN") {
+    return useMutation<IWeekChartResponse, unknown, void, unknown>(
+      "getMonthChart",
+      () =>
+        LogenInstance.post("/boardTotal", {
+          api: "month",
+          data: [
+            {
+              bran_cd: login.branchCode,
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            setMonthData(data.data);
+
+            const totalSum = data.data.reduce(
+              (acc, item) => acc + parseInt(item.count, 10),
+              0,
+            );
+            setMonthTotal(totalSum);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 롯데
+  else if (login.company === "LOTTE") {
+    return useMutation<IWeekChartResponse, unknown, void, unknown>(
+      "getMonthChart",
+      () =>
+        LotteInstance.post("/boardTotal", {
+          api: "month",
+          data: [
+            {
+              bran_cd: login.branchCode,
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            setMonthData(data.data);
+
+            const totalSum = data.data.reduce(
+              (acc, item) => acc + parseInt(item.count, 10),
+              0,
+            );
+            setMonthTotal(totalSum);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한진
+  else if (login.company === "HANJIN") {
+    return useMutation<IWeekChartResponse, unknown, void, unknown>(
+      "getMonthChart",
+      () =>
+        HanjinInstance.post("/boardTotal", {
+          api: "month",
+          data: [
+            {
+              bran_cd: login.branchCode,
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            setMonthData(data.data);
+
+            const totalSum = data.data.reduce(
+              (acc, item) => acc + parseInt(item.count, 10),
+              0,
+            );
+            setMonthTotal(totalSum);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+
   return useMutation<IWeekChartResponse, unknown, void, unknown>(
     "getMonthChart",
-    () =>
-      instance.post("/boardTotal", {
-        api: "month",
-        data: [
-          {
-            bran_cd: login.branchCode,
-          },
-        ],
-      }),
+    () => {
+      throw new Error("Invalid company");
+    },
     {
-      onSuccess: (data) => {
-        if (data.result === "00") {
-          setMonthData(data.data);
-
-          const totalSum = data.data.reduce(
-            (acc, item) => acc + parseInt(item.count, 10),
-            0,
-          );
-          setMonthTotal(totalSum);
-        }
-      },
       onError: (error) => {
         console.log(error);
       },

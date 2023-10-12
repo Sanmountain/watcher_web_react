@@ -5,8 +5,8 @@
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>
 </div> <br />
 
-> Vass Lotte 프론트엔드 repository입니다. <br />
-> 배포주소 : http://43.202.131.180/
+> Vass (통합) 프론트엔드 repository입니다. <br />
+> 배포주소 : https://vass.jhcon.net/
 
 ## 버전
 
@@ -18,7 +18,7 @@
 ## 설치 방법
 
 ```
-git clone https://github.com/PairCompany/vass_lotte_web_react.git
+git clone https://github.com/PairCompany/vass_web_react.git
 npm install
 npm start
 ```

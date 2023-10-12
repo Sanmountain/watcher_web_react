@@ -9,8 +9,10 @@ import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
 import { weekTotalState } from "../stores/dashboard/weekTotalState";
 import { monthTotalState } from "../stores/dashboard/monthTotalState";
+import { loginState } from "../stores/loginState";
 
 export default function Dashboard() {
+  const login = useRecoilValue(loginState);
   const [shipmentCount, setShipmentCount] = useState<IWorkListData[]>([]);
   const [receiveCount, setReceiveCount] = useState<IWorkListData[]>([]);
 
@@ -31,17 +33,25 @@ export default function Dashboard() {
       <S.TopContainer>
         <S.Date>{dayjs().format("YYYY-MM-DD")}</S.Date>
         <S.CountContainer>
-          발송
+          {login.company === "LOGEN" && "배송입고"}
+          {login.company === "LOTTE" && "도착"}
+          {login.company === "HANJIN" && "간선상차"}
           <S.Count>
             <p>스캔 수량</p>
-            <p>{numberWithCommas(shipmentCount?.length) || 0} 건</p>
+            <p className="count">
+              {numberWithCommas(receiveCount?.length) || 0} 건
+            </p>
           </S.Count>
         </S.CountContainer>
         <S.CountContainer>
-          도착
+          {login.company === "LOGEN" && "집하출고"}
+          {login.company === "LOTTE" && "발송"}
+          {login.company === "HANJIN" && "간선하차"}
           <S.Count>
             <p>스캔 수량</p>
-            <p>{numberWithCommas(receiveCount?.length) || 0} 건</p>
+            <p className="count">
+              {numberWithCommas(shipmentCount?.length) || 0} 건
+            </p>
           </S.Count>
         </S.CountContainer>
       </S.TopContainer>
