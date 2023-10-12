@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../stores/loginState";
 import { useNavigate } from "react-router";
 import modalClose from "../utils/modalClose";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -89,6 +90,15 @@ export default function Login() {
   };
 
   const onClickLogin = () => {
+    if (!login.company) {
+      Swal.fire({
+        icon: "warning",
+        title: "회사를 선택해주세요.",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     loginMutate();
   };
 
