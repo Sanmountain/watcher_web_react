@@ -325,13 +325,6 @@ export default function VassDetail() {
     vassDetailInvoiceMutate();
   };
 
-  // NOTE cameraInfo와 videoList에서 cam_id가 일치하는 것만 필터링
-  const allFilteredVideos = cameraInfo
-    .map((camera) => {
-      return videoList.filter((video) => video.cam_id === camera.cam_id);
-    })
-    .flat();
-
   return (
     <>
       <S.ShoppingMallContainer>
@@ -367,57 +360,65 @@ export default function VassDetail() {
 
       <S.Container>
         <S.VideoContainer>
-          {allFilteredVideos
+          {cameraInfo
             .slice(videoStartIndex, videoEndIndex)
-            .map((video, index) => (
-              <S.Video key={video.cam_id}>
-                <ReactPlayer
-                  url={video.stream_url}
-                  ref={(ref) => (playerRef.current[index] = ref)}
-                  width="95%"
-                  height="95%"
-                  controls={true}
-                  muted={true}
-                  playing={isPlaying}
-                  onProgress={({ playedSeconds }) => {
-                    setPlayTime(playedSeconds);
-                  }}
-                />
-                <S.CameraInfo>{video.cam_name}</S.CameraInfo>
-                {videoStartIndex === 0 && index === 0 && (
-                  <S.InvoiceNumber>
-                    {displayedBarcodes.length < 1 ? (
-                      <p>No Barcode</p>
-                    ) : (
-                      displayedBarcodes.map((barcode, index) => {
-                        const originalIndex = vassList.findIndex(
-                          (video) => video.barcode === barcode,
-                        );
+            .map((camera, index) => {
+              const videosWithSameCamId = videoList.filter(
+                (video) => video.cam_id === camera.cam_id,
+              );
 
-                        const reversedIndex = vassList.length - originalIndex;
+              return videosWithSameCamId.map((sameVideo) => (
+                <S.Video key={sameVideo.cam_id}>
+                  <ReactPlayer
+                    url={sameVideo.stream_url}
+                    ref={(ref) => (playerRef.current[index] = ref)}
+                    width="95%"
+                    height="95%"
+                    controls={true}
+                    muted={true}
+                    playing={isPlaying}
+                    onProgress={({ playedSeconds }) => {
+                      setPlayTime(playedSeconds);
+                    }}
+                  />
 
-                        if (barcode === nowVassDetail.barcode)
-                          return (
-                            <p className="sameBarcode" key={index}>
-                              {barcode
-                                ? `${reversedIndex}. ${barcode}`
-                                : barcode}
-                            </p>
+                  <S.CameraInfo>{camera.cam_name}</S.CameraInfo>
+
+                  {videoStartIndex === 0 && index === 0 && (
+                    <S.InvoiceNumber>
+                      {displayedBarcodes.length < 1 ? (
+                        <p>No Barcode</p>
+                      ) : (
+                        displayedBarcodes.map((barcode, index) => {
+                          const originalIndex = vassList.findIndex(
+                            (video) => video.barcode === barcode,
                           );
-                        else
-                          return (
-                            <p key={index}>
-                              {barcode
-                                ? `${reversedIndex}. ${barcode}`
-                                : barcode}
-                            </p>
-                          );
-                      })
-                    )}
-                  </S.InvoiceNumber>
-                )}
-              </S.Video>
-            ))}
+
+                          const reversedIndex = vassList.length - originalIndex;
+
+                          if (barcode === nowVassDetail.barcode)
+                            return (
+                              <p className="sameBarcode" key={index}>
+                                {barcode
+                                  ? `${reversedIndex}. ${barcode}`
+                                  : barcode}
+                              </p>
+                            );
+                          else
+                            return (
+                              <p key={index}>
+                                {barcode
+                                  ? `${reversedIndex}. ${barcode}`
+                                  : barcode}
+                              </p>
+                            );
+                        })
+                      )}
+                    </S.InvoiceNumber>
+                  )}
+                </S.Video>
+              ));
+            })}
         </S.VideoContainer>
         <S.PaginationContainer>
           <S.VideoControllerContainer>
