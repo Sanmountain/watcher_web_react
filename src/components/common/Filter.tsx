@@ -158,7 +158,7 @@ export default function Filter({
                       contents="송장 등록"
                       onClickFn={onClickRegisterInvoice}
                       height="100%"
-                      backgroundColor="#FFB437"
+                      backgroundColor="green"
                     />
                   </S.SubmitButtonContainer>
                   <S.SubmitButtonContainer>
@@ -167,11 +167,11 @@ export default function Filter({
                       contents={
                         login.company === "LOGEN"
                           ? "아이로젠 바로 전송"
-                          : "아이롯데 바로 전송"
+                          : "알프스 바로 전송"
                       }
                       onClickFn={onClickSendInvoice}
                       height="100%"
-                      backgroundColor="#FFB437"
+                      backgroundColor="green"
                     />
                   </S.SubmitButtonContainer>
                 </>
