@@ -93,7 +93,7 @@ export default function Login() {
     if (!login.company) {
       Swal.fire({
         icon: "warning",
-        title: "회사를 선택해주세요.",
+        title: "택배사를 선택해주세요.",
         confirmButtonText: "확인",
       });
       return;
@@ -138,7 +138,7 @@ export default function Login() {
             $isSelectBoxOpen={isSelectBoxOpen}
             onClick={onClickSelectBox}
           >
-            <p>{login.company || "회사 선택"}</p>
+            <p>{login.company || "택배사 선택"}</p>
             {isSelectBoxOpen ? <S.ArrowUp /> : <S.ArrowDown />}
 
             {isSelectBoxOpen && (
