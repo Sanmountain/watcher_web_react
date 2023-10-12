@@ -1,11 +1,11 @@
-# vass_lotte_web_react
+# vass_web_react
 
 <div>
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/>
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>
 </div> <br />
 
-> Vass (통합) 프론트엔드 repository입니다. <br />
+> VASS (통합) 프론트엔드 repository입니다. <br />
 > 배포주소 : https://vass.jhcon.net/
 
 ## 버전
