@@ -116,23 +116,6 @@ export default function Login() {
         </S.LogoContainer>
 
         <S.InputContainer>
-          <S.Input
-            placeholder="ID"
-            onChange={handleId}
-            defaultValue={login.userId}
-          />
-          <S.PasswordContainer>
-            <S.Input
-              type={isShowPassword.type}
-              placeholder="Password"
-              onChange={handlePassword}
-            />
-            {isShowPassword.isShow ? (
-              <S.ShowIcon onClick={onClickPasswordIcon} />
-            ) : (
-              <S.HiddenIcon onClick={onClickPasswordIcon} />
-            )}
-          </S.PasswordContainer>
           <S.SelectBox
             ref={selectBoxOutside}
             $isSelectBoxOpen={isSelectBoxOpen}
@@ -155,6 +138,23 @@ export default function Login() {
               </S.OptionContainer>
             )}
           </S.SelectBox>
+          <S.Input
+            placeholder="ID"
+            onChange={handleId}
+            defaultValue={login.userId}
+          />
+          <S.PasswordContainer>
+            <S.Input
+              type={isShowPassword.type}
+              placeholder="Password"
+              onChange={handlePassword}
+            />
+            {isShowPassword.isShow ? (
+              <S.ShowIcon onClick={onClickPasswordIcon} />
+            ) : (
+              <S.HiddenIcon onClick={onClickPasswordIcon} />
+            )}
+          </S.PasswordContainer>
         </S.InputContainer>
 
         <S.SaveContainer>
