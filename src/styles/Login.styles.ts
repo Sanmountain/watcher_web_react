@@ -102,6 +102,7 @@ export const SelectBox = styled.div<{ $isSelectBoxOpen: boolean }>`
   font-size: ${font.fontSize[300]};
   color: ${colors.black[200]};
   cursor: pointer;
+  z-index: 5;
 
   &:focus {
     outline: none;
