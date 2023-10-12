@@ -124,6 +124,7 @@ export default function Filter({
               contents="검색"
               onClickFn={onClickDateSearch}
               height="100%"
+              backgroundColor="#010163"
             />
           </S.ButtonContainer>
         </S.FilterContainer>
@@ -141,6 +142,7 @@ export default function Filter({
               contents="검색"
               onClickFn={onClickInvoiceSearch}
               height="100%"
+              backgroundColor="#010163"
             />
           </S.ButtonContainer>
         </S.FilterContainer>
@@ -149,9 +151,34 @@ export default function Filter({
           <>
             <S.FilterContainer className="noDisplay" />
             <S.FilterContainer className="register">
+              {(login.company === "LOGEN" || login.company === "LOTTE") && (
+                <>
+                  <S.SubmitButtonContainer>
+                    <CommonButton
+                      contents="송장 등록"
+                      onClickFn={onClickRegisterInvoice}
+                      height="100%"
+                      backgroundColor="#FFB437"
+                    />
+                  </S.SubmitButtonContainer>
+                  <S.SubmitButtonContainer>
+                    <CommonButton
+                      className="ilogenBtn"
+                      contents={
+                        login.company === "LOGEN"
+                          ? "아이로젠 바로 전송"
+                          : "아이롯데 바로 전송"
+                      }
+                      onClickFn={onClickSendInvoice}
+                      height="100%"
+                      backgroundColor="#FFB437"
+                    />
+                  </S.SubmitButtonContainer>
+                </>
+              )}
               {login.company === "LOGEN" && (
                 <>
-                  <span id="total_count"> 자동여부</span>
+                  <S.FilterTitle className="autoBtn"> 자동여부</S.FilterTitle>
                   <S.ToggleContainer onClick={handleToggle}>
                     <div
                       className={`toggle-container ${
@@ -165,27 +192,6 @@ export default function Filter({
                     />
                   </S.ToggleContainer>
                   <div className="toggleLabel">{isOn ? "자동" : "수동"}</div>
-                </>
-              )}
-
-              {(login.company === "LOGEN" || login.company === "LOTTE") && (
-                <>
-                  <S.SubmitButtonContainer>
-                    <CommonButton
-                      contents="송장 등록"
-                      onClickFn={onClickRegisterInvoice}
-                    />
-                  </S.SubmitButtonContainer>
-                  <S.SubmitButtonContainer>
-                    <CommonButton
-                      contents={
-                        login.company === "LOGEN"
-                          ? "아이로젠 바로 전송"
-                          : "아이롯데 바로 전송"
-                      }
-                      onClickFn={onClickSendInvoice}
-                    />
-                  </S.SubmitButtonContainer>
                 </>
               )}
             </S.FilterContainer>

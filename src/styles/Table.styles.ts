@@ -9,7 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 98%;
+  width: 94%;
   min-width: calc(${breakPoints.medium}px - 230px);
   margin-left: 1%;
 `;
