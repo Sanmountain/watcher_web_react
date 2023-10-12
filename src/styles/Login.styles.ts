@@ -9,7 +9,7 @@ export const Container = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
 
 export const LoginContainer = styled.div`
@@ -18,16 +18,16 @@ export const LoginContainer = styled.div`
   align-items: center;
 
   min-width: 470px;
-  width: 30%;
+  width: 23%;
+  height: 60%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  padding: 20px;
 `;
 
 export const LogoContainer = styled.div`
-  width: 60%;
+  width: 70%;
   height: 120px;
 `;
 
@@ -41,9 +41,9 @@ export const InputContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 60%;
+  width: 65%;
   gap: 20px;
-  margin-top: 50px;
+  margin-top: 40px;
   margin-bottom: 20px;
 `;
 
@@ -69,7 +69,7 @@ export const ShowIcon = styled(BiShow)`
   font-size: ${font.fontSize[200]};
   color: ${colors.black[300]};
   position: absolute;
-  right: 10px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -79,7 +79,7 @@ export const HiddenIcon = styled(BiHide)`
   font-size: ${font.fontSize[200]};
   color: ${colors.black[300]};
   position: absolute;
-  right: 10px;
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -89,9 +89,9 @@ export const SaveContainer = styled.div`
   display: flex;
   align-items: center;
 
-  width: 63%;
+  width: 68%;
   height: 20px;
-  gap: 5px;
+  gap: 3px;
   color: ${colors.black[300]};
   font-size: ${font.fontSize[300]};
 `;
@@ -102,9 +102,9 @@ export const CheckBox = styled.input`
 `;
 
 export const LoginButtonContainer = styled.div`
-  width: 63%;
+  width: 70%;
   height: 48px;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 export const BottomContainer = styled.div`
@@ -117,10 +117,10 @@ export const BottomContainer = styled.div`
   padding: 10px;
   border-top: 1px solid ${colors.black[400]};
   font-size: ${font.fontSize[300]};
-  margin-top: 50px;
+  margin-top: 40px;
 `;
 
 export const JHCIcon = styled.div`
-  width: 15%;
-  height: 35px;
+  width: 17%;
+  height: 40px;
 `;
