@@ -5,6 +5,7 @@ import { vassFilterState } from "../../stores/vass/vassFilterState";
 import { vassListState } from "../../stores/vass/vassListState";
 import { getVassDateList } from "../../api/vass/getVassDateList";
 import { getVassInvoiceList } from "../../api/vass/getVassInvoiceList";
+import { loginState } from "../../stores/loginState";
 
 export default function Vass() {
   const title = [
@@ -16,6 +17,16 @@ export default function Vass() {
     { label: "화물추적", value: "button" },
   ];
 
+  const hanjinTitle = [
+    { label: "No.", value: "" },
+    { label: "업무", value: "tm_dv" },
+    { label: "날짜 & 시간", value: "scan_total_time" },
+    { label: "간선편명", value: "trk" },
+    { label: "송장번호", value: "barcode" },
+    { label: "화물추적", value: "button" },
+  ];
+
+  const login = useRecoilValue(loginState);
   const [filterOption, setFilterOption] = useRecoilState(vassFilterState);
   const vassList = useRecoilValue(vassListState);
 
@@ -35,7 +46,7 @@ export default function Vass() {
         invoiceMutate={vassInvoiceNumberListMutate}
       />
       <Table
-        title={title}
+        title={login.company === "HANJIN" ? hanjinTitle : title}
         contents={vassList}
         columns={6}
         dateLoading={isDateMutateLoading}
