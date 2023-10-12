@@ -9,11 +9,11 @@ export const ShoppingMallContainer = styled.div`
   align-items: center;
 
   width: 230px;
-  gap: 30px;
+  gap: 25px;
   position: fixed;
   left: 10px;
   z-index: 3;
-  top: 550px;
+  top: 150px;
 `;
 
 export const ShoppingMallLogoContainer = styled.div`
@@ -114,19 +114,17 @@ export const VideoControllerContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
-  gap: 30px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-right: 10px;
 `;
 
 export const Controller = styled.button`
-  background-color: ${colors.black[200]};
+  background-color: ${colors.black[300]};
   border: none;
   color: ${colors.black[1000]};
   font-size: ${font.fontSize[200]};
-  font-weight: 700;
   padding: 6px 15px;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
 `;
 
@@ -183,9 +181,9 @@ export const SettingMenuContainer = styled.div<{ $isSettingOpen: boolean }>`
   border: 1px solid ${colors.black[200]};
   background-color: ${colors.black[1000]};
   border-radius: 10px;
-  width: 110px;
+  width: 120px;
   padding: 10px 5px;
-  top: 36px;
+  top: -51px;
   left: 0;
   gap: 10px;
   z-index: 2;
@@ -209,11 +207,11 @@ export const SettingMenu = styled.div`
 export const VideoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 375px);
+  grid-template-rows: repeat(2, 390px);
   align-items: center;
   justify-items: center;
   width: 99.5%;
-  height: 750px;
+  height: 780px;
 `;
 
 export const Video = styled.div`
@@ -227,8 +225,10 @@ export const Video = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
-  width: 100%;
 `;
 
 export const CameraInfo = styled.div`

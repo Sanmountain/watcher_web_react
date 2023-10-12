@@ -341,6 +341,7 @@ export default function VassDetail() {
           <CommonButton
             contents="송장번호 조회"
             onClickFn={onClickSearchInvoice}
+            height="35px"
           />
         </S.InvoiceButtonContainer>
         <S.InvoiceInput
@@ -365,32 +366,8 @@ export default function VassDetail() {
           <p>{deliveryState}</p>
         </S.TradeSubInfoContainer>
       </S.ShoppingMallContainer>
-      <S.Container>
-        <S.VideoControllerContainer>
-          <S.Controller onClick={onClickRefresh}>영상 새로고침</S.Controller>
-          <S.Controller onClick={onClickMoveBefore10Second}>
-            - 10초
-          </S.Controller>
-          <S.Controller onClick={handlePlayVideos}>
-            {isPlaying ? "일시정지" : "재생"}
-          </S.Controller>
-          <S.Controller onClick={onClickMoveAfter10Second}>+ 10초</S.Controller>
 
-          <S.SettingContainer ref={outSide}>
-            <S.SettingButton
-              onClick={onClickSetting}
-              $isSettingOpen={isSettingOpen}
-            >
-              설정
-              {isSettingOpen ? <S.UpArrowIcon /> : <S.DownArrowIcon />}
-            </S.SettingButton>
-            <S.SettingMenuContainer $isSettingOpen={isSettingOpen}>
-              <S.SettingMenu onClick={onClickChangeSequence}>
-                재생 순서 변경
-              </S.SettingMenu>
-            </S.SettingMenuContainer>
-          </S.SettingContainer>
-        </S.VideoControllerContainer>
+      <S.Container>
         <S.VideoContainer>
           {allFilteredVideos
             .slice(videoStartIndex, videoEndIndex)
@@ -445,6 +422,33 @@ export default function VassDetail() {
             ))}
         </S.VideoContainer>
         <S.PaginationContainer>
+          <S.VideoControllerContainer>
+            <S.Controller onClick={onClickRefresh}>영상 새로고침</S.Controller>
+            <S.Controller onClick={onClickMoveBefore10Second}>
+              - 10초
+            </S.Controller>
+            <S.Controller onClick={handlePlayVideos}>
+              {isPlaying ? "일시정지" : "재생"}
+            </S.Controller>
+            <S.Controller onClick={onClickMoveAfter10Second}>
+              + 10초
+            </S.Controller>
+
+            <S.SettingContainer ref={outSide}>
+              <S.SettingButton
+                onClick={onClickSetting}
+                $isSettingOpen={isSettingOpen}
+              >
+                설정
+                {isSettingOpen ? <S.UpArrowIcon /> : <S.DownArrowIcon />}
+              </S.SettingButton>
+              <S.SettingMenuContainer $isSettingOpen={isSettingOpen}>
+                <S.SettingMenu onClick={onClickChangeSequence}>
+                  재생 순서 변경
+                </S.SettingMenu>
+              </S.SettingMenuContainer>
+            </S.SettingContainer>
+          </S.VideoControllerContainer>
           <Pagination
             page={currentPage}
             setPage={paginate}

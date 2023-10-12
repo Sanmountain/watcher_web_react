@@ -42,7 +42,7 @@ export const MenuContainer = styled.div`
 
 export const HeaderImg = styled.img`
   width: 100px;
-  height: 30px;
+  height: 27px;
 `;
 
 export const MenuButton = styled.div`
@@ -53,6 +53,7 @@ export const MenuButton = styled.div`
   width: fit-content;
   font-size: ${font.fontSize[600]};
   font-weight: 900;
+  letter-spacing: -2px;
   background-color: transparent;
   border: none;
   position: relative;
@@ -92,14 +93,14 @@ export const ProfileButtonContainer = styled.div`
 
   width: 20%;
   height: 100%;
-  gap: 10px;
+  gap: 15px;
 `;
 
 export const Profile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: ${font.fontSize[400]};
+  font-size: ${font.fontSize[300]};
   font-weight: 400;
   width: fit-content;
   height: 100%;

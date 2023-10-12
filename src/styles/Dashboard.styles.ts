@@ -11,7 +11,7 @@ export const Container = styled.div`
   justify-content: center;
 
   width: 100%;
-  min-width: calc(${breakPoints.medium}px - 230px);
+  min-width: calc(${breakPoints.medium}px - 250px);
 `;
 
 export const TopContainer = styled.div`
@@ -65,6 +65,12 @@ export const Count = styled.div`
     width: 40%;
     min-width: 200px;
   `)}
+
+  > p {
+    &.count {
+      font-size: 2.4rem;
+    }
+  }
 `;
 
 export const BottomContainer = styled.div`

@@ -38,7 +38,9 @@ export default function Dashboard() {
           {login.company === "HANJIN" && "간선상차"}
           <S.Count>
             <p>스캔 수량</p>
-            <p>{numberWithCommas(receiveCount?.length) || 0} 건</p>
+            <p className="count">
+              {numberWithCommas(receiveCount?.length) || 0} 건
+            </p>
           </S.Count>
         </S.CountContainer>
         <S.CountContainer>
@@ -47,7 +49,9 @@ export default function Dashboard() {
           {login.company === "HANJIN" && "간선하차"}
           <S.Count>
             <p>스캔 수량</p>
-            <p>{numberWithCommas(shipmentCount?.length) || 0} 건</p>
+            <p className="count">
+              {numberWithCommas(shipmentCount?.length) || 0} 건
+            </p>
           </S.Count>
         </S.CountContainer>
       </S.TopContainer>

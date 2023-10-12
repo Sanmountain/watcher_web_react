@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import * as S from "../../styles/layout/Header.styles";
 import { loginState } from "../../stores/loginState";
@@ -9,6 +9,7 @@ import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import JHCLogo from "../../assets/images/JHC.png";
 import gigaLogo from "../../assets/images/gigaeyes.png";
+import { menuState } from "../../stores/menuState";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -16,7 +17,7 @@ export default function Header() {
   const resetVassList = useResetRecoilState(vassListState);
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
-  const [currentMenu, setCurrentMenu] = useState("");
+  const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,7 +45,7 @@ export default function Header() {
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
     if (!params.invoiceNumber) {
-      setCurrentMenu(`${location.pathname}`);
+      setCurrentMenu(location.pathname);
     }
   }, [params, location]);
 
@@ -80,9 +81,11 @@ export default function Header() {
             {menu.label}
           </S.MenuButton>
         ))}
-        <Link to="https://gigaeyes.co.kr/memberN/loginForm">
-          <S.HeaderImg src={gigaLogo} />
-        </Link>
+        {login.company === "LOGEN" && (
+          <Link to="https://gigaeyes.co.kr/memberN/loginForm">
+            <S.HeaderImg src={gigaLogo} />
+          </Link>
+        )}
       </S.MenuContainer>
       <S.ProfileButtonContainer>
         <S.Profile>{login.branchName}</S.Profile>
