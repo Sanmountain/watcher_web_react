@@ -32,7 +32,7 @@ const Button = styled.button<{ $isRound?: boolean }>`
   border: 1px solid ${colors.blue[300]};
   border-radius: ${(props) => (props.$isRound ? "20px" : "10px")};
   width: 100%;
-  height: 100%;
+  height: 120%;
   cursor: pointer;
 
   &:hover {
