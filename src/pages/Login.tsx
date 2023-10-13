@@ -93,7 +93,7 @@ export default function Login() {
     if (!login.company) {
       Swal.fire({
         icon: "warning",
-        title: "회사를 선택해주세요.",
+        title: "택배사를 선택해주세요.",
         confirmButtonText: "확인",
       });
       return;
@@ -116,6 +116,28 @@ export default function Login() {
         </S.LogoContainer>
 
         <S.InputContainer>
+          <S.SelectBox
+            ref={selectBoxOutside}
+            $isSelectBoxOpen={isSelectBoxOpen}
+            onClick={onClickSelectBox}
+          >
+            <p>{login.company || "택배사 선택"}</p>
+            {isSelectBoxOpen ? <S.ArrowUp /> : <S.ArrowDown />}
+
+            {isSelectBoxOpen && (
+              <S.OptionContainer $isSelectBoxOpen={isSelectBoxOpen}>
+                <S.Option onClick={() => handleCompany("LOGEN")}>
+                  LOGEN
+                </S.Option>
+                <S.Option onClick={() => handleCompany("LOTTE")}>
+                  LOTTE
+                </S.Option>
+                <S.Option onClick={() => handleCompany("HANJIN")}>
+                  HANJIN
+                </S.Option>
+              </S.OptionContainer>
+            )}
+          </S.SelectBox>
           <S.Input
             placeholder="ID"
             onChange={handleId}
@@ -133,28 +155,6 @@ export default function Login() {
               <S.HiddenIcon onClick={onClickPasswordIcon} />
             )}
           </S.PasswordContainer>
-          <S.SelectBox
-            ref={selectBoxOutside}
-            $isSelectBoxOpen={isSelectBoxOpen}
-            onClick={onClickSelectBox}
-          >
-            <p>{login.company || "회사 선택"}</p>
-            {isSelectBoxOpen ? <S.ArrowUp /> : <S.ArrowDown />}
-
-            {isSelectBoxOpen && (
-              <S.OptionContainer $isSelectBoxOpen={isSelectBoxOpen}>
-                <S.Option onClick={() => handleCompany("LOGEN")}>
-                  LOGEN
-                </S.Option>
-                <S.Option onClick={() => handleCompany("LOTTE")}>
-                  LOTTE
-                </S.Option>
-                <S.Option onClick={() => handleCompany("HANJIN")}>
-                  HANJIN
-                </S.Option>
-              </S.OptionContainer>
-            )}
-          </S.SelectBox>
         </S.InputContainer>
 
         <S.SaveContainer>
