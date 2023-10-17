@@ -21,8 +21,12 @@ export const sendInvoice = () => {
           data: [
             {
               bran_cd: login.branchCode,
-              start_time: dayjs(filterOption.date).format("YYYY-MM-DD"),
-              end_time: dayjs(filterOption.date).format("YYYY-MM-DD"),
+              start_time: `${dayjs(filterOption.date).format(
+                "YYYY-MM-DD",
+              )} 00:00:00`,
+              end_time: `${dayjs(filterOption.date).format(
+                "YYYY-MM-DD",
+              )} 23:59:59`,
               longTime: "",
             },
           ],
