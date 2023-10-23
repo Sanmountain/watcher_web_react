@@ -44,7 +44,7 @@ export default function Filter({
 
   // NOTE  Auto 체크
   useEffect(() => {
-    autoCheckMutate();
+    if (login.company === "LOGEN") autoCheckMutate();
   }, []);
 
   const handleFilter = (
@@ -106,7 +106,7 @@ export default function Filter({
                 <option value="shipment">발송</option>
               </>
             )}
-            {login.company === "HANJIN" && (
+            {(login.company === "HANJIN" || login.company === "HANDEX") && (
               <>
                 <option value="receive">간선상차</option>
                 <option value="shipment">간선하차</option>

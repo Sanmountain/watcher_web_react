@@ -1,7 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
-import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
+import {
+  HandexInstance,
+  HanjinInstance,
+  LogenInstance,
+  LotteInstance,
+} from "../instance";
 import { Dispatch, SetStateAction } from "react";
 import {
   ICameraInfoData,
@@ -84,7 +89,37 @@ export const getCameraInfo = (
           data: [
             {
               user_id: login.userId,
-              company: "lotte",
+              company: "hanjin",
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            const sortedData = data.data.sort(
+              (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
+            );
+            setCameraInfo(sortedData);
+            setChangePlaySequence(data.data);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한덱스
+  else if (login.company === "HANDEX") {
+    return useMutation<ICameraInfoResponse, unknown, void, unknown>(
+      "getCameraInfo",
+      () =>
+        HandexInstance.post("/watcher/cam", {
+          api: "caminfo",
+          data: [
+            {
+              user_id: login.userId,
+              company: "handex",
             },
           ],
         }),

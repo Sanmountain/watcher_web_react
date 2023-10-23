@@ -1,5 +1,10 @@
 import { useMutation } from "react-query";
-import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
+import {
+  HandexInstance,
+  HanjinInstance,
+  LogenInstance,
+  LotteInstance,
+} from "../instance";
 import { Dispatch, SetStateAction } from "react";
 import {
   ICameraInfoData,
@@ -88,6 +93,34 @@ export const editCameraSequence = (
       "editCameraSequence",
       () =>
         HanjinInstance.post("/watcher/cam", {
+          api: "camModify",
+          data: modifyData,
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            setIsModalOpen(false);
+            setCameraInfo(changePlaySequence);
+
+            Swal.fire({
+              icon: "success",
+              title: "저장 완료",
+              confirmButtonText: "확인",
+            });
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한덱스
+  else if (login.company === "HANDEX") {
+    return useMutation<ICameraInfoResponse, unknown, void, unknown>(
+      "editCameraSequence",
+      () =>
+        HandexInstance.post("/watcher/cam", {
           api: "camModify",
           data: modifyData,
         }),

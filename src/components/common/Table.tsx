@@ -50,7 +50,7 @@ export default function Table({
     <>
       <S.Container>
         <S.TitleContainer
-          columns={login.camUsable === "2" ? columns : columns + 1}
+          $columns={login.camUsable === "2" ? columns : columns + 1}
         >
           {title.map((item) => (
             <S.Title key={item.label}>{item.label}</S.Title>
@@ -64,7 +64,7 @@ export default function Table({
           ) : (
             contents.map((item, index) => (
               <S.ContentsContainer
-                columns={login.camUsable === "2" ? columns : columns + 1}
+                $columns={login.camUsable === "2" ? columns : columns + 1}
                 key={item.id}
               >
                 {title.map((el) => (

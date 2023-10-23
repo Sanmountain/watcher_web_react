@@ -1,7 +1,12 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
-import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
+import {
+  HandexInstance,
+  HanjinInstance,
+  LogenInstance,
+  LotteInstance,
+} from "../instance";
 import { Dispatch, SetStateAction } from "react";
 import {
   IWeekChartData,
@@ -83,6 +88,37 @@ export const getWeekChart = (
       "getWeekChart",
       () =>
         HanjinInstance.post("/boardTotal", {
+          api: "week",
+          data: [
+            {
+              bran_cd: login.branchCode,
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            setWeekData(data.data);
+
+            const totalSum = data.data.reduce(
+              (acc, item) => acc + parseInt(item.count, 10),
+              0,
+            );
+            setWeekTotal(totalSum);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한덱스
+  else if (login.company === "HANDEX") {
+    return useMutation<IWeekChartResponse, unknown, void, unknown>(
+      "getWeekChart",
+      () =>
+        HandexInstance.post("/boardTotal", {
           api: "week",
           data: [
             {

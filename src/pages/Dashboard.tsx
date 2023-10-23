@@ -35,7 +35,8 @@ export default function Dashboard() {
         <S.CountContainer>
           {login.company === "LOGEN" && "배송입고"}
           {login.company === "LOTTE" && "도착"}
-          {login.company === "HANJIN" && "간선상차"}
+          {(login.company === "HANJIN" || login.company === "HANDEX") &&
+            "간선상차"}
           <S.Count>
             <p>스캔 수량</p>
             <p className="count">
@@ -46,7 +47,8 @@ export default function Dashboard() {
         <S.CountContainer>
           {login.company === "LOGEN" && "집하출고"}
           {login.company === "LOTTE" && "발송"}
-          {login.company === "HANJIN" && "간선하차"}
+          {(login.company === "HANJIN" || login.company === "HANDEX") &&
+            "간선하차"}
           <S.Count>
             <p>스캔 수량</p>
             <p className="count">
