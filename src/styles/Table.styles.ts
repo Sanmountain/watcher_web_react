@@ -14,9 +14,9 @@ export const Container = styled.div`
   margin-left: 1%;
 `;
 
-export const TitleContainer = styled.div<{ columns: number }>`
+export const TitleContainer = styled.div<{ $columns: number }>`
   display: grid;
-  grid-template-columns: ${(props) => `repeat(${props.columns}, 1fr)`};
+  grid-template-columns: ${(props) => `repeat(${props.$columns}, 1fr)`};
   align-items: center;
   justify-items: center;
 
@@ -59,9 +59,9 @@ export const ContentsList = styled.div<{ $isWorkPage: boolean }>`
   `)}
 `;
 
-export const ContentsContainer = styled.div<{ columns: number }>`
+export const ContentsContainer = styled.div<{ $columns: number }>`
   display: grid;
-  grid-template-columns: ${(props) => `repeat(${props.columns}, 1fr)`};
+  grid-template-columns: ${(props) => `repeat(${props.$columns}, 1fr)`};
   align-items: center;
   justify-items: center;
 

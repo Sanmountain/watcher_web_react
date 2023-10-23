@@ -34,7 +34,7 @@ export default function CommonButton({
       onClick={onClickFn}
       width={getWidth(className, width)}
       height={height}
-      backgroundColor={backgroundColor}
+      $backgroundColor={backgroundColor}
       className={className}
     >
       {contents}
@@ -46,7 +46,7 @@ const Button = styled.button<{
   $isRound?: boolean;
   width?: string;
   height?: string;
-  backgroundColor?: string;
+  $backgroundColor?: string;
 }>`
   display: flex;
   align-items: center;
@@ -55,10 +55,10 @@ const Button = styled.button<{
   font-size: 16px;
   font-weight: 600;
 
-  background-color: ${(props) => props.backgroundColor || colors.blue[300]};
+  background-color: ${(props) => props.$backgroundColor || colors.blue[300]};
   color: ${colors.black[1000]};
   padding: 5px 15px;
-  border: 1px solid ${(props) => props.backgroundColor || colors.blue[300]};
+  border: 1px solid ${(props) => props.$backgroundColor || colors.blue[300]};
   border-radius: ${(props) => (props.$isRound ? "20px" : "10px")};
   width: ${(props) => props.width};
   height: ${(props) => props.height || "120%"};
@@ -66,6 +66,6 @@ const Button = styled.button<{
 
   &:hover {
     background-color: ${colors.black[1000]};
-    color: ${(props) => props.backgroundColor || colors.blue[300]};
+    color: ${(props) => props.$backgroundColor || colors.blue[300]};
   }
 `;
