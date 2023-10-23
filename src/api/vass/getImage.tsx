@@ -1,6 +1,11 @@
 import { useRecoilValue } from "recoil";
 import { useMutation } from "react-query";
-import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
+import {
+  HandexInstance,
+  HanjinInstance,
+  LogenInstance,
+  LotteInstance,
+} from "../instance";
 import { Dispatch, SetStateAction } from "react";
 import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { IImageResponse } from "../../types/getImage.types";
@@ -77,6 +82,35 @@ export const getImage = (
       "getImage",
       () =>
         HanjinInstance.post("/loin", {
+          api: "imgGet",
+          data: [
+            {
+              barcode: nowVassDetail.barcode,
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            if (data.data[0]) {
+              setIsDisplayImageModal(true);
+              const imgUrl = "data:image/jpeg;base64," + data.data[0].img;
+              setImageUrl(imgUrl);
+            }
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한덱스
+  else if (login.company === "HANDEX") {
+    return useMutation<IImageResponse, unknown, void, unknown>(
+      "getImage",
+      () =>
+        HandexInstance.post("/loin", {
           api: "imgGet",
           data: [
             {

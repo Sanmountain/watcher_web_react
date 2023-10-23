@@ -2,7 +2,12 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
 import { IWorkListData, IWorkListResponse } from "../../types/Work.types";
-import { HanjinInstance, LogenInstance, LotteInstance } from "../instance";
+import {
+  HandexInstance,
+  HanjinInstance,
+  LogenInstance,
+  LotteInstance,
+} from "../instance";
 import dayjs from "dayjs";
 import { Dispatch, SetStateAction } from "react";
 
@@ -90,6 +95,42 @@ export const getAmount = (
       "getAmount",
       () =>
         HanjinInstance.post("/lose", {
+          api: "dvInAll",
+          data: [
+            {
+              start_time: `${dayjs().format("YYYY-MM-DD")} 00:00:00`,
+              end_time: `${dayjs().format("YYYY-MM-DD")} 23:59:59`,
+              bran_cd: login.branchCode,
+              longTime: "",
+            },
+          ],
+        }),
+      {
+        onSuccess: (data) => {
+          if (data.result === "00") {
+            const filteringShipmentData = data.data.filter(
+              (item) => item.tm_dv === "32",
+            );
+            setShipmentCount(filteringShipmentData);
+
+            const filteringReceiveData = data.data.filter(
+              (item) => item.tm_dv === "31",
+            );
+            setReceiveCount(filteringReceiveData);
+          }
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  }
+  // NOTE 한덱스
+  else if (login.company === "HANDEX") {
+    return useMutation<IWorkListResponse, unknown, void, unknown>(
+      "getAmount",
+      () =>
+        HandexInstance.post("/lose", {
           api: "dvInAll",
           data: [
             {

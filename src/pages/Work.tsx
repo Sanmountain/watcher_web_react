@@ -53,9 +53,15 @@ export default function Work() {
         invoiceMutate={workInvoiceNumberListMutate}
       />
       <Table
-        title={login.company === "HANJIN" ? hanjinTitle : title}
+        title={
+          login.company === "HANJIN" || login.company === "HANDEX"
+            ? hanjinTitle
+            : title
+        }
         contents={workList}
-        columns={login.company === "HANJIN" ? 9 : 10}
+        columns={
+          login.company === "HANJIN" || login.company === "HANDEX" ? 9 : 10
+        }
         dateLoading={isDateMutateLoading}
         invoiceLoading={isInvoiceNumberMutateLoading}
       />

@@ -46,7 +46,11 @@ export default function Vass() {
         invoiceMutate={vassInvoiceNumberListMutate}
       />
       <Table
-        title={login.company === "HANJIN" ? hanjinTitle : title}
+        title={
+          login.company === "HANJIN" || login.company === "HANDEX"
+            ? hanjinTitle
+            : title
+        }
         contents={vassList}
         columns={6}
         dateLoading={isDateMutateLoading}

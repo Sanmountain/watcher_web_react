@@ -48,6 +48,22 @@ HanjinInstance.interceptors.response.use(
   },
 );
 
+export const HandexInstance = axios.create({
+  baseURL: `${process.env.REACT_APP_HANDEX_API_URL}/AndyHandex`,
+});
+
+HandexInstance.interceptors.response.use(
+  (response) => {
+    if (response.status === 200) {
+      return response.data;
+    }
+  },
+
+  (error) => {
+    console.log(error);
+  },
+);
+
 export const videoInstance = axios.create({
   baseURL: `${process.env.REACT_APP_VIDEO_API_URL}`,
 });

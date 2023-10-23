@@ -135,6 +135,9 @@ export default function Login() {
                 <S.Option onClick={() => handleCompany("HANJIN")}>
                   HANJIN
                 </S.Option>
+                <S.Option onClick={() => handleCompany("HANDEX")}>
+                  HANDEX
+                </S.Option>
               </S.OptionContainer>
             )}
           </S.SelectBox>
