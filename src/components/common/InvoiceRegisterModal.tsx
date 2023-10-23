@@ -153,7 +153,10 @@ export default function InvoiceRegisterModal({
             <S.TitleInputContainer>
               <S.Title>업무분류</S.Title>
               <S.Info>
-                {filterOption?.receivingShipment === "receive" ? "21" : "20"}
+                {login.company === "LOGEN" &&
+                  (filterOption?.receivingShipment === "receive" ? "60" : "30")}
+                {login.company === "LOTTE" &&
+                  (filterOption?.receivingShipment === "receive" ? "21" : "20")}
               </S.Info>
             </S.TitleInputContainer>
             <S.TitleInputContainer>
