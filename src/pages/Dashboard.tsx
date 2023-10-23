@@ -15,6 +15,7 @@ export default function Dashboard() {
   const login = useRecoilValue(loginState);
   const [shipmentCount, setShipmentCount] = useState<IWorkListData[]>([]);
   const [receiveCount, setReceiveCount] = useState<IWorkListData[]>([]);
+  const [goodsCount, setGoodsCount] = useState<IWorkListData[]>([]);
 
   const weekTotal = useRecoilValue(weekTotalState);
   const monthTotal = useRecoilValue(monthTotalState);
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const { mutate: getAmountMutate } = getAmount(
     setShipmentCount,
     setReceiveCount,
+    setGoodsCount,
   );
 
   useEffect(() => {
@@ -30,14 +32,14 @@ export default function Dashboard() {
 
   return (
     <S.Container>
-      <S.TopContainer>
-        <S.Date>{dayjs().format("YYYY-MM-DD")}</S.Date>
+      <S.TopContainer $login={login}>
+        <S.Date $login={login}>{dayjs().format("YYYY-MM-DD")}</S.Date>
         <S.CountContainer>
           {login.company === "LOGEN" && "배송입고"}
           {login.company === "LOTTE" && "도착"}
-          {(login.company === "HANJIN" || login.company === "HANDEX") &&
-            "간선상차"}
-          <S.Count>
+          {login.company === "HANJIN" && "간선상차"}
+          {login.company === "HANDEX" && "영업소상차"}
+          <S.Count $login={login}>
             <p>스캔 수량</p>
             <p className="count">
               {numberWithCommas(receiveCount?.length) || 0} 건
@@ -47,15 +49,26 @@ export default function Dashboard() {
         <S.CountContainer>
           {login.company === "LOGEN" && "집하출고"}
           {login.company === "LOTTE" && "발송"}
-          {(login.company === "HANJIN" || login.company === "HANDEX") &&
-            "간선하차"}
-          <S.Count>
+          {login.company === "HANJIN" && "간선하차"}
+          {login.company === "HANDEX" && "영업소하차"}
+          <S.Count $login={login}>
             <p>스캔 수량</p>
             <p className="count">
               {numberWithCommas(shipmentCount?.length) || 0} 건
             </p>
           </S.Count>
         </S.CountContainer>
+        {login.company === "HANDEX" && (
+          <S.CountContainer>
+            상품집하
+            <S.Count $login={login}>
+              <p>스캔 수량</p>
+              <p className="count">
+                {numberWithCommas(goodsCount?.length) || 0} 건
+              </p>
+            </S.Count>
+          </S.CountContainer>
+        )}
       </S.TopContainer>
       <S.BottomContainer>
         <S.ChartContainer>

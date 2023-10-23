@@ -14,6 +14,7 @@ import { Dispatch, SetStateAction } from "react";
 export const getAmount = (
   setShipmentCount: Dispatch<SetStateAction<IWorkListData[]>>,
   setReceiveCount: Dispatch<SetStateAction<IWorkListData[]>>,
+  setGoodsCount: Dispatch<SetStateAction<IWorkListData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
 
@@ -145,14 +146,19 @@ export const getAmount = (
         onSuccess: (data) => {
           if (data.result === "00") {
             const filteringShipmentData = data.data.filter(
-              (item) => item.tm_dv === "32",
+              (item) => item.tm_dv === "50",
             );
             setShipmentCount(filteringShipmentData);
 
             const filteringReceiveData = data.data.filter(
-              (item) => item.tm_dv === "31",
+              (item) => item.tm_dv === "15",
             );
             setReceiveCount(filteringReceiveData);
+
+            const filteringGoodsData = data.data.filter(
+              (item) => item.tm_dv === "10",
+            );
+            setGoodsCount(filteringGoodsData);
           }
         },
         onError: (error) => {
