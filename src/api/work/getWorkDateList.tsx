@@ -141,11 +141,11 @@ export const getWorkDateList = () => {
           if (data.result === "00") {
             let filteringData: any;
 
-            // NOTE 도착
+            // NOTE 간선상차
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "31");
             }
-            // NOTE 발송
+            // NOTE 간선하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "32");
             }
@@ -190,13 +190,17 @@ export const getWorkDateList = () => {
           if (data.result === "00") {
             let filteringData: any;
 
-            // NOTE 도착
+            // NOTE 영업소상차
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "15");
             }
-            // NOTE 발송
+            // NOTE 영업소하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "50");
+            }
+            // NOTE 상품집하
+            else if (filterOption.receivingShipment === "goods") {
+              filteringData = data.data.filter((item) => item.tm_dv === "10");
             }
 
             setWorkList(filteringData);

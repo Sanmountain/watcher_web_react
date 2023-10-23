@@ -3,6 +3,7 @@ import { colors } from "./palette";
 import { font } from "./typography";
 import { breakPoints } from "./breakPoints";
 import { mediaQuery } from "./mediaQuery";
+import { ILoginState } from "../types/Login.types";
 
 export const Container = styled.div`
   display: flex;
@@ -14,9 +15,12 @@ export const Container = styled.div`
   min-width: calc(${breakPoints.medium}px - 250px);
 `;
 
-export const TopContainer = styled.div`
+export const TopContainer = styled.div<{ $login: ILoginState }>`
   display: grid;
-  grid-template-columns: 1.5fr 1.3fr 1.3fr;
+  grid-template-columns: ${(props) =>
+    props.$login.company === "HANDEX"
+      ? "0.5fr 1fr 1fr 1fr"
+      : "1.5fr 1.3fr 1.3fr"};
   align-items: center;
   justify-items: center;
 
@@ -26,8 +30,9 @@ export const TopContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const Date = styled.div`
-  font-size: 3.3rem;
+export const Date = styled.div<{ $login: ILoginState }>`
+  font-size: ${(props) =>
+    props.$login.company === "HANDEX" ? "2.8rem" : "3.3rem"};
   font-weight: 900;
 `;
 
@@ -47,7 +52,7 @@ export const CountContainer = styled.div`
   `)}
 `;
 
-export const Count = styled.div`
+export const Count = styled.div<{ $login: ILoginState }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,7 +61,8 @@ export const Count = styled.div`
   background-color: ${colors.blue[200]};
   color: ${colors.black[1000]};
   border-radius: 10px;
-  min-width: 220px;
+  min-width: ${(props) =>
+    props.$login.company === "HANDEX" ? "180px" : "220px"};
   width: 50%;
   height: 35px;
   padding: 5px 10px;
