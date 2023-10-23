@@ -33,6 +33,17 @@ export default function Work() {
     { label: "사원", value: "emp_cd" },
   ];
 
+  const handexTitle = [
+    { label: "No.", value: "" },
+    { label: "업무", value: "tm_dv" },
+    { label: "영업소", value: "bran_cd" },
+    { label: "송장", value: "barcode" },
+    { label: "상대", value: "pob" },
+    { label: "날짜", value: "scandate" },
+    { label: "시간", value: "scantime" },
+    { label: "사원", value: "emp_cd" },
+  ];
+
   const login = useRecoilValue(loginState);
   const [filterOption, setFilterOption] = useRecoilState(workFilterState);
   const workList = useRecoilValue(workListState);
@@ -54,13 +65,15 @@ export default function Work() {
       />
       <Table
         title={
-          login.company === "HANJIN" || login.company === "HANDEX"
+          login.company === "HANJIN"
             ? hanjinTitle
+            : login.company === "HANDEX"
+            ? handexTitle
             : title
         }
         contents={workList}
         columns={
-          login.company === "HANJIN" || login.company === "HANDEX" ? 9 : 10
+          login.company === "HANJIN" ? 9 : login.company === "HANDEX" ? 8 : 10
         }
         dateLoading={isDateMutateLoading}
         invoiceLoading={isInvoiceNumberMutateLoading}
