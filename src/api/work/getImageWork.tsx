@@ -14,6 +14,7 @@ import { loginState } from "../../stores/loginState";
 export const getImageWork = (
   setImageUrl: Dispatch<SetStateAction<string>>,
   setIsDisplayImageModal: Dispatch<SetStateAction<boolean>>,
+  scanDate: string | undefined,
 ) => {
   const login = useRecoilValue(loginState);
 
@@ -27,6 +28,7 @@ export const getImageWork = (
           data: [
             {
               barcode,
+              scandate: scanDate,
             },
           ],
         }),
@@ -62,6 +64,7 @@ export const getImageWork = (
           data: [
             {
               barcode,
+              scandate: scanDate,
             },
           ],
         }),
@@ -97,6 +100,7 @@ export const getImageWork = (
           data: [
             {
               barcode,
+              scandate: scanDate,
             },
           ],
         }),
@@ -132,6 +136,7 @@ export const getImageWork = (
           data: [
             {
               barcode,
+              scandate: scanDate,
             },
           ],
         }),

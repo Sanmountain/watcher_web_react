@@ -19,6 +19,7 @@ export default function Table({
   columns,
   dateLoading,
   invoiceLoading,
+  filterOption,
 }: ITableProps) {
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
@@ -29,6 +30,7 @@ export default function Table({
   const { mutate: getImageMutate } = getImageWork(
     setImageUrl,
     setIsDisplayImageModal,
+    filterOption?.date,
   );
 
   const navigate = useNavigate();

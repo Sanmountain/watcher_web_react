@@ -1,4 +1,4 @@
-// import { IWorkListData } from "./Work.types";
+import { IFilterState } from "./Filter.types";
 
 export type ITitle = {
   label: string;
@@ -11,4 +11,5 @@ export interface ITableProps {
   columns: number;
   dateLoading: boolean;
   invoiceLoading: boolean;
+  filterOption?: IFilterState;
 }
