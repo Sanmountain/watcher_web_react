@@ -79,7 +79,11 @@ export default function VassDetail() {
     searchInvoice,
     setRefetchList,
   );
-  const { mutate: imageMutate } = getImage(setImageUrl, setIsDisplayImageModal);
+  const { mutate: imageMutate } = getImage(
+    setImageUrl,
+    setIsDisplayImageModal,
+    nowVassDetail.scandate,
+  );
 
   // NOTE video list 담기
   useEffect(() => {
