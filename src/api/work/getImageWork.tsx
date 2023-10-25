@@ -14,15 +14,19 @@ import { loginState } from "../../stores/loginState";
 export const getImageWork = (
   setImageUrl: Dispatch<SetStateAction<string>>,
   setIsDisplayImageModal: Dispatch<SetStateAction<boolean>>,
-  scanDate: string | undefined,
 ) => {
   const login = useRecoilValue(loginState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
-    return useMutation<IImageResponse, unknown, void, unknown>(
+    return useMutation<
+      IImageResponse,
+      unknown,
+      { barcode: string; scanDate: string },
+      unknown
+    >(
       "getImageWork",
-      (barcode) =>
+      ({ barcode, scanDate }) =>
         LogenInstance.post("/loin", {
           api: "imgGet",
           data: [
@@ -56,9 +60,14 @@ export const getImageWork = (
   }
   // NOTE 롯데
   else if (login.company === "LOTTE") {
-    return useMutation<IImageResponse, unknown, void, unknown>(
+    return useMutation<
+      IImageResponse,
+      unknown,
+      { barcode: string; scanDate: string },
+      unknown
+    >(
       "getImageWork",
-      (barcode) =>
+      ({ barcode, scanDate }) =>
         LotteInstance.post("/loin", {
           api: "imgGet",
           data: [
@@ -92,9 +101,14 @@ export const getImageWork = (
   }
   // NOTE 한진
   else if (login.company === "HANJIN") {
-    return useMutation<IImageResponse, unknown, void, unknown>(
+    return useMutation<
+      IImageResponse,
+      unknown,
+      { barcode: string; scanDate: string },
+      unknown
+    >(
       "getImageWork",
-      (barcode) =>
+      ({ barcode, scanDate }) =>
         HanjinInstance.post("/loin", {
           api: "imgGet",
           data: [
@@ -128,9 +142,14 @@ export const getImageWork = (
   }
   // NOTE 한덱스
   else if (login.company === "HANDEX") {
-    return useMutation<IImageResponse, unknown, void, unknown>(
+    return useMutation<
+      IImageResponse,
+      unknown,
+      { barcode: string; scanDate: string },
+      unknown
+    >(
       "getImageWork",
-      (barcode) =>
+      ({ barcode, scanDate }) =>
         HandexInstance.post("/loin", {
           api: "imgGet",
           data: [
@@ -163,7 +182,12 @@ export const getImageWork = (
     );
   }
 
-  return useMutation<IImageResponse, unknown, void, unknown>(
+  return useMutation<
+    IImageResponse,
+    unknown,
+    { barcode: string; scanDate: string },
+    unknown
+  >(
     "getImageWork",
     () => {
       throw new Error("Invalid company");

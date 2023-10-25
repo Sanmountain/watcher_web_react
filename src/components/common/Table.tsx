@@ -19,7 +19,6 @@ export default function Table({
   columns,
   dateLoading,
   invoiceLoading,
-  filterOption,
 }: ITableProps) {
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
@@ -30,7 +29,6 @@ export default function Table({
   const { mutate: getImageMutate } = getImageWork(
     setImageUrl,
     setIsDisplayImageModal,
-    filterOption?.date,
   );
 
   const navigate = useNavigate();
@@ -44,8 +42,8 @@ export default function Table({
     setPrevVassDetail(contents[index + 1]);
   };
 
-  const onClickImage = (item: any) => {
-    getImageMutate(item.barcode);
+  const onClickImage = (item: IWorkListData) => {
+    getImageMutate({ barcode: item.barcode, scanDate: item.scandate });
   };
 
   return (
