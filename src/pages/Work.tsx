@@ -77,6 +77,7 @@ export default function Work() {
         }
         dateLoading={isDateMutateLoading}
         invoiceLoading={isInvoiceNumberMutateLoading}
+        filterOption={filterOption}
       />
     </>
   );
