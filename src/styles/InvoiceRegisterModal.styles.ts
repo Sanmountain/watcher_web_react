@@ -4,6 +4,7 @@ import { font } from "./typography";
 import { AiOutlineClose } from "react-icons/ai";
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,6 +19,14 @@ export const Container = styled.div`
   background-color: ${colors.black[1000]};
   border: 1px solid ${colors.black[200]};
   border-radius: 10px;
+`;
+
+export const LoadingContainer = styled.div`
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 100%;
+  height: 40%;
 `;
 
 export const TopContainer = styled.div`
