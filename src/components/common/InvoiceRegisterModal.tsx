@@ -12,6 +12,7 @@ import { getRegisterModalStatus } from "../../api/work/getRegisterModalStatus";
 import { useRecoilValue } from "recoil";
 import { workFilterState } from "../../stores/work/workFilterState";
 import { loginState } from "../../stores/loginState";
+import Loading from "./Loading";
 export default function InvoiceRegisterModal({
   setIsDisplayRegisterModal,
 }: IInvoiceRegisterModalProps) {
@@ -42,7 +43,8 @@ export default function InvoiceRegisterModal({
     setRegisterInfo,
     setRegisteredData,
   );
-  const { mutate: registerInvoiceMutate } = registerInvoice();
+  const { mutate: registerInvoiceMutate, isLoading: isRegisterLoading } =
+    registerInvoice(setIsDisplayRegisterModal);
 
   useEffect(() => {
     registerModalStatus();
@@ -136,12 +138,16 @@ export default function InvoiceRegisterModal({
     }
 
     registerInvoiceMutate(finalRegisteredData);
-
-    setIsDisplayRegisterModal(false);
   };
 
   return (
     <S.Container>
+      {isRegisterLoading && (
+        <S.LoadingContainer>
+          <Loading />
+        </S.LoadingContainer>
+      )}
+
       <S.TopContainer>
         송장 등록
         <S.CloseIcon onClick={onClickCloseButton} />
