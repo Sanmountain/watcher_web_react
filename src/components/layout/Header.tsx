@@ -10,10 +10,16 @@ import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import JHCLogo from "../../assets/images/JHC.png";
 import gigaLogo from "../../assets/images/gigaeyes.png";
 import { menuState } from "../../stores/menuState";
+import { workListState } from "../../stores/work/workListState";
+import { workFilterState } from "../../stores/work/workFilterState";
+import { vassFilterState } from "../../stores/vass/vassFilterState";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
   const resetLogin = useResetRecoilState(loginState);
+  const resetWorkFilter = useResetRecoilState(workFilterState);
+  const resetVassFilter = useResetRecoilState(vassFilterState);
+  const resetWorkList = useResetRecoilState(workListState);
   const resetVassList = useResetRecoilState(vassListState);
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
@@ -30,6 +36,9 @@ export default function Header() {
       resetLogin();
     }
 
+    resetWorkFilter();
+    resetVassFilter();
+    resetWorkList();
     resetVassList();
     resetNowVassDetail();
     resetPrevVassDetail();

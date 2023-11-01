@@ -19,6 +19,10 @@ export default function Table({
   columns,
   dateLoading,
   invoiceLoading,
+  checkedItems,
+  setCheckedItems,
+  allChecked,
+  setAllChecked,
 }: ITableProps) {
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
@@ -46,12 +50,57 @@ export default function Table({
     getImageMutate({ barcode: item.barcode, scanDate: item.scandate });
   };
 
+  // NOTE 체크박스 전체 선택,해제
+  const handleCheckAll = () => {
+    if (setCheckedItems && setAllChecked) {
+      if (allChecked) {
+        setCheckedItems([]);
+      } else {
+        const newCheckedItems = contents.map((item) => ({
+          barcode: item.barcode,
+          scandate: item.scandate,
+        }));
+        setCheckedItems(newCheckedItems);
+      }
+      setAllChecked(!allChecked);
+    }
+  };
+
+  // NOTE 체크박스 개별 선택,해제
+  const handleCheckItem = (barcode: string, scandate: string) => {
+    if (checkedItems && setCheckedItems && setAllChecked) {
+      const newCheckedItems = checkedItems.some(
+        (item) => item.barcode === barcode && item.scandate === scandate,
+      )
+        ? checkedItems.filter(
+            (item) => item.barcode !== barcode || item.scandate !== scandate,
+          )
+        : [...checkedItems, { barcode, scandate }];
+
+      setCheckedItems(newCheckedItems);
+
+      // NOTE 모든 checkbox 체크 된 경우 전체 선택 체크박스 체크
+      setAllChecked(newCheckedItems.length === contents.length);
+    }
+  };
+
   return (
     <>
       <S.Container>
         <S.TitleContainer
           $columns={login.camUsable === "2" ? columns : columns + 1}
         >
+          {WORK_PAGE && (
+            <S.Title>
+              <input
+                type="checkbox"
+                id="checkAll"
+                checked={allChecked}
+                disabled={contents.length < 1}
+                onChange={handleCheckAll}
+              />
+            </S.Title>
+          )}
           {title.map((item) => (
             <S.Title key={item.label}>{item.label}</S.Title>
           ))}
@@ -67,6 +116,22 @@ export default function Table({
                 $columns={login.camUsable === "2" ? columns : columns + 1}
                 key={item.id}
               >
+                {WORK_PAGE && (
+                  <S.Contents>
+                    <input
+                      type="checkbox"
+                      id={`checkbox-${item.id}`}
+                      checked={checkedItems?.some(
+                        (checkedItem) =>
+                          checkedItem.barcode === item.barcode &&
+                          checkedItem.scandate === item.scandate,
+                      )}
+                      onChange={() =>
+                        handleCheckItem(item.barcode, item.scandate)
+                      }
+                    />
+                  </S.Contents>
+                )}
                 {title.map((el) => (
                   <S.Contents key={el.label}>
                     {!el.value ? (

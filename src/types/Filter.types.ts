@@ -1,5 +1,7 @@
 import { UseMutateFunction } from "react-query";
 import { SetterOrUpdater } from "recoil";
+import { ICheckedItems } from "./Work.types";
+import { Dispatch, SetStateAction } from "react";
 
 export interface IFilterState {
   receivingShipment: "receive" | "shipment";
@@ -12,4 +14,7 @@ export interface IFilterProps {
   setFilterOption: SetterOrUpdater<IFilterState>;
   dateMutate: UseMutateFunction<any, unknown, void, unknown>;
   invoiceMutate: UseMutateFunction<any, unknown, void, unknown>;
+  checkedItems?: ICheckedItems[];
+  setCheckedItems?: Dispatch<SetStateAction<ICheckedItems[]>>;
+  setAllChecked?: Dispatch<SetStateAction<boolean>>;
 }

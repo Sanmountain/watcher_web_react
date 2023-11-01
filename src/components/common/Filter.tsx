@@ -14,17 +14,23 @@ import { numberWithCommas } from "../../utils/numberWithCommas";
 import { getAutoCheck } from "../../api/work/getAutoCheck";
 import { getAutoChange } from "../../api/work/getAutoChange";
 import { loginState } from "../../stores/loginState";
+import TmDvEditModal from "./TmDvEditModal";
 
 export default function Filter({
   filterOption,
   setFilterOption,
   dateMutate,
   invoiceMutate,
+  checkedItems,
+  setCheckedItems,
+  setAllChecked,
 }: IFilterProps) {
   const login = useRecoilValue(loginState);
   const [isDisplayRegisterModal, setIsDisplayRegisterModal] = useState(false);
   // NOTE 토글
   const [isOn, setIsOn] = useState(false);
+  // NOTE 업무수정 모달
+  const [isOpen, setIsOpen] = useState(false);
 
   const workList = useRecoilValue(workListState);
   const vassList = useRecoilValue(vassListState);
@@ -57,10 +63,20 @@ export default function Filter({
 
   const onClickDateSearch = () => {
     dateMutate();
+
+    if (setCheckedItems && setAllChecked) {
+      setCheckedItems([]);
+      setAllChecked(false);
+    }
   };
 
   const onClickInvoiceSearch = () => {
     invoiceMutate();
+
+    if (setCheckedItems && setAllChecked) {
+      setCheckedItems([]);
+      setAllChecked(false);
+    }
   };
 
   // NOTE 자동,수동 변환
@@ -80,10 +96,18 @@ export default function Filter({
     sendInvoiceMutate();
   };
 
+  // NOTE 업무 수정
+  const handleEditTmDv = () => {
+    setIsOpen(true);
+  };
+
   return (
     <>
       <S.Container $isWorkPage={WORK_PAGE}>
-        <S.FilterContainer>
+        <S.FilterContainer
+          className="item1"
+          $isLogen={login.company === "LOGEN"}
+        >
           <S.FilterTitle>스캔수량</S.FilterTitle>{" "}
           {(WORK_PAGE && numberWithCommas(workList.length)) ||
             (VASS_PAGE && numberWithCommas(vassList.length)) ||
@@ -115,22 +139,24 @@ export default function Filter({
             )}
           </S.SelectBox>
           <S.Input
+            className="date"
             type="date"
             name="date"
             defaultValue={filterOption.date}
             onChange={handleFilter}
           />
-          <S.ButtonContainer>
-            <CommonButton
-              contents="검색"
-              onClickFn={onClickDateSearch}
-              height="100%"
-              backgroundColor="#010163"
-            />
-          </S.ButtonContainer>
+          <CommonButton
+            contents="검색"
+            onClickFn={onClickDateSearch}
+            height="100%"
+            backgroundColor="#010163"
+          />
         </S.FilterContainer>
 
-        <S.FilterContainer>
+        <S.FilterContainer
+          className="item2"
+          $isLogen={login.company === "LOGEN"}
+        >
           <S.FilterTitle>송장조회</S.FilterTitle>
           <S.Input
             placeholder="송장번호 입력"
@@ -138,65 +164,68 @@ export default function Filter({
             defaultValue={filterOption.invoiceNumber}
             onChange={handleFilter}
           />
-          <S.ButtonContainer>
-            <CommonButton
-              contents="검색"
-              onClickFn={onClickInvoiceSearch}
-              height="100%"
-              backgroundColor="#010163"
-            />
-          </S.ButtonContainer>
+          <CommonButton
+            contents="검색"
+            onClickFn={onClickInvoiceSearch}
+            height="100%"
+            backgroundColor="#010163"
+          />
         </S.FilterContainer>
 
         {!VASS_PAGE && (
-          <>
-            <S.FilterContainer className="noDisplay" />
-            <S.FilterContainer className="register">
-              {(login.company === "LOGEN" || login.company === "LOTTE") && (
-                <>
-                  <S.SubmitButtonContainer>
-                    <CommonButton
-                      contents="송장 등록"
-                      onClickFn={onClickRegisterInvoice}
-                      height="100%"
-                      backgroundColor="green"
-                    />
-                  </S.SubmitButtonContainer>
-                  <S.SubmitButtonContainer>
-                    <CommonButton
-                      className="ilogenBtn"
-                      contents={
-                        login.company === "LOGEN"
-                          ? "아이로젠 바로 전송"
-                          : "알프스 바로 전송"
-                      }
-                      onClickFn={onClickSendInvoice}
-                      height="100%"
-                      backgroundColor="green"
-                    />
-                  </S.SubmitButtonContainer>
-                </>
-              )}
-              {login.company === "LOGEN" && (
-                <>
-                  <S.FilterTitle className="autoBtn"> 자동여부</S.FilterTitle>
-                  <S.ToggleContainer onClick={handleToggle}>
-                    <div
-                      className={`toggle-container ${
-                        isOn ? "toggle--checked" : null
-                      }`}
-                    />
-                    <div
-                      className={`toggle-circle ${
-                        isOn ? "toggle--checked" : null
-                      }`}
-                    />
-                  </S.ToggleContainer>
-                  <div className="toggleLabel">{isOn ? "자동" : "수동"}</div>
-                </>
-              )}
-            </S.FilterContainer>
-          </>
+          <S.FilterContainer
+            className="register item3"
+            $isLogen={login.company === "LOGEN"}
+          >
+            {login.company === "LOGEN" && (
+              <S.RegisterContainer>
+                <S.FilterTitle className="autoBtn"> 자동여부</S.FilterTitle>
+                <S.ToggleContainer onClick={handleToggle}>
+                  <div
+                    className={`toggle-container ${
+                      isOn ? "toggle--checked" : null
+                    }`}
+                  />
+                  <div
+                    className={`toggle-circle ${
+                      isOn ? "toggle--checked" : null
+                    }`}
+                  />
+                </S.ToggleContainer>
+                <S.ToggleLabel>{isOn ? "자동" : "수동"}</S.ToggleLabel>
+              </S.RegisterContainer>
+            )}
+
+            {(login.company === "LOGEN" || login.company === "LOTTE") && (
+              <S.RegisterContainer>
+                <CommonButton
+                  contents="송장 등록"
+                  onClickFn={onClickRegisterInvoice}
+                  height="100%"
+                  backgroundColor="green"
+                />
+                <CommonButton
+                  contents={
+                    login.company === "LOGEN"
+                      ? "아이로젠 바로 전송"
+                      : "알프스 바로 전송"
+                  }
+                  onClickFn={onClickSendInvoice}
+                  height="100%"
+                  backgroundColor="green"
+                />
+              </S.RegisterContainer>
+            )}
+
+            <S.RegisterContainer>
+              <CommonButton
+                contents="업무 수정"
+                onClickFn={handleEditTmDv}
+                height="100%"
+                backgroundColor="#010163"
+              />
+            </S.RegisterContainer>
+          </S.FilterContainer>
         )}
       </S.Container>
 
@@ -210,6 +239,14 @@ export default function Filter({
         <S.LoadingContainer>
           <Loading />
         </S.LoadingContainer>
+      )}
+
+      {isOpen && (
+        <TmDvEditModal
+          checkedItems={checkedItems}
+          setCheckedItems={setCheckedItems}
+          setIsOpen={setIsOpen}
+        />
       )}
     </>
   );

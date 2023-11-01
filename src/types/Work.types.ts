@@ -30,3 +30,8 @@ export interface IWorkListResponse {
   message: string;
   data: IWorkListData[];
 }
+
+export interface ICheckedItems {
+  barcode: string;
+  scandate: string;
+}

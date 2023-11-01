@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import { workListState } from "../../stores/work/workListState";
 import Swal from "sweetalert2";
 
-export const getWorkDateList = () => {
+export const getWorkDateList = (isTmDvModal?: boolean) => {
   const login = useRecoilValue(loginState);
   const filterOption = useRecoilValue(workFilterState);
   const setWorkList = useSetRecoilState(workListState);
@@ -54,11 +54,13 @@ export const getWorkDateList = () => {
 
             setWorkList(filteringData);
 
-            Swal.fire({
-              icon: "success",
-              title: "조회 성공",
-              confirmButtonText: "확인",
-            });
+            if (!isTmDvModal) {
+              Swal.fire({
+                icon: "success",
+                title: "조회 성공",
+                confirmButtonText: "확인",
+              });
+            }
           }
         },
         onError: (error) => {
@@ -103,11 +105,13 @@ export const getWorkDateList = () => {
 
             setWorkList(filteringData);
 
-            Swal.fire({
-              icon: "success",
-              title: "조회 성공",
-              confirmButtonText: "확인",
-            });
+            if (!isTmDvModal) {
+              Swal.fire({
+                icon: "success",
+                title: "조회 성공",
+                confirmButtonText: "확인",
+              });
+            }
           }
         },
         onError: (error) => {
@@ -152,11 +156,13 @@ export const getWorkDateList = () => {
 
             setWorkList(filteringData);
 
-            Swal.fire({
-              icon: "success",
-              title: "조회 성공",
-              confirmButtonText: "확인",
-            });
+            if (!isTmDvModal) {
+              Swal.fire({
+                icon: "success",
+                title: "조회 성공",
+                confirmButtonText: "확인",
+              });
+            }
           }
         },
         onError: (error) => {
@@ -205,11 +211,13 @@ export const getWorkDateList = () => {
 
             setWorkList(filteringData);
 
-            Swal.fire({
-              icon: "success",
-              title: "조회 성공",
-              confirmButtonText: "확인",
-            });
+            if (!isTmDvModal) {
+              Swal.fire({
+                icon: "success",
+                title: "조회 성공",
+                confirmButtonText: "확인",
+              });
+            }
           }
         },
         onError: (error) => {
