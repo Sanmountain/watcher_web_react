@@ -20,20 +20,12 @@ export default function CommonButton({
   backgroundColor,
   className,
 }: ICommonButtonProps) {
-  const getWidth = (
-    className: string | undefined,
-    width: string | undefined,
-  ): string => {
-    if (className === "ilogenBtn") return "170px";
-    return width || "100%";
-  };
-
   return (
     <Button
       $isRound={$isRound}
       onClick={onClickFn}
-      width={getWidth(className, width)}
-      height={height}
+      $width={width}
+      $height={height}
       $backgroundColor={backgroundColor}
       className={className}
     >
@@ -44,15 +36,15 @@ export default function CommonButton({
 
 const Button = styled.button<{
   $isRound?: boolean;
-  width?: string;
-  height?: string;
+  $width?: string;
+  $height?: string;
   $backgroundColor?: string;
 }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 
   background-color: ${(props) => props.$backgroundColor || colors.blue[300]};
@@ -60,8 +52,8 @@ const Button = styled.button<{
   padding: 5px 15px;
   border: 1px solid ${(props) => props.$backgroundColor || colors.blue[300]};
   border-radius: ${(props) => (props.$isRound ? "20px" : "10px")};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height || "120%"};
+  width: ${(props) => props.$width || "fit-content"};
+  height: ${(props) => props.$height || "120%"};
   cursor: pointer;
 
   &:hover {

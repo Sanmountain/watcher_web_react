@@ -16,7 +16,10 @@ export const Container = styled.div`
 
 export const TitleContainer = styled.div<{ $columns: number }>`
   display: grid;
-  grid-template-columns: ${(props) => `repeat(${props.$columns}, 1fr)`};
+  grid-template-columns: 0.5fr 0.7fr 0.7fr repeat(
+      ${(props) => props.$columns - 3},
+      1fr
+    );
   align-items: center;
   justify-items: center;
 
@@ -61,7 +64,10 @@ export const ContentsList = styled.div<{ $isWorkPage: boolean }>`
 
 export const ContentsContainer = styled.div<{ $columns: number }>`
   display: grid;
-  grid-template-columns: ${(props) => `repeat(${props.$columns}, 1fr)`};
+  grid-template-columns: 0.5fr 0.7fr 0.7fr repeat(
+      ${(props) => props.$columns - 3},
+      1fr
+    );
   align-items: center;
   justify-items: center;
 

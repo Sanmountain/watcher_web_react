@@ -6,68 +6,63 @@ import { breakPoints } from "./breakPoints";
 
 export const Container = styled.div<{ $isWorkPage: boolean }>`
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1.4fr;
+  grid-template-columns: 1.4fr 1fr 2fr;
   align-items: center;
   width: 98%;
   min-width: calc(${breakPoints.medium}px - 230px);
   height: 65px;
   margin-left: 1%;
-  padding-left: 0.5%;
   position: sticky;
   top: 70px;
   background-color: ${colors.black[1000]};
 
-  ${mediaQuery.large(`
-    grid-template-columns: 1.5fr 1.1fr 0.8fr;
-    padding-left: 0;
-  `)}
-
   ${(props) =>
     props.$isWorkPage
-      ? mediaQuery.largeMedium(`
-          grid-template-columns: 1.3fr 1fr;
-          grid-template-rows: 1fr 1fr;
+      ? mediaQuery.large(`
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      .item1 { grid-column: span 1; }
+      .item2 { grid-column: span 1; }
+      .item3 { grid-column: span 2; }
           height: 110px;
         `)
-      : mediaQuery.largeMedium(`
+      : mediaQuery.large(`
           grid-template-columns: 1.3fr 1fr;
   `)}
 `;
 
-export const FilterContainer = styled.div`
+export const FilterContainer = styled.div<{ $isLogen: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 100%;
   gap: 10px;
   font-size: ${font.fontSize[200]};
 
   ${mediaQuery.large(`
     gap: 10px;
     font-size: ${font.fontSize[300]};
+    justify-content: center;
   `)}
 
   ${mediaQuery.largeMedium(`
       padding-left: 2%;
       width: 98%;
-  `)}
-
-  &.noDisplay {
-    display: none;
-
-    ${mediaQuery.largeMedium(`
-      display: flex; 
-  `)}
-  }
-
+  `)} 
+  
   &.register {
-    width: 110%;
-    justify-content: left;
+    justify-content: ${(props) => (props.$isLogen ? "center" : "flex-start")};
 
-    ${mediaQuery.largeMedium(`
-      justify-content: center;
-  `)}
+    ${mediaQuery.large(`
+        justify-content: center;
+        gap: 50px;
+    `)}
   }
+`;
+
+export const RegisterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 export const AutoTitle = styled.span`
@@ -84,10 +79,11 @@ export const AutoTitle = styled.span`
 
 export const ToggleContainer = styled.div`
   position: relative;
+  cursor: pointer;
 
   > .toggle-container {
-    width: 63px;
-    height: 28px;
+    width: 55px;
+    height: 27px;
     border-radius: 16px;
     background-color: ${colors.black[600]};
   }
@@ -100,8 +96,8 @@ export const ToggleContainer = styled.div`
     position: absolute;
     margin-top: 2px;
 
-    top: 2px;
-    left: 2px;
+    top: 1px;
+    left: 1px;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -110,9 +106,14 @@ export const ToggleContainer = styled.div`
     transition: 0.3s;
   }
   > .toggle--checked {
-    left: 34px;
+    left: 33px;
     transition: 0.3s;
   }
+`;
+
+export const ToggleLabel = styled.div`
+  margin-right: 10px;
+  font-size: ${font.fontSize[300]};
 `;
 
 export const FilterTitle = styled.div`
@@ -134,31 +135,25 @@ export const FilterTitle = styled.div`
   `)}
 
   &.autoBtn {
-    margin-left: 30px;
+    margin-left: 20px;
   }
 `;
 
 export const SelectBox = styled.select`
-  min-width: 110px;
+  width: 90px;
   height: 30px;
   border-radius: 5px;
 `;
 
 export const Input = styled.input`
-  min-width: 110px;
+  width: 130px;
   height: 27px;
   border-radius: 5px;
   border-width: 1px;
-`;
 
-export const ButtonContainer = styled.div`
-  width: 75px;
-  height: 30px;
-`;
-
-export const SubmitButtonContainer = styled.div`
-  width: 140px;
-  height: 30px;
+  &.date {
+    width: 100px;
+  }
 `;
 
 export const LoadingContainer = styled.div`
