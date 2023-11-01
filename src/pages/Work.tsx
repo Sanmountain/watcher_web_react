@@ -91,7 +91,7 @@ export default function Work() {
         }
         contents={workList}
         columns={
-          login.company === "HANJIN" ? 10 : login.company === "HANDEX" ? 9 : 11
+          login.company === "HANJIN" ? 9 : login.company === "HANDEX" ? 8 : 11
         }
         dateLoading={isDateMutateLoading}
         invoiceLoading={isInvoiceNumberMutateLoading}

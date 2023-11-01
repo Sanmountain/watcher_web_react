@@ -90,17 +90,18 @@ export default function Table({
         <S.TitleContainer
           $columns={login.camUsable === "2" ? columns : columns + 1}
         >
-          {WORK_PAGE && (
-            <S.Title>
-              <input
-                type="checkbox"
-                id="checkAll"
-                checked={allChecked}
-                disabled={contents.length < 1}
-                onChange={handleCheckAll}
-              />
-            </S.Title>
-          )}
+          {WORK_PAGE &&
+            (login.company === "LOGEN" || login.company === "LOTTE") && (
+              <S.Title>
+                <input
+                  type="checkbox"
+                  id="checkAll"
+                  checked={allChecked}
+                  disabled={contents.length < 1}
+                  onChange={handleCheckAll}
+                />
+              </S.Title>
+            )}
           {title.map((item) => (
             <S.Title key={item.label}>{item.label}</S.Title>
           ))}
@@ -116,22 +117,23 @@ export default function Table({
                 $columns={login.camUsable === "2" ? columns : columns + 1}
                 key={item.id}
               >
-                {WORK_PAGE && (
-                  <S.Contents>
-                    <input
-                      type="checkbox"
-                      id={`checkbox-${item.id}`}
-                      checked={checkedItems?.some(
-                        (checkedItem) =>
-                          checkedItem.barcode === item.barcode &&
-                          checkedItem.scandate === item.scandate,
-                      )}
-                      onChange={() =>
-                        handleCheckItem(item.barcode, item.scandate)
-                      }
-                    />
-                  </S.Contents>
-                )}
+                {WORK_PAGE &&
+                  (login.company === "LOGEN" || login.company === "LOTTE") && (
+                    <S.Contents>
+                      <input
+                        type="checkbox"
+                        id={`checkbox-${item.id}`}
+                        checked={checkedItems?.some(
+                          (checkedItem) =>
+                            checkedItem.barcode === item.barcode &&
+                            checkedItem.scandate === item.scandate,
+                        )}
+                        onChange={() =>
+                          handleCheckItem(item.barcode, item.scandate)
+                        }
+                      />
+                    </S.Contents>
+                  )}
                 {title.map((el) => (
                   <S.Contents key={el.label}>
                     {!el.value ? (
