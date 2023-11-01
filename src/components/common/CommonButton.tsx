@@ -25,7 +25,7 @@ export default function CommonButton({
     width: string | undefined,
   ): string => {
     if (className === "ilogenBtn") return "170px";
-    return width || "100%";
+    return width || "fit-content";
   };
 
   return (
@@ -52,7 +52,7 @@ const Button = styled.button<{
   align-items: center;
   justify-content: center;
 
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 
   background-color: ${(props) => props.$backgroundColor || colors.blue[300]};
