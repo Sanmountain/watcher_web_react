@@ -6,6 +6,7 @@ import { loginState } from "../../stores/loginState";
 import { ChangeEvent, useState } from "react";
 import { editTmDv } from "../../api/work/editTmDv";
 import { getWorkDateList } from "../../api/work/getWorkDateList";
+import Swal from "sweetalert2";
 
 export default function TmDvEditModal({
   checkedItems,
@@ -44,6 +45,17 @@ export default function TmDvEditModal({
   };
 
   const handleClickChangeTmDv = () => {
+    if (checkedItems) {
+      // NOTE 선택한 송장리스트가 없을 경우 return처리
+      if (checkedItems.length < 1) {
+        Swal.fire({
+          icon: "warning",
+          title: "수정할 송장번호를 선택해주세요.",
+          confirmButtonText: "확인",
+        });
+        return;
+      }
+    }
     editTmDvMutate();
   };
 
@@ -54,6 +66,7 @@ export default function TmDvEditModal({
       </S.TopContainer>
       <S.ContentsContainer>
         <S.Title>업무구분 수정</S.Title>
+        <S.Count>{checkedItems?.length} 건</S.Count>
         {login.company === "LOGEN" && (
           <S.SelectBox onChange={handleSelectBox}>
             <option value="60">60 (배송입고)</option>

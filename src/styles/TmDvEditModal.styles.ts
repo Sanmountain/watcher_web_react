@@ -51,6 +51,10 @@ export const Title = styled.div`
   font-weight: 700;
 `;
 
+export const Count = styled.div`
+  font-size: 15px;
+`;
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
