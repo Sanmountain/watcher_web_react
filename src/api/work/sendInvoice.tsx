@@ -6,8 +6,12 @@ import { workFilterState } from "../../stores/work/workFilterState";
 import { loginState } from "../../stores/loginState";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import { Dispatch, SetStateAction } from "react";
 
-export const sendInvoice = () => {
+export const sendInvoice = (
+  isTmDvModal?: boolean,
+  setIsOpen?: Dispatch<SetStateAction<boolean>>,
+) => {
   const filterOption = useRecoilValue(workFilterState);
   const login = useRecoilValue(loginState);
 
@@ -34,11 +38,23 @@ export const sendInvoice = () => {
       {
         onSuccess: (data) => {
           if (data.result === "00") {
-            Swal.fire({
-              icon: "success",
-              title: "전송완료",
-              confirmButtonText: "확인",
-            });
+            if (!isTmDvModal) {
+              Swal.fire({
+                icon: "success",
+                title: "전송완료",
+                confirmButtonText: "확인",
+              });
+            }
+
+            // NOTE TmDv 모달에서 전송될 경우
+            if (isTmDvModal && setIsOpen) {
+              Swal.fire({
+                icon: "success",
+                title: "수정 완료되었습니다.",
+                confirmButtonText: "확인",
+              });
+              setIsOpen(false);
+            }
           }
         },
         onError: (error) => {
@@ -78,18 +94,24 @@ export const sendInvoice = () => {
                 text: `${data.data[0].fail_list[0]}`,
                 confirmButtonText: "확인",
               });
-            } else
-              Swal.fire({
-                icon: "success",
-                title: "전송완료",
-                confirmButtonText: "확인",
-              });
-          } else {
-            Swal.fire({
-              icon: "warning",
-              title: "통신오류",
-              confirmButtonText: "확인",
-            });
+            } else {
+              if (!isTmDvModal) {
+                Swal.fire({
+                  icon: "success",
+                  title: "전송완료",
+                  confirmButtonText: "확인",
+                });
+              }
+              // NOTE TmDv 모달에서 전송될 경우
+              if (isTmDvModal && setIsOpen) {
+                Swal.fire({
+                  icon: "success",
+                  title: "수정 완료되었습니다.",
+                  confirmButtonText: "확인",
+                });
+                setIsOpen(false);
+              }
+            }
           }
         },
         onError: (error) => {

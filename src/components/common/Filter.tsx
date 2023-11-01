@@ -91,7 +91,7 @@ export default function Filter({
     setIsDisplayRegisterModal(true);
   };
 
-  // NOTE i롯데 전송
+  // NOTE i롯데,알프스 전송
   const onClickSendInvoice = () => {
     sendInvoiceMutate();
   };
@@ -130,7 +130,14 @@ export default function Filter({
                 <option value="shipment">발송</option>
               </>
             )}
-            {(login.company === "HANJIN" || login.company === "HANDEX") && (
+
+            {login.company === "HANJIN" && (
+              <>
+                <option value="receive">간선상차</option>
+                <option value="shipment">간선하차</option>
+              </>
+            )}
+            {login.company === "HANDEX" && (
               <>
                 <option value="receive">영업소상차</option>
                 <option value="shipment">영업소하차</option>
@@ -217,14 +224,16 @@ export default function Filter({
               </S.RegisterContainer>
             )}
 
-            <S.RegisterContainer>
-              <CommonButton
-                contents="업무 수정"
-                onClickFn={handleEditTmDv}
-                height="100%"
-                backgroundColor="#010163"
-              />
-            </S.RegisterContainer>
+            {(login.company === "LOGEN" || login.company === "LOTTE") && (
+              <S.RegisterContainer>
+                <CommonButton
+                  contents="업무 수정"
+                  onClickFn={handleEditTmDv}
+                  height="100%"
+                  backgroundColor="#010163"
+                />
+              </S.RegisterContainer>
+            )}
           </S.FilterContainer>
         )}
       </S.Container>

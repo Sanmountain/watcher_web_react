@@ -7,6 +7,8 @@ import { ChangeEvent, useState } from "react";
 import { editTmDv } from "../../api/work/editTmDv";
 import { getWorkDateList } from "../../api/work/getWorkDateList";
 import Swal from "sweetalert2";
+import { sendInvoice } from "../../api/work/sendInvoice";
+import Loading from "./Loading";
 
 export default function TmDvEditModal({
   checkedItems,
@@ -25,14 +27,18 @@ export default function TmDvEditModal({
   );
   const [isTmDvModal] = useState(true);
 
+  // NOTE list refetch
   const { mutate: workDateListMutate } = getWorkDateList(isTmDvModal);
+  // NOTE i로젠, 알프스
+  const { mutate: sendInvoiceMutate, isLoading: isSendInvoiceLoading } =
+    sendInvoice(isTmDvModal, setIsOpen);
 
-  const { mutate: editTmDvMutate } = editTmDv(
+  const { mutate: editTmDvMutate, isLoading: isEditTmDvLoading } = editTmDv(
     checkedItems,
     setCheckedItems,
     changedTmDv,
-    setIsOpen,
     workDateListMutate,
+    sendInvoiceMutate,
   );
 
   const handleClose = () => {
@@ -56,6 +62,7 @@ export default function TmDvEditModal({
         return;
       }
     }
+
     editTmDvMutate();
   };
 
@@ -92,7 +99,7 @@ export default function TmDvEditModal({
             <option value="10">10 (상품집하)</option>
           </S.SelectBox>
         )}
-
+        {(isSendInvoiceLoading || isEditTmDvLoading) && <Loading />}
         <S.ButtonContainer>
           <CommonButton
             contents="수정"

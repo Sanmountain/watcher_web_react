@@ -20,11 +20,13 @@ export const Container = styled.div<{ $isWorkPage: boolean }>`
     props.$isWorkPage
       ? mediaQuery.large(`
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
+      grid-template-rows: auto;
+      height: 80px;
+
       .item1 { grid-column: span 1; }
       .item2 { grid-column: span 1; }
       .item3 { grid-column: span 2; }
-          height: 110px;
+          
         `)
       : mediaQuery.large(`
           grid-template-columns: 1.3fr 1fr;
