@@ -170,7 +170,12 @@ export default function Login() {
         </S.SaveContainer>
 
         <S.LoginButtonContainer>
-          <CommonButton contents="로그인" onClickFn={onClickLogin} $isRound />
+          <CommonButton
+            contents="로그인"
+            onClickFn={onClickLogin}
+            $isRound
+            width="100%"
+          />
         </S.LoginButtonContainer>
 
         <S.BottomContainer>
