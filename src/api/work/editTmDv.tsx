@@ -72,6 +72,7 @@ export const editTmDv = (
       () =>
         LotteInstance.post("/distinguish", {
           list: checkItems,
+          tm_dv: changedTmDv,
           bran_cd: login.branchCode,
           company: login.company,
         }),
@@ -111,6 +112,7 @@ export const editTmDv = (
       () =>
         HanjinInstance.post("/distinguish", {
           list: checkItems,
+          tm_dv: changedTmDv,
           bran_cd: login.branchCode,
           company: login.company,
         }),
@@ -150,6 +152,7 @@ export const editTmDv = (
       () =>
         HandexInstance.post("/distinguish", {
           list: checkItems,
+          tm_dv: changedTmDv,
           bran_cd: login.branchCode,
           company: login.company,
         }),
