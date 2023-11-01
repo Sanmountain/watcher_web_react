@@ -130,7 +130,14 @@ export default function Filter({
                 <option value="shipment">발송</option>
               </>
             )}
-            {(login.company === "HANJIN" || login.company === "HANDEX") && (
+
+            {login.company === "HANJIN" && (
+              <>
+                <option value="receive">간선상차</option>
+                <option value="shipment">간선하차</option>
+              </>
+            )}
+            {login.company === "HANDEX" && (
               <>
                 <option value="receive">영업소상차</option>
                 <option value="shipment">영업소하차</option>
