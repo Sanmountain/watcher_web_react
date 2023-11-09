@@ -46,7 +46,7 @@ export const getImageWork = (
             } else {
               Swal.fire({
                 icon: "warning",
-                title: "이미지가 없는 송장번호입니다.",
+                title: "오토스캐너 PC에서 사진 전송을 해주세요.",
                 confirmButtonText: "확인",
               });
             }
@@ -94,7 +94,7 @@ export const getImageWork = (
             } else {
               Swal.fire({
                 icon: "warning",
-                title: "이미지가 없는 송장번호입니다.",
+                title: "오토스캐너 PC에서 사진 전송을 해주세요.",
                 confirmButtonText: "확인",
               });
             }
@@ -142,7 +142,7 @@ export const getImageWork = (
             } else {
               Swal.fire({
                 icon: "warning",
-                title: "이미지가 없는 송장번호입니다.",
+                title: "오토스캐너 PC에서 사진 전송을 해주세요.",
                 confirmButtonText: "확인",
               });
             }
@@ -190,7 +190,7 @@ export const getImageWork = (
             } else {
               Swal.fire({
                 icon: "warning",
-                title: "이미지가 없는 송장번호입니다.",
+                title: "오토스캐너 PC에서 사진 전송을 해주세요.",
                 confirmButtonText: "확인",
               });
             }
