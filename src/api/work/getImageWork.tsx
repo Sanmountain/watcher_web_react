@@ -50,6 +50,13 @@ export const getImageWork = (
                 confirmButtonText: "확인",
               });
             }
+          } else if (data.result === "04") {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: "이미지 조회에 실패했습니다.",
+              confirmButtonText: "확인",
+            });
           }
         },
         onError: (error) => {
@@ -91,6 +98,13 @@ export const getImageWork = (
                 confirmButtonText: "확인",
               });
             }
+          } else if (data.result === "04") {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: "이미지 조회에 실패했습니다.",
+              confirmButtonText: "확인",
+            });
           }
         },
         onError: (error) => {
@@ -132,6 +146,13 @@ export const getImageWork = (
                 confirmButtonText: "확인",
               });
             }
+          } else if (data.result === "04") {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: "이미지 조회에 실패했습니다.",
+              confirmButtonText: "확인",
+            });
           }
         },
         onError: (error) => {
@@ -173,6 +194,13 @@ export const getImageWork = (
                 confirmButtonText: "확인",
               });
             }
+          } else if (data.result === "04") {
+            Swal.fire({
+              title: "Error!",
+              icon: "error",
+              text: "이미지 조회에 실패했습니다.",
+              confirmButtonText: "확인",
+            });
           }
         },
         onError: (error) => {
