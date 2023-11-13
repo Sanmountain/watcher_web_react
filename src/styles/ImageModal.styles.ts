@@ -5,7 +5,7 @@ import { colors } from "./palette";
 export const ModalContainer = styled.div`
   position: fixed;
   top: 70px;
-  left: 10px;
+  right: 30px;
 
   background-color: ${colors.black[1000]};
   border-radius: 10px;
@@ -90,6 +90,23 @@ export const ImageControlButton = styled.button`
   &.rotateBtn {
     left: 150px;
   }
+`;
+
+export const BrightnessInfo = styled.div`
+  position: fixed;
+  left: 230px;
+  top: 18px;
+  font-size: ${font.fontSize[300]};
+  font-weight: bold;
+  color: ${colors.blue[200]};
+`;
+
+export const BrightnessSlider = styled.input`
+  position: fixed;
+  left: 270px;
+  top: 15px;
+  width: 150px;
+  height: 15px;
 `;
 
 export const Info = styled.p`

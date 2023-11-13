@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   Dispatch,
   MouseEvent,
   SetStateAction,
@@ -21,6 +22,7 @@ export default function ImageModal({
 }: IImageModalProps) {
   const [rotation, setRotation] = useState(180);
   const [modalSize, setModalSize] = useState("medium");
+  const [brightness, setBrightness] = useState(100);
 
   const imgRef = useRef<HTMLImageElement | null>(null);
 
@@ -52,6 +54,10 @@ export default function ImageModal({
     setModalSize("medium");
   };
 
+  const handleBrightnessSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setBrightness(Number(e.target.value));
+  };
+
   return (
     <Draggable handle="#modalContainer" cancel=".react-transform-wrapper">
       <S.ModalContainer
@@ -73,7 +79,10 @@ export default function ImageModal({
                   src={imageUrl}
                   alt="바코드"
                   ref={imgRef}
-                  style={{ transform: `rotate(${rotation}deg)` }}
+                  style={{
+                    transform: `rotate(${rotation}deg)`,
+                    filter: `brightness(${brightness}%)`,
+                  }}
                 />
               </TransformComponent>
 
@@ -95,6 +104,16 @@ export default function ImageModal({
               >
                 ↷ 회전
               </S.ImageControlButton>
+              <S.BrightnessInfo>밝기</S.BrightnessInfo>
+              <S.BrightnessSlider
+                type="range"
+                min={100}
+                max={500}
+                step={1}
+                value={brightness}
+                onChange={handleBrightnessSliderChange}
+                className="react-transform-wrapper"
+              />
 
               <S.Info>마우스 휠로 확대, 축소가 가능합니다.</S.Info>
 

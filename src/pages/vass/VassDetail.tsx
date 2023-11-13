@@ -43,7 +43,7 @@ export default function VassDetail() {
   // NOTE player control
   const vassList = useRecoilValue(vassListState);
   const nowVassDetail = useRecoilValue(nowVassDetailState);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [playTime, setPlayTime] = useState(0);
   const [pausedTime, setPausedTime] = useState<any>(
     nowVassDetail.scan_total_time,
@@ -297,7 +297,9 @@ export default function VassDetail() {
         return checkTimeInSeconds === currentScanTimeInSeconds;
       });
 
-      const matchedBarcodes = matchedVideos.map((video) => video.barcode);
+      const matchedBarcodes = matchedVideos
+        .map((video) => video.barcode)
+        .reverse();
       setCurrentBarcodes(matchedBarcodes.length ? matchedBarcodes : [""]);
 
       timerRef.current = setTimeout(scanVideo, 1000);
@@ -347,13 +349,13 @@ export default function VassDetail() {
 
         <S.InvoiceInfoContainer>
           <p>현재 송장번호</p>
-          <S.InvoiceInfo>{nowVassDetail.barcode}</S.InvoiceInfo>
+          <S.InvoiceInfo>{nowVassDetail?.barcode}</S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
         <S.InvoiceInfoContainer>
           <p>이전 송장번호</p>
           <S.InvoiceInfo className="prev">
-            {prevVassDetail.barcode}
+            {prevVassDetail?.barcode}
           </S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
