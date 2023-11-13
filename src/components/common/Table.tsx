@@ -9,9 +9,6 @@ import { IWorkListData } from "../../types/Work.types";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import { getWorkPage } from "../../utils/getLocationPath";
 import { loginState } from "../../stores/loginState";
-import { getImageWork } from "../../api/work/getImageWork";
-import { useState } from "react";
-import ImageModal from "./ImageModal";
 
 export default function Table({
   title,
@@ -27,13 +24,6 @@ export default function Table({
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
   const login = useRecoilValue(loginState);
-  const [imageUrl, setImageUrl] = useState("");
-  const [isDisplayImageModal, setIsDisplayImageModal] = useState(false);
-
-  const { mutate: getImageMutate } = getImageWork(
-    setImageUrl,
-    setIsDisplayImageModal,
-  );
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,10 +34,6 @@ export default function Table({
     navigate(`/vass/${item.barcode}`);
     setNowVassDetail(item);
     setPrevVassDetail(contents[index + 1]);
-  };
-
-  const onClickImage = (item: IWorkListData) => {
-    getImageMutate({ barcode: item.barcode, scanDate: item.scandate });
   };
 
   // NOTE 체크박스 전체 선택,해제
@@ -87,9 +73,7 @@ export default function Table({
   return (
     <>
       <S.Container>
-        <S.TitleContainer
-          $columns={login.camUsable === "2" ? columns : columns + 1}
-        >
+        <S.TitleContainer $columns={columns}>
           {WORK_PAGE &&
             (login.company === "LOGEN" || login.company === "LOTTE") && (
               <S.Title>
@@ -105,7 +89,6 @@ export default function Table({
           {title.map((item) => (
             <S.Title key={item.label}>{item.label}</S.Title>
           ))}
-          {login.camUsable !== "2" && <S.Title>사진</S.Title>}
         </S.TitleContainer>
 
         <S.ContentsList $isWorkPage={WORK_PAGE}>
@@ -113,10 +96,7 @@ export default function Table({
             <Loading />
           ) : (
             contents.map((item, index) => (
-              <S.ContentsContainer
-                $columns={login.camUsable === "2" ? columns : columns + 1}
-                key={item.id}
-              >
+              <S.ContentsContainer $columns={columns} key={item.id}>
                 {WORK_PAGE &&
                   (login.company === "LOGEN" || login.company === "LOTTE") && (
                     <S.Contents>
@@ -151,29 +131,11 @@ export default function Table({
                     )}
                   </S.Contents>
                 ))}
-                {login.camUsable !== "2" && (
-                  <S.Contents>
-                    <S.CommonButtonContainer>
-                      <CommonButton
-                        contents="조회"
-                        onClickFn={() => onClickImage(item)}
-                        backgroundColor="#010163"
-                      />
-                    </S.CommonButtonContainer>
-                  </S.Contents>
-                )}
               </S.ContentsContainer>
             ))
           )}
         </S.ContentsList>
       </S.Container>
-
-      {isDisplayImageModal && (
-        <ImageModal
-          imageUrl={imageUrl}
-          setIsDisplayImageModal={setIsDisplayImageModal}
-        />
-      )}
     </>
   );
 }
