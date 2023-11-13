@@ -210,8 +210,9 @@ export const VideoContainer = styled.div`
   grid-template-rows: repeat(2, 390px);
   align-items: center;
   justify-items: center;
+  margin-top: 1%;
   width: 99.5%;
-  height: 780px;
+  height: 760px;
 `;
 
 export const Video = styled.div`
@@ -234,12 +235,12 @@ export const PaginationContainer = styled.div`
 export const CameraInfo = styled.div`
   position: absolute;
   top: 12px;
-  left: 64%;
+  left: 70%;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 170px;
+  width: 130px;
   padding: 10px;
   background-color: ${colors.blue[400]};
   border-radius: 10px;
@@ -250,14 +251,14 @@ export const CameraInfo = styled.div`
 export const InvoiceNumber = styled.div`
   position: absolute;
   top: 47px;
-  left: 64%;
+  left: 70%;
 
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
 
-  width: 170px;
+  width: 130px;
   gap: 5px;
   padding: 10px;
   background-color: ${colors.blue[400]};
