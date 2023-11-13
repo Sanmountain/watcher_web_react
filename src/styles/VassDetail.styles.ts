@@ -210,8 +210,9 @@ export const VideoContainer = styled.div`
   grid-template-rows: repeat(2, 390px);
   align-items: center;
   justify-items: center;
+  margin-top: 1%;
   width: 99.5%;
-  height: 780px;
+  height: 760px;
 `;
 
 export const Video = styled.div`

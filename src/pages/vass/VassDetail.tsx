@@ -375,7 +375,14 @@ export default function VassDetail() {
               );
 
               return videosWithSameCamId.map((sameVideo) => (
-                <S.Video key={sameVideo.cam_id}>
+                <S.Video
+                  key={sameVideo.cam_id}
+                  style={
+                    videoStartIndex === 0 && index === 0
+                      ? { border: "2px solid red" }
+                      : {}
+                  }
+                >
                   <ReactPlayer
                     url={sameVideo.stream_url}
                     ref={(ref) => (playerRef.current[index] = ref)}
