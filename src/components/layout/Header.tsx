@@ -75,6 +75,10 @@ export default function Header() {
     }
   };
 
+  const onClickProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <S.Container>
       <S.LogoContainer>
@@ -97,7 +101,7 @@ export default function Header() {
         )}
       </S.MenuContainer>
       <S.ProfileButtonContainer>
-        <S.Profile>{login.branchName}</S.Profile>
+        <S.Profile onClick={onClickProfile}>{login.branchName}</S.Profile>
         <S.LogOutButton onClick={onClickLogout}>Logout</S.LogOutButton>
       </S.ProfileButtonContainer>
     </S.Container>

@@ -104,6 +104,7 @@ export const Profile = styled.div`
   font-weight: 400;
   width: fit-content;
   height: 100%;
+  cursor: pointer;
 
   ${mediaQuery.largeMedium(`
     font-size: ${font.fontSize[300]}
