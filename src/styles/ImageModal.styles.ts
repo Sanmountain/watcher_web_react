@@ -5,7 +5,7 @@ import { colors } from "./palette";
 export const ModalContainer = styled.div`
   position: fixed;
   top: 70px;
-  left: 10px;
+  right: 30px;
 
   background-color: ${colors.black[1000]};
   border-radius: 10px;
