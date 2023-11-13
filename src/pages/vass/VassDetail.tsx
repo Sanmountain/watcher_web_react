@@ -349,13 +349,13 @@ export default function VassDetail() {
 
         <S.InvoiceInfoContainer>
           <p>현재 송장번호</p>
-          <S.InvoiceInfo>{nowVassDetail.barcode}</S.InvoiceInfo>
+          <S.InvoiceInfo>{nowVassDetail?.barcode}</S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
         <S.InvoiceInfoContainer>
           <p>이전 송장번호</p>
           <S.InvoiceInfo className="prev">
-            {prevVassDetail.barcode}
+            {prevVassDetail?.barcode}
           </S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
