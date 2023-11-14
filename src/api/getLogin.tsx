@@ -60,7 +60,7 @@ export const getLogin = (userId: string, userPassword: string) => {
               camUsable: data.data[0].cam_usable,
             });
 
-            navigate("/dashboard");
+            navigate("/");
           }
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
