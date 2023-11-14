@@ -46,7 +46,7 @@ export const LabelInputContainer = styled.div`
 export const Label = styled.label`
   font-size: ${font.fontSize[600]};
   font-weight: 600;
-  width: 20%;
+  width: 25%;
   text-align: right;
 `;
 
@@ -68,8 +68,7 @@ export const Input = styled.input`
 
 export const PasswordError = styled.div`
   display: flex;
-  justify-content: center;
-  width: 50%;
+  width: 52%;
   font-size: ${font.fontSize[200]};
   color: red;
 `;
