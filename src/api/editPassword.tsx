@@ -2,7 +2,6 @@ import { useMutation } from "react-query";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { ILoginResponse } from "../types/Login.types";
 import { loginState } from "../stores/loginState";
 import {
   HandexInstance,
@@ -16,6 +15,7 @@ import { workListState } from "../stores/work/workListState";
 import { vassListState } from "../stores/vass/vassListState";
 import { nowVassDetailState } from "../stores/vass/nowVassDetailState";
 import { prevVassDetailState } from "../stores/vass/prevVassDetailState";
+import { IEditPasswordResponse } from "../types/editPassword.types";
 
 export const editPassword = (userPassword: string) => {
   const [login, setLogin] = useRecoilState(loginState);
@@ -31,7 +31,7 @@ export const editPassword = (userPassword: string) => {
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
-    return useMutation<ILoginResponse, unknown, void, unknown>(
+    return useMutation<IEditPasswordResponse, unknown, void, unknown>(
       "editPassword",
       () =>
         LogenInstance.post("/watcher/sign", {
@@ -81,7 +81,7 @@ export const editPassword = (userPassword: string) => {
   }
   // NOTE 롯데
   else if (login.company === "LOTTE") {
-    return useMutation<ILoginResponse, unknown, void, unknown>(
+    return useMutation<IEditPasswordResponse, unknown, void, unknown>(
       "editPassword",
       () =>
         LotteInstance.post("/watcher/sign", {
@@ -131,7 +131,7 @@ export const editPassword = (userPassword: string) => {
   }
   // NOTE 한진
   else if (login.company === "HANJIN") {
-    return useMutation<ILoginResponse, unknown, void, unknown>(
+    return useMutation<IEditPasswordResponse, unknown, void, unknown>(
       "editPassword",
       () =>
         HanjinInstance.post("/watcher/sign", {
@@ -181,7 +181,7 @@ export const editPassword = (userPassword: string) => {
   }
   // NOTE 한덱스
   else if (login.company === "HANDEX") {
-    return useMutation<ILoginResponse, unknown, void, unknown>(
+    return useMutation<IEditPasswordResponse, unknown, void, unknown>(
       "editPassword",
       () =>
         HandexInstance.post("/watcher/sign", {
@@ -230,7 +230,7 @@ export const editPassword = (userPassword: string) => {
     );
   }
 
-  return useMutation<ILoginResponse, unknown, void, unknown>(
+  return useMutation<IEditPasswordResponse, unknown, void, unknown>(
     "getLogin",
     () => {
       throw new Error("Invalid company");
