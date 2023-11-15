@@ -231,7 +231,7 @@ export const editPassword = (userPassword: string) => {
   }
 
   return useMutation<IEditPasswordResponse, unknown, void, unknown>(
-    "getLogin",
+    "editPassword",
     () => {
       throw new Error("Invalid company");
     },
