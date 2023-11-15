@@ -4,6 +4,10 @@ export interface IWeekChartData {
   week: string;
 }
 
+export interface IChartProps {
+  chartData: IWeekChartData[];
+}
+
 export interface IWeekChartResponse {
   message: string;
   result: string;
