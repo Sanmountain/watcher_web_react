@@ -25,6 +25,8 @@ export interface ILoginData {
   time_change_usable: string;
   sa_id: string;
   account_id: string;
+  password_change_it: string;
+  password_change_date: string;
 }
 
 export interface ILoginResponse {
