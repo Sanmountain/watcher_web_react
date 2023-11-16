@@ -375,7 +375,14 @@ export default function VassDetail() {
               );
 
               return videosWithSameCamId.map((sameVideo) => (
-                <S.Video key={sameVideo.cam_id}>
+                <S.Video
+                  key={sameVideo.cam_id}
+                  style={
+                    videoStartIndex === 0 && index === 0
+                      ? { border: "2px solid red" }
+                      : {}
+                  }
+                >
                   <ReactPlayer
                     url={sameVideo.stream_url}
                     ref={(ref) => (playerRef.current[index] = ref)}
@@ -397,26 +404,22 @@ export default function VassDetail() {
                         <p>No Barcode</p>
                       ) : (
                         displayedBarcodes.map((barcode, index) => {
-                          const originalIndex = vassList.findIndex(
+                          vassList.findIndex(
                             (video) => video.barcode === barcode,
                           );
 
-                          const reversedIndex = vassList.length - originalIndex;
+                          // const reversedIndex = vassList.length - originalIndex;
 
                           if (barcode === nowVassDetail.barcode)
                             return (
                               <p className="sameBarcode" key={index}>
-                                {barcode
-                                  ? `${reversedIndex}. ${barcode}`
-                                  : barcode}
+                                {barcode ? `${barcode}` : barcode}
                               </p>
                             );
                           else
                             return (
                               <p key={index}>
-                                {barcode
-                                  ? `${reversedIndex}. ${barcode}`
-                                  : barcode}
+                                {barcode ? `${barcode}` : barcode}
                               </p>
                             );
                         })
