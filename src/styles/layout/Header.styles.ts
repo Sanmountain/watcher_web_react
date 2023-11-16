@@ -3,6 +3,9 @@ import { font } from "../typography";
 import { colors } from "../palette";
 import { mediaQuery } from "../mediaQuery";
 import { breakPoints } from "../breakPoints";
+import { CgProfile } from "react-icons/cg";
+import { MdLogout } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 export const Container = styled.div`
   display: flex;
@@ -27,6 +30,7 @@ export const LogoImg = styled.img`
   width: 230px;
   height: 53px;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const MenuContainer = styled.div`
@@ -86,14 +90,14 @@ export const MenuButton = styled.div`
 `;
 
 export const ProfileButtonContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
 
-  width: 20%;
+  width: fit-content;
   height: 100%;
-  gap: 15px;
+  margin-right: 1%;
 `;
 
 export const Profile = styled.div`
@@ -104,17 +108,66 @@ export const Profile = styled.div`
   font-weight: 400;
   width: fit-content;
   height: 100%;
-  cursor: pointer;
 
   ${mediaQuery.largeMedium(`
     font-size: ${font.fontSize[300]}
   `)}
 `;
 
+export const ProfileIcon = styled(CgProfile)`
+  width: 30px;
+  height: 30px;
+  margin: 0 7px 0 20px;
+  color: ${colors.blue[500]};
+  cursor: pointer;
+`;
+
+export const Modal = styled.div`
+  position: absolute;
+  top: 60px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  width: 140px;
+  height: 80px;
+  padding: 10px 5px;
+  z-index: 2;
+  border: 1px solid ${colors.blue[500]};
+  border-radius: 5px;
+  background-color: ${colors.black[1000]};
+`;
+
 export const LogOutButton = styled.button`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  padding: 5px;
   background-color: transparent;
   border: none;
-  font-size: ${font.fontSize[600]};
+  font-size: ${font.fontSize[200]};
   font-weight: 600;
+  color: ${colors.black[1000]};
+  color: ${colors.blue[500]};
   cursor: pointer;
+
+  &:hover {
+    background-color: ${colors.blue[500]};
+    color: ${colors.black[1000]};
+  }
+`;
+
+export const EditIcon = styled(RiLockPasswordFill)`
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+`;
+
+export const LogOutIcon = styled(MdLogout)`
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 `;
