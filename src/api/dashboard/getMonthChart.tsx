@@ -12,13 +12,19 @@ import {
   IWeekChartData,
   IWeekChartResponse,
 } from "../../types/weekChart.types";
-import { monthTotalState } from "../../stores/dashboard/monthTotalState";
+import {
+  monthTotalState,
+  inMonthTotalState,
+  outMonthTotalState,
+} from "../../stores/dashboard/monthTotalState";
 
 export const getMonthChart = (
   setMonthData: Dispatch<SetStateAction<IWeekChartData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
   const setMonthTotal = useSetRecoilState(monthTotalState);
+  const setInTotal = useSetRecoilState(inMonthTotalState);
+  const setOutTotal = useSetRecoilState(outMonthTotalState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -38,11 +44,23 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
-            setMonthTotal(totalSum);
+            const inSum = data.data.reduce((acc, item) => {
+              if (Array.isArray(item.count) && item.count.length > 0) {
+                return acc + parseInt(item.count[0], 10);
+              } else {
+                return acc;
+              }
+            }, 0);
+
+            const outSum = data.data.reduce((acc, item) => {
+              if (Array.isArray(item.count) && item.count.length > 1) {
+                return acc + parseInt(item.count[1], 10);
+              } else {
+                return acc;
+              }
+            }, 0);
+            setInTotal(inSum);
+            setOutTotal(outSum);
           }
         },
         onError: (error) => {
@@ -69,10 +87,13 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setMonthTotal(totalSum);
           }
         },
@@ -100,10 +121,13 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setMonthTotal(totalSum);
           }
         },
@@ -131,10 +155,13 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setMonthTotal(totalSum);
           }
         },
