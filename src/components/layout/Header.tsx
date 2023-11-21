@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import * as S from "../../styles/layout/Header.styles";
 import { loginState } from "../../stores/loginState";
@@ -13,6 +13,7 @@ import { menuState } from "../../stores/menuState";
 import { workListState } from "../../stores/work/workListState";
 import { workFilterState } from "../../stores/work/workFilterState";
 import { vassFilterState } from "../../stores/vass/vassFilterState";
+import modalClose from "../../utils/modalClose";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -24,6 +25,9 @@ export default function Header() {
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const modalOutside = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -51,6 +55,10 @@ export default function Header() {
     { label: "화물추적", path: "/vass" },
   ];
 
+  useEffect(() => {
+    modalClose(isModalOpen, setIsModalOpen, modalOutside);
+  }, [isModalOpen]);
+
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
     if (!params.invoiceNumber) {
@@ -75,6 +83,15 @@ export default function Header() {
     }
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const onClickProfile = () => {
+    navigate("/profile");
+    setIsModalOpen(false);
+  };
+
   return (
     <S.Container>
       <S.LogoContainer>
@@ -96,9 +113,21 @@ export default function Header() {
           </Link>
         )}
       </S.MenuContainer>
-      <S.ProfileButtonContainer>
+      <S.ProfileButtonContainer ref={modalOutside}>
         <S.Profile>{login.branchName}</S.Profile>
-        <S.LogOutButton onClick={onClickLogout}>Logout</S.LogOutButton>
+        <S.ProfileIcon onClick={handleModalOpen} />
+
+        {isModalOpen && (
+          <S.Modal>
+            <S.LogOutButton onClick={onClickProfile}>
+              <S.EditIcon /> 비밀번호 변경
+            </S.LogOutButton>
+            <S.LogOutButton onClick={onClickLogout}>
+              <S.LogOutIcon />
+              Logout
+            </S.LogOutButton>
+          </S.Modal>
+        )}
       </S.ProfileButtonContainer>
     </S.Container>
   );
