@@ -3,6 +3,7 @@ import { font } from "./typography";
 import { colors } from "./palette";
 import { mediaQuery } from "./mediaQuery";
 import { breakPoints } from "./breakPoints";
+import { SiMicrosoftexcel } from "react-icons/si";
 
 export const Container = styled.div<{ $isWorkPage: boolean }>`
   display: grid;
@@ -52,7 +53,9 @@ export const FilterContainer = styled.div<{ $isLogen: boolean }>`
   `)} 
   
   &.register {
-    justify-content: ${(props) => (props.$isLogen ? "center" : "flex-start")};
+    justify-content: ${(props) =>
+      props.$isLogen ? "space-around" : "flex-start"};
+    gap: 0;
 
     ${mediaQuery.large(`
         justify-content: center;
@@ -164,4 +167,11 @@ export const LoadingContainer = styled.div`
   left: 50%;
   width: 1500px;
   height: 900px;
+`;
+
+export const ExcelIcon = styled(SiMicrosoftexcel)`
+  width: 20px;
+  height: 20px;
+  color: #010163;
+  cursor: pointer;
 `;

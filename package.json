@@ -31,7 +31,8 @@
     "recoil-persist": "^5.1.0",
     "styled-components": "^6.0.5",
     "sweetalert2": "^11.7.27",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
