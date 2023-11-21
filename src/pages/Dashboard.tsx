@@ -7,14 +7,8 @@ import { getAmount } from "../api/dashboard/getAmount";
 import { numberWithCommas } from "../utils/numberWithCommas";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
-import {
-  inWeekTotalState,
-  outWeekTotalState,
-} from "../stores/dashboard/weekTotalState";
-import {
-  inMonthTotalState,
-  outMonthTotalState,
-} from "../stores/dashboard/monthTotalState";
+import { weekTotalState } from "../stores/dashboard/weekTotalState";
+import { monthTotalState } from "../stores/dashboard/monthTotalState";
 import { loginState } from "../stores/loginState";
 
 export default function Dashboard() {
@@ -23,13 +17,8 @@ export default function Dashboard() {
   const [receiveCount, setReceiveCount] = useState<IWorkListData[]>([]);
   const [goodsCount, setGoodsCount] = useState<IWorkListData[]>([]);
 
-  const weekInTotal = useRecoilValue(inWeekTotalState);
-  const weekOutTotal = useRecoilValue(outWeekTotalState);
-  const weekTotal = weekInTotal + weekOutTotal;
-
-  const monthInTotal = useRecoilValue(inMonthTotalState);
-  const monthOutTotal = useRecoilValue(outMonthTotalState);
-  const monthTotal = monthInTotal + monthOutTotal;
+  const weekTotal = useRecoilValue(weekTotalState);
+  const monthTotal = useRecoilValue(monthTotalState);
 
   const { mutate: getAmountMutate } = getAmount(
     setShipmentCount,

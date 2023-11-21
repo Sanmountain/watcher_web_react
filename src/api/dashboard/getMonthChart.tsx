@@ -12,19 +12,13 @@ import {
   IWeekChartData,
   IWeekChartResponse,
 } from "../../types/weekChart.types";
-import {
-  monthTotalState,
-  inMonthTotalState,
-  outMonthTotalState,
-} from "../../stores/dashboard/monthTotalState";
+import { monthTotalState } from "../../stores/dashboard/monthTotalState";
 
 export const getMonthChart = (
   setMonthData: Dispatch<SetStateAction<IWeekChartData[]>>,
 ) => {
   const login = useRecoilValue(loginState);
   const setMonthTotal = useSetRecoilState(monthTotalState);
-  const setInTotal = useSetRecoilState(inMonthTotalState);
-  const setOutTotal = useSetRecoilState(outMonthTotalState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -59,8 +53,7 @@ export const getMonthChart = (
                 return acc;
               }
             }, 0);
-            setInTotal(inSum);
-            setOutTotal(outSum);
+            setMonthTotal(inSum + outSum);
           }
         },
         onError: (error) => {
