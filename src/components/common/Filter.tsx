@@ -15,6 +15,7 @@ import { getAutoCheck } from "../../api/work/getAutoCheck";
 import { getAutoChange } from "../../api/work/getAutoChange";
 import { loginState } from "../../stores/loginState";
 import TmDvEditModal from "./TmDvEditModal";
+import { excelDownload } from "../../utils/excelDownload";
 
 export default function Filter({
   filterOption,
@@ -99,6 +100,10 @@ export default function Filter({
   // NOTE 업무 수정
   const handleEditTmDv = () => {
     setIsOpen(true);
+  };
+
+  const handleDownloadExcel = () => {
+    excelDownload(filterOption, workList);
   };
 
   return (
@@ -234,6 +239,9 @@ export default function Filter({
                 />
               </S.RegisterContainer>
             )}
+            <S.RegisterContainer>
+              <S.ExcelIcon onClick={handleDownloadExcel} />
+            </S.RegisterContainer>
           </S.FilterContainer>
         )}
       </S.Container>
