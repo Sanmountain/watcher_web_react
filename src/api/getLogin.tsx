@@ -58,7 +58,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -131,7 +131,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -204,7 +204,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -278,7 +278,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
