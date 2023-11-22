@@ -34,7 +34,7 @@ export const LogoImg = styled.img`
 `;
 
 export const MenuContainer = styled.div`
-  flex: 5;
+  flex: 4;
 
   display: flex;
   flex-direction: row;
@@ -92,7 +92,8 @@ export const MenuButton = styled.div`
 export const ProfileButtonContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
+  flex: 2;
+  justify-content: flex-end;
   align-items: center;
 
   width: fit-content;
@@ -102,12 +103,12 @@ export const ProfileButtonContainer = styled.div`
 
 export const Profile = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   font-size: ${font.fontSize[300]};
-  font-weight: 400;
+  font-weight: 900;
   width: fit-content;
-  height: 100%;
+  height: fit-content;
+  margin-right: 3%;
 
   ${mediaQuery.largeMedium(`
     font-size: ${font.fontSize[300]}
@@ -143,7 +144,8 @@ export const Modal = styled.div`
 export const LogOutButton = styled.button`
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: left;
+  width: 26%;
   height: fit-content;
   padding: 5px;
   background-color: transparent;

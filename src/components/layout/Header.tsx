@@ -83,10 +83,6 @@ export default function Header() {
     }
   };
 
-  const handleModalOpen = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
   const onClickProfile = () => {
     navigate("/profile");
     setIsModalOpen(false);
@@ -115,19 +111,13 @@ export default function Header() {
       </S.MenuContainer>
       <S.ProfileButtonContainer ref={modalOutside}>
         <S.Profile>{login.branchName}</S.Profile>
-        <S.ProfileIcon onClick={handleModalOpen} />
-
-        {isModalOpen && (
-          <S.Modal>
-            <S.LogOutButton onClick={onClickProfile}>
-              <S.EditIcon /> 비밀번호 변경
-            </S.LogOutButton>
-            <S.LogOutButton onClick={onClickLogout}>
-              <S.LogOutIcon />
-              Logout
-            </S.LogOutButton>
-          </S.Modal>
-        )}
+        <S.LogOutButton onClick={onClickProfile}>
+          <S.EditIcon /> 비밀번호 변경
+        </S.LogOutButton>
+        <S.LogOutButton onClick={onClickLogout}>
+          <S.LogOutIcon />
+          Logout
+        </S.LogOutButton>
       </S.ProfileButtonContainer>
     </S.Container>
   );
