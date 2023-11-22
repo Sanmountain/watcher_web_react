@@ -31,8 +31,8 @@ export default function LineChart() {
 
     return {
       scandate: item.scandate,
-      countIn: countIn,
-      countOut: countOut,
+      countIn,
+      countOut,
     };
   });
 

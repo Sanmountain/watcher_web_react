@@ -32,8 +32,8 @@ export default function BarChart() {
     return {
       scandate: item.scandate,
       week: item.week,
-      countIn: countIn,
-      countOut: countOut,
+      countIn,
+      countOut,
     };
   });
 

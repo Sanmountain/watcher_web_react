@@ -125,12 +125,14 @@ export default function Filter({
           >
             {login.company === "LOGEN" && (
               <>
+                <option value="all">전체</option>
                 <option value="receive">배송입고</option>
                 <option value="shipment">집하출고</option>
               </>
             )}
             {login.company === "LOTTE" && (
               <>
+                <option value="all">전체</option>
                 <option value="receive">도착</option>
                 <option value="shipment">발송</option>
               </>
@@ -138,12 +140,14 @@ export default function Filter({
 
             {login.company === "HANJIN" && (
               <>
+                <option value="all">전체</option>
                 <option value="receive">간선상차</option>
                 <option value="shipment">간선하차</option>
               </>
             )}
             {login.company === "HANDEX" && (
               <>
+                <option value="all">전체</option>
                 <option value="receive">영업소상차</option>
                 <option value="shipment">영업소하차</option>
                 <option value="goods">상품집하</option>
