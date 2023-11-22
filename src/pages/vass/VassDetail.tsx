@@ -396,7 +396,9 @@ export default function VassDetail() {
                     }}
                   />
 
-                  <S.CameraInfo>{camera.cam_name}</S.CameraInfo>
+                  <S.CameraInfo>
+                    {camera.cam_seq}.{camera.cam_name}
+                  </S.CameraInfo>
 
                   {videoStartIndex === 0 && index === 0 && (
                     <S.InvoiceNumber>
