@@ -5,9 +5,12 @@ import { getWeekChart } from "../../../api/dashboard/getWeekChart";
 import { IWeekChartData } from "../../../types/weekChart.types";
 import Loading from "../Loading";
 import * as S from "../../../styles/Dashboard.styles";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function BarChart() {
   const [weekData, setWeekData] = useState<IWeekChartData[]>([]);
+  const login = useRecoilValue(loginState);
 
   const { mutate: weekChartMutate, isLoading: isWeekChartLoading } =
     getWeekChart(setWeekData);
@@ -96,6 +99,32 @@ export default function BarChart() {
                 style: {
                   itemOpacity: 1,
                 },
+              },
+            ],
+            data: [
+              {
+                id: "countIn",
+                label:
+                  login.company === "LOGEN"
+                    ? "배송입고"
+                    : login.company === "LOTTE"
+                      ? "도착"
+                      : login.company === "HANJIN"
+                        ? "간선상차"
+                        : "영업소상차",
+                color: colors.green[100],
+              },
+              {
+                id: "countOut",
+                label:
+                  login.company === "LOGEN"
+                    ? "집하출고"
+                    : login.company === "LOTTE"
+                      ? "발송"
+                      : login.company === "HANJIN"
+                        ? "간선하차"
+                        : "영업소하차",
+                color: colors.blue[100],
               },
             ],
           },

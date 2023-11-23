@@ -108,7 +108,7 @@ export default function Filter({
   };
 
   const handleDownloadExcel = () => {
-    excelDownload(filterOption, workList);
+    excelDownload(login.branchName, filterOption, workList);
   };
 
   return (
@@ -121,6 +121,7 @@ export default function Filter({
           <S.FilterTitle>스캔수량</S.FilterTitle>{" "}
           {(WORK_PAGE && numberWithCommas(workList.length)) ||
             (VASS_PAGE && numberWithCommas(vassList.length)) ||
+            (IMAGE_PAGE && numberWithCommas(vassList.length)) ||
             0}{" "}
           건{" "}
           <S.SelectBox
@@ -260,11 +261,16 @@ export default function Filter({
                   onClickFn={handleEditTmDv}
                   height="100%"
                   backgroundColor="#010163"
-                  // style={{ marginRight: "3%" }}
                 />
-                <S.ExcelIcon onClick={handleDownloadExcel} />
               </S.RegisterContainer>
             )}
+            <S.RegisterContainer>
+              <CommonButton
+                contents="엑셀다운"
+                onClickFn={handleDownloadExcel}
+                backgroundColor="#010163"
+              />
+            </S.RegisterContainer>
           </S.FilterContainer>
         )}
       </S.Container>

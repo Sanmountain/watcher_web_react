@@ -67,7 +67,7 @@ export const FilterContainer = styled.div<{ $isLogen: boolean }>`
 export const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const AutoTitle = styled.span`
@@ -138,10 +138,6 @@ export const FilterTitle = styled.div`
   ${mediaQuery.large(`
     font-size: ${font.fontSize[200]};
   `)}
-
-  &.autoBtn {
-    margin-left: 20px;
-  }
 `;
 
 export const SelectBox = styled.select`
