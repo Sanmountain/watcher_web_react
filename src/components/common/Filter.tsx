@@ -232,13 +232,6 @@ export default function Filter({
                   height="100%"
                   backgroundColor="green"
                 />
-                <CommonButton
-                  contents="업무 수정"
-                  onClickFn={handleEditTmDv}
-                  height="100%"
-                  backgroundColor="#010163"
-                />
-                <S.ExcelIcon onClick={handleDownloadExcel} />
               </S.RegisterContainer>
             )}
 
@@ -256,15 +249,15 @@ export default function Filter({
                   height="100%"
                   backgroundColor="green"
                 />
-                <CommonButton
-                  contents="업무 수정"
-                  onClickFn={handleEditTmDv}
-                  height="100%"
-                  backgroundColor="#010163"
-                />
               </S.RegisterContainer>
             )}
             <S.RegisterContainer>
+              <CommonButton
+                contents="업무 수정"
+                onClickFn={handleEditTmDv}
+                height="100%"
+                backgroundColor="#010163"
+              />
               <CommonButton
                 contents="엑셀다운"
                 onClickFn={handleDownloadExcel}
