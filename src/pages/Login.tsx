@@ -151,12 +151,14 @@ export default function Login() {
             placeholder="ID"
             onChange={handleId}
             defaultValue={login.userId}
+            maxLength={8}
           />
           <S.PasswordContainer>
             <S.Input
               type={isShowPassword.type}
               placeholder="Password"
               onChange={handlePassword}
+              maxLength={20}
             />
             {isShowPassword.isShow ? (
               <S.ShowIcon onClick={onClickPasswordIcon} />

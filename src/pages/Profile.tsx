@@ -59,11 +59,15 @@ export default function Profile() {
         </S.LabelInputContainer>
         <S.LabelInputContainer>
           <S.Label>비밀번호</S.Label>
-          <S.Input type="password" onChange={handlePassword} />
+          <S.Input type="password" maxLength={20} onChange={handlePassword} />
         </S.LabelInputContainer>
         <S.LabelInputContainer className="confirm">
           <S.Label>비밀번호 확인</S.Label>
-          <S.Input type="password" onChange={handleConfirmedPassword} />
+          <S.Input
+            type="password"
+            maxLength={20}
+            onChange={handleConfirmedPassword}
+          />
         </S.LabelInputContainer>
         {password !== confirmed && confirmed !== "" && (
           <S.LabelInputContainer>
