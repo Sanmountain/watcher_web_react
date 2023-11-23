@@ -9,17 +9,27 @@ import { loginState } from "../../stores/loginState";
 import { menuState } from "../../stores/menuState";
 
 export default function Sidebar() {
-  const menuList = [
-    { label: "송장조회", path: "/work" },
-    { label: "화물추적", path: "/vass" },
-  ];
-
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
   const login = useRecoilValue(loginState);
 
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
+
+  let menuList;
+  if (login.camUsable === "0") {
+    menuList = [{ label: "송장조회", path: "/work" }];
+  } else if (login.camUsable === "1" || login.camUsable === "3") {
+    menuList = [
+      { label: "송장조회", path: "/work" },
+      { label: "이미지조회", path: "/image" },
+    ];
+  } else if (login.camUsable === "2") {
+    menuList = [
+      { label: "송장조회", path: "/work" },
+      { label: "화물추적", path: "/vass" },
+    ];
+  }
 
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
@@ -33,16 +43,8 @@ export default function Sidebar() {
   };
 
   const onClickMenu = (path: string) => {
-    if (login.camUsable === "2") {
-      navigate(path);
-      setCurrentMenu(path);
-    } else {
-      if (path === "/vass") {
-        navigate("/noCam");
-      } else {
-        navigate(path);
-      }
-    }
+    navigate(path);
+    setCurrentMenu(path);
   };
 
   return (
@@ -54,7 +56,7 @@ export default function Sidebar() {
           </S.LogoContainer>
           <S.MenuContainer>
             <S.MenuTitle>MENU</S.MenuTitle>
-            {menuList.map((menu) => (
+            {menuList?.map((menu) => (
               <S.MenuButton
                 key={menu.label}
                 onClick={() => onClickMenu(menu.path)}

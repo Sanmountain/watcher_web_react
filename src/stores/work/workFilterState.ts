@@ -5,7 +5,7 @@ import { IFilterState } from "../../types/Filter.types";
 export const workFilterState = atom<IFilterState>({
   key: "workFilterState",
   default: {
-    receivingShipment: "receive",
+    receivingShipment: "all",
     date: dayjs().format("YYYY-MM-DD"),
     invoiceNumber: "",
   },

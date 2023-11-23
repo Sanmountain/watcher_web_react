@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import * as S from "../../styles/layout/Header.styles";
 import { loginState } from "../../stores/loginState";
@@ -13,6 +13,7 @@ import { menuState } from "../../stores/menuState";
 import { workListState } from "../../stores/work/workListState";
 import { workFilterState } from "../../stores/work/workFilterState";
 import { vassFilterState } from "../../stores/vass/vassFilterState";
+import modalClose from "../../utils/modalClose";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -24,6 +25,9 @@ export default function Header() {
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const modalOutside = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,11 +49,29 @@ export default function Header() {
     navigate("/login");
   };
 
-  const menuList = [
-    { label: "대시보드", path: "/" },
-    { label: "송장조회", path: "/work" },
-    { label: "화물추적", path: "/vass" },
-  ];
+  let menuList;
+  if (login.camUsable === "0") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+    ];
+  } else if (login.camUsable === "1" || login.camUsable === "3") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+      { label: "이미지조회", path: "/image" },
+    ];
+  } else if (login.camUsable === "2") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+      { label: "화물추적", path: "/vass" },
+    ];
+  }
+
+  useEffect(() => {
+    modalClose(isModalOpen, setIsModalOpen, modalOutside);
+  }, [isModalOpen]);
 
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
@@ -63,16 +85,13 @@ export default function Header() {
   };
 
   const onClickMenu = (path: string) => {
-    if (login.camUsable === "2") {
-      navigate(path);
-      setCurrentMenu(path);
-    } else {
-      if (path === "/vass") {
-        navigate("/noCam");
-      } else {
-        navigate(path);
-      }
-    }
+    navigate(path);
+    setCurrentMenu(path);
+  };
+
+  const onClickProfile = () => {
+    navigate("/profile");
+    setIsModalOpen(false);
   };
 
   return (
@@ -81,7 +100,7 @@ export default function Header() {
         <S.LogoImg src={JHCLogo} onClick={onClickLogo} />
       </S.LogoContainer>
       <S.MenuContainer>
-        {menuList.map((menu) => (
+        {menuList?.map((menu) => (
           <S.MenuButton
             key={menu.label}
             onClick={() => onClickMenu(menu.path)}
@@ -90,15 +109,21 @@ export default function Header() {
             {menu.label}
           </S.MenuButton>
         ))}
-        {login.company === "LOGEN" && (
+        {login.company === "LOGEN" && login.camUsable === "2" && (
           <Link to="https://gigaeyes.co.kr/memberN/loginForm">
             <S.HeaderImg src={gigaLogo} />
           </Link>
         )}
       </S.MenuContainer>
-      <S.ProfileButtonContainer>
+      <S.ProfileButtonContainer ref={modalOutside}>
         <S.Profile>{login.branchName}</S.Profile>
-        <S.LogOutButton onClick={onClickLogout}>Logout</S.LogOutButton>
+        <S.LogOutButton onClick={onClickProfile}>
+          <S.EditIcon /> 비밀번호 변경
+        </S.LogOutButton>
+        <S.LogOutButton onClick={onClickLogout}>
+          <S.LogOutIcon />
+          Logout
+        </S.LogOutButton>
       </S.ProfileButtonContainer>
     </S.Container>
   );

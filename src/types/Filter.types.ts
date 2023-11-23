@@ -4,7 +4,7 @@ import { ICheckedItems } from "./Work.types";
 import { Dispatch, SetStateAction } from "react";
 
 export interface IFilterState {
-  receivingShipment: "receive" | "shipment";
+  receivingShipment: "receive" | "shipment" | "goods" | "all";
   date: string;
   invoiceNumber: string;
 }

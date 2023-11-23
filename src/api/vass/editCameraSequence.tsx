@@ -42,7 +42,7 @@ export const editCameraSequence = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsModalOpen(false);
             setCameraInfo(changePlaySequence);
 
@@ -70,7 +70,7 @@ export const editCameraSequence = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsModalOpen(false);
             setCameraInfo(changePlaySequence);
 
@@ -98,7 +98,7 @@ export const editCameraSequence = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsModalOpen(false);
             setCameraInfo(changePlaySequence);
 
@@ -126,7 +126,7 @@ export const editCameraSequence = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsModalOpen(false);
             setCameraInfo(changePlaySequence);
 

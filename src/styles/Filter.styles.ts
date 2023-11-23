@@ -3,6 +3,7 @@ import { font } from "./typography";
 import { colors } from "./palette";
 import { mediaQuery } from "./mediaQuery";
 import { breakPoints } from "./breakPoints";
+import { SiMicrosoftexcel } from "react-icons/si";
 
 export const Container = styled.div<{ $isWorkPage: boolean }>`
   display: grid;
@@ -52,7 +53,9 @@ export const FilterContainer = styled.div<{ $isLogen: boolean }>`
   `)} 
   
   &.register {
-    justify-content: ${(props) => (props.$isLogen ? "center" : "flex-start")};
+    justify-content: ${(props) =>
+      props.$isLogen ? "space-around" : "flex-start"};
+    gap: 0;
 
     ${mediaQuery.large(`
         justify-content: center;
@@ -64,7 +67,7 @@ export const FilterContainer = styled.div<{ $isLogen: boolean }>`
 export const RegisterContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const AutoTitle = styled.span`
@@ -135,10 +138,6 @@ export const FilterTitle = styled.div`
   ${mediaQuery.large(`
     font-size: ${font.fontSize[200]};
   `)}
-
-  &.autoBtn {
-    margin-left: 20px;
-  }
 `;
 
 export const SelectBox = styled.select`
@@ -164,4 +163,11 @@ export const LoadingContainer = styled.div`
   left: 50%;
   width: 1500px;
   height: 900px;
+`;
+
+export const ExcelIcon = styled(SiMicrosoftexcel)`
+  width: 20px;
+  height: 20px;
+  color: #010163;
+  cursor: pointer;
 `;

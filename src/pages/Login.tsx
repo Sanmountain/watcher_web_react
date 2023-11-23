@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import { getLogin } from "../api/getLogin";
+import { editPasswordLater } from "../api/editPasswordLater";
 import { useRecoilState } from "recoil";
 import { loginState } from "../stores/loginState";
 import { useNavigate } from "react-router";
@@ -31,7 +32,12 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const { mutate: loginMutate } = getLogin(id, password);
+  const { mutate: editPasswordLaterMutate } = editPasswordLater();
+  const { mutate: loginMutate } = getLogin(
+    id,
+    password,
+    editPasswordLaterMutate,
+  );
 
   useEffect(() => {
     modalClose(isSelectBoxOpen, setIsSelectBoxOpen, selectBoxOutside);
@@ -145,12 +151,14 @@ export default function Login() {
             placeholder="ID"
             onChange={handleId}
             defaultValue={login.userId}
+            maxLength={8}
           />
           <S.PasswordContainer>
             <S.Input
               type={isShowPassword.type}
               placeholder="Password"
               onChange={handlePassword}
+              maxLength={20}
             />
             {isShowPassword.isShow ? (
               <S.ShowIcon onClick={onClickPasswordIcon} />

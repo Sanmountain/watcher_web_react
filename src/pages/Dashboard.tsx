@@ -72,7 +72,7 @@ export default function Dashboard() {
       </S.TopContainer>
       <S.BottomContainer>
         <S.ChartContainer>
-          <S.ChartTitle>최근 7일 스캔 수량</S.ChartTitle>
+          <S.ChartTitle>주간 스캔 수량</S.ChartTitle>
           <S.ChartCount>{numberWithCommas(weekTotal)} 건</S.ChartCount>
           <S.Chart>
             <BarChart />

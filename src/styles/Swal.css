@@ -7,3 +7,15 @@
   padding: 0;
   padding-top: 5px;
 }
+
+.swal2-confirm {
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  background-color: #1d74e6 !important;
+}
+
+.swal2-cancel {
+  font-size: 1.2rem !important;
+  background-color: #5a5d61 !important;
+  font-weight: 700 !important;
+}

@@ -5,9 +5,12 @@ import { getWeekChart } from "../../../api/dashboard/getWeekChart";
 import { IWeekChartData } from "../../../types/weekChart.types";
 import Loading from "../Loading";
 import * as S from "../../../styles/Dashboard.styles";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function BarChart() {
   const [weekData, setWeekData] = useState<IWeekChartData[]>([]);
+  const login = useRecoilValue(loginState);
 
   const { mutate: weekChartMutate, isLoading: isWeekChartLoading } =
     getWeekChart(setWeekData);
@@ -16,22 +19,38 @@ export default function BarChart() {
     weekChartMutate();
   }, []);
 
-  const revertWeekDataCountNumber = weekData?.map((item) => ({
-    week: item.week,
-    count: parseInt(item.count, 10),
-  }));
+  const revertWeekDataCountNumber = weekData?.map((item) => {
+    let countIn = 0;
+    let countOut = 0;
+
+    if (Array.isArray(item.count)) {
+      countIn = parseInt(item.count[0], 10);
+      if (item.count.length > 1) {
+        countOut = parseInt(item.count[1], 10);
+      }
+    } else {
+      countIn = parseInt(item.count, 10);
+    }
+
+    return {
+      scandate: item.scandate,
+      week: item.week,
+      countIn,
+      countOut,
+    };
+  });
 
   return (
     <>
       <ResponsiveBar
         data={revertWeekDataCountNumber}
-        keys={["count"]}
+        keys={["countIn", "countOut"]}
         indexBy="week"
         margin={{ top: 20, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={[`${colors.green[100]}`]}
+        colors={[`${colors.green[100]}`, `${colors.blue[100]}`]}
         fill={[
           {
             match: {
@@ -60,6 +79,56 @@ export default function BarChart() {
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="white"
+        legends={[
+          {
+            dataFrom: "keys",
+            anchor: "bottom-right",
+            direction: "column",
+            justify: false,
+            translateX: 120,
+            translateY: 0,
+            itemsSpacing: 2,
+            itemWidth: 100,
+            itemHeight: 20,
+            itemDirection: "left-to-right",
+            itemOpacity: 0.85,
+            symbolSize: 20,
+            effects: [
+              {
+                on: "hover",
+                style: {
+                  itemOpacity: 1,
+                },
+              },
+            ],
+            data: [
+              {
+                id: "countIn",
+                label:
+                  login.company === "LOGEN"
+                    ? "배송입고"
+                    : login.company === "LOTTE"
+                      ? "도착"
+                      : login.company === "HANJIN"
+                        ? "간선상차"
+                        : "영업소상차",
+                color: colors.green[100],
+              },
+              {
+                id: "countOut",
+                label:
+                  login.company === "LOGEN"
+                    ? "집하출고"
+                    : login.company === "LOTTE"
+                      ? "발송"
+                      : login.company === "HANJIN"
+                        ? "간선하차"
+                        : "영업소하차",
+                color: colors.blue[100],
+              },
+            ],
+          },
+        ]}
       />
       {isWeekChartLoading && (
         <S.LoadingContainer>

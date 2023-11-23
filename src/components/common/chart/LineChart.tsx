@@ -5,9 +5,12 @@ import { IWeekChartData } from "../../../types/weekChart.types";
 import { getMonthChart } from "../../../api/dashboard/getMonthChart";
 import * as S from "../../../styles/Dashboard.styles";
 import Loading from "../Loading";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function LineChart() {
   const [monthData, setMonthData] = useState<IWeekChartData[]>([]);
+  const login = useRecoilValue(loginState);
 
   const { mutate: monthChartMutate, isLoading: isMonthChartLoading } =
     getMonthChart(setMonthData);
@@ -16,17 +19,39 @@ export default function LineChart() {
     monthChartMutate();
   }, []);
 
-  const revertMonthDataCountNumber = monthData?.map((item) => ({
-    scandate: item.scandate,
-    count: parseInt(item.count, 10),
-  }));
+  const revertMonthDataCountNumber = monthData?.map((item) => {
+    let countIn = 0;
+    let countOut = 0;
+
+    if (Array.isArray(item.count)) {
+      countIn = parseInt(item.count[0], 10);
+      if (item.count.length > 1) {
+        countOut = parseInt(item.count[1], 10);
+      }
+    } else {
+      countIn = parseInt(item.count, 10);
+    }
+
+    return {
+      scandate: item.scandate,
+      countIn,
+      countOut,
+    };
+  });
 
   const lineChartData = [
     {
-      id: "count",
+      id: "countIn",
       data: revertMonthDataCountNumber.map((item) => ({
         x: item.scandate,
-        y: item.count,
+        y: item.countIn,
+      })),
+    },
+    {
+      id: "countOut",
+      data: revertMonthDataCountNumber.map((item) => ({
+        x: item.scandate,
+        y: item.countOut,
       })),
     },
   ];
@@ -35,7 +60,7 @@ export default function LineChart() {
     <>
       <ResponsiveLine
         data={lineChartData}
-        margin={{ top: 30, right: 60, bottom: 50, left: 110 }}
+        margin={{ top: 30, right: 90, bottom: 50, left: 50 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
@@ -44,7 +69,7 @@ export default function LineChart() {
           stacked: true,
           reverse: false,
         }}
-        colors={[`${colors.green[100]}`]}
+        colors={[`${colors.green[100]}`, `${colors.blue[100]}`]}
         axisTop={null}
         axisRight={null}
         axisBottom={{
@@ -67,6 +92,58 @@ export default function LineChart() {
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
+        legends={[
+          {
+            anchor: "bottom-right",
+            direction: "column",
+            justify: false,
+            translateX: 100,
+            translateY: 0,
+            itemsSpacing: 0,
+            itemDirection: "left-to-right",
+            itemWidth: 80,
+            itemHeight: 20,
+            itemOpacity: 0.75,
+            symbolSize: 12,
+            symbolShape: "circle",
+            symbolBorderColor: "rgba(0, 0, 0, .5)",
+            effects: [
+              {
+                on: "hover",
+                style: {
+                  itemBackground: "rgba(0, 0, 0, .03)",
+                  itemOpacity: 1,
+                },
+              },
+            ],
+            data: [
+              {
+                id: "countIn",
+                label:
+                  login.company === "LOGEN"
+                    ? "배송입고"
+                    : login.company === "LOTTE"
+                      ? "도착"
+                      : login.company === "HANJIN"
+                        ? "간선상차"
+                        : "영업소상차",
+                color: colors.green[100],
+              },
+              {
+                id: "countOut",
+                label:
+                  login.company === "LOGEN"
+                    ? "집하출고"
+                    : login.company === "LOTTE"
+                      ? "발송"
+                      : login.company === "HANJIN"
+                        ? "간선하차"
+                        : "영업소하차",
+                color: colors.blue[100],
+              },
+            ],
+          },
+        ]}
       />
       {isMonthChartLoading && (
         <S.LoadingContainer>

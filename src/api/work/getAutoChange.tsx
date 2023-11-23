@@ -21,7 +21,7 @@ export const getAutoChange = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsOn(!isOn);
           }
         },

@@ -36,7 +36,7 @@ export const getAmount = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const filteringShipmentData = data.data.filter(
               (item) => item.tm_dv === "30",
             );
@@ -72,7 +72,7 @@ export const getAmount = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const filteringShipmentData = data.data.filter(
               (item) => item.tm_dv === "20",
             );
@@ -108,7 +108,7 @@ export const getAmount = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const filteringShipmentData = data.data.filter(
               (item) => item.tm_dv === "32",
             );
@@ -144,7 +144,7 @@ export const getAmount = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const filteringShipmentData = data.data.filter(
               (item) => item.tm_dv === "50",
             );

@@ -338,6 +338,7 @@ export default function VassDetail() {
           <CommonButton
             contents="송장번호 조회"
             onClickFn={onClickSearchInvoice}
+            width="100%"
             height="35px"
             backgroundColor="#010163"
           />
@@ -396,7 +397,9 @@ export default function VassDetail() {
                     }}
                   />
 
-                  <S.CameraInfo>{camera.cam_name}</S.CameraInfo>
+                  <S.CameraInfo>
+                    {camera.cam_seq}.{camera.cam_name}
+                  </S.CameraInfo>
 
                   {videoStartIndex === 0 && index === 0 && (
                     <S.InvoiceNumber>

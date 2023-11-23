@@ -1,7 +1,11 @@
 export interface IWeekChartData {
-  count: string;
+  count: string | string[];
   scandate: string;
   week: string;
+}
+
+export interface IChartProps {
+  chartData: IWeekChartData[];
 }
 
 export interface IWeekChartResponse {

@@ -40,7 +40,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 도착
@@ -51,11 +51,17 @@ export const getVassDateList = () => {
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "30");
             }
+            // NOTE 전체
+            else if (filterOption.receivingShipment === "all") {
+              filteringData = data.data.filter(
+                (item) => item.tm_dv === "30" || item.tm_dv === "60",
+              );
+            }
 
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -88,7 +94,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 도착
@@ -99,11 +105,17 @@ export const getVassDateList = () => {
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "20");
             }
+            // NOTE 전체
+            else if (filterOption.receivingShipment === "all") {
+              filteringData = data.data.filter(
+                (item) => item.tm_dv === "20" || item.tm_dv === "21",
+              );
+            }
 
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -136,7 +148,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 간선상차
@@ -147,11 +159,17 @@ export const getVassDateList = () => {
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "32");
             }
+            // NOTE 전체
+            else if (filterOption.receivingShipment === "all") {
+              filteringData = data.data.filter(
+                (item) => item.tm_dv === "31" || item.tm_dv === "32",
+              );
+            }
 
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -184,7 +202,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 영업소상차
@@ -199,12 +217,21 @@ export const getVassDateList = () => {
             else if (filterOption.receivingShipment === "goods") {
               filteringData = data.data.filter((item) => item.tm_dv === "10");
             }
+            // NOTE 전체
+            else if (filterOption.receivingShipment === "all") {
+              filteringData = data.data.filter(
+                (item) =>
+                  item.tm_dv === "15" ||
+                  item.tm_dv === "50" ||
+                  item.tm_dv === "10",
+              );
+            }
 
             setWorkList(filteringData);
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }

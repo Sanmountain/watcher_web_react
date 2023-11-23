@@ -17,7 +17,7 @@ export const getAutoCheck = (setIsOn: Dispatch<SetStateAction<boolean>>) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const autoValue = data.data[0].auto;
 
             if (autoValue === "1") {

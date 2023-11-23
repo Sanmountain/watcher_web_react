@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { UseMutateFunction, useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -11,6 +11,7 @@ import {
   LotteInstance,
 } from "./instance";
 import axios from "axios";
+import { IEditPasswordLaterResponse } from "../types/editPasswordLater.types";
 
 export const useLocalIP = () => {
   const [login, setLogin] = useRecoilState(loginState);
@@ -30,7 +31,16 @@ export const useLocalIP = () => {
   );
 };
 
-export const getLogin = (userId: string, userPassword: string) => {
+export const getLogin = (
+  userId: string,
+  userPassword: string,
+  editPasswordLaterMutate: UseMutateFunction<
+    IEditPasswordLaterResponse,
+    unknown,
+    void,
+    unknown
+  >,
+) => {
   const [login, setLogin] = useRecoilState(loginState);
 
   const navigate = useNavigate();
@@ -48,7 +58,7 @@ export const getLogin = (userId: string, userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -60,7 +70,24 @@ export const getLogin = (userId: string, userPassword: string) => {
               camUsable: data.data[0].cam_usable,
             });
 
-            navigate("/dashboard");
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
           }
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
@@ -104,7 +131,7 @@ export const getLogin = (userId: string, userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -116,7 +143,24 @@ export const getLogin = (userId: string, userPassword: string) => {
               camUsable: data.data[0].cam_usable,
             });
 
-            navigate("/");
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
           }
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
@@ -160,7 +204,7 @@ export const getLogin = (userId: string, userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -172,7 +216,25 @@ export const getLogin = (userId: string, userPassword: string) => {
               camUsable: data.data[0].cam_usable,
             });
 
-            navigate("/");
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  console.log("dddd");
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
           }
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
@@ -216,7 +278,7 @@ export const getLogin = (userId: string, userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setLogin({
               ...login,
               isLogin: true,
@@ -228,7 +290,24 @@ export const getLogin = (userId: string, userPassword: string) => {
               camUsable: data.data[0].cam_usable,
             });
 
-            navigate("/");
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
           }
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {

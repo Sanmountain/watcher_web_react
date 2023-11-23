@@ -6,7 +6,8 @@ import Vass from "../pages/vass/Vass";
 import VassDetail from "../pages/vass/VassDetail";
 import Layout from "../components/layout";
 import LoginRoute from "./LoginRouter";
-import NoCam from "../pages/NoCam";
+import Profile from "../pages/Profile";
+import Image from "../pages/Image";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -17,6 +18,17 @@ export const router = createBrowserRouter([
       <LoginRoute>
         <Layout>
           <Dashboard />
+        </Layout>
+      </LoginRoute>
+    ),
+  },
+
+  {
+    path: "/profile",
+    element: (
+      <LoginRoute>
+        <Layout>
+          <Profile />
         </Layout>
       </LoginRoute>
     ),
@@ -49,11 +61,11 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/noCam",
+    path: "/image",
     element: (
       <LoginRoute>
         <Layout>
-          <NoCam />
+          <Image />
         </Layout>
       </LoginRoute>
     ),

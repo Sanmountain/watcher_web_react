@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { font } from "./typography";
 import { colors } from "./palette";
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ $IMAGE_PAGE: boolean }>`
   position: fixed;
   top: 70px;
-  right: 30px;
+  right: ${(props) => !props.$IMAGE_PAGE && "30px"};
+  left: ${(props) => props.$IMAGE_PAGE && "280px"};
 
   background-color: ${colors.black[1000]};
   border-radius: 10px;

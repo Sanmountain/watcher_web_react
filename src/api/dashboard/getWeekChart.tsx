@@ -35,14 +35,25 @@ export const getWeekChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setWeekData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
-            setWeekTotal(totalSum);
+            const inSum = data.data.reduce((acc, item) => {
+              if (Array.isArray(item.count) && item.count.length > 0) {
+                return acc + parseInt(item.count[0], 10);
+              } else {
+                return acc;
+              }
+            }, 0);
+
+            const outSum = data.data.reduce((acc, item) => {
+              if (Array.isArray(item.count) && item.count.length > 1) {
+                return acc + parseInt(item.count[1], 10);
+              } else {
+                return acc;
+              }
+            }, 0);
+            setWeekTotal(inSum + outSum);
           }
         },
         onError: (error) => {
@@ -66,13 +77,16 @@ export const getWeekChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setWeekData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setWeekTotal(totalSum);
           }
         },
@@ -97,13 +111,16 @@ export const getWeekChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setWeekData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setWeekTotal(totalSum);
           }
         },
@@ -128,13 +145,16 @@ export const getWeekChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setWeekData(data.data);
 
-            const totalSum = data.data.reduce(
-              (acc, item) => acc + parseInt(item.count, 10),
-              0,
-            );
+            const totalSum = data.data.reduce((acc, item) => {
+              if (!Array.isArray(item.count)) {
+                return acc + parseInt(item.count, 10);
+              } else {
+                return acc;
+              }
+            }, 0);
             setWeekTotal(totalSum);
           }
         },

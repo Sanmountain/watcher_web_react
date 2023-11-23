@@ -37,7 +37,7 @@ export const sendInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             if (!isTmDvModal) {
               Swal.fire({
                 icon: "success",
@@ -85,7 +85,7 @@ export const sendInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             // NOTE fail난 경우 fail 사유 띄우기
             if (data.data[0].fail_list.length > 0) {
               Swal.fire({
