@@ -108,7 +108,7 @@ export default function Filter({
   };
 
   const handleDownloadExcel = () => {
-    excelDownload(filterOption, workList);
+    excelDownload(login.branchName, filterOption, workList);
   };
 
   return (
