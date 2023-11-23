@@ -121,6 +121,7 @@ export default function Filter({
           <S.FilterTitle>스캔수량</S.FilterTitle>{" "}
           {(WORK_PAGE && numberWithCommas(workList.length)) ||
             (VASS_PAGE && numberWithCommas(vassList.length)) ||
+            (IMAGE_PAGE && numberWithCommas(vassList.length)) ||
             0}{" "}
           건{" "}
           <S.SelectBox
@@ -249,7 +250,11 @@ export default function Filter({
               </S.RegisterContainer>
             )}
             <S.RegisterContainer>
-              <S.ExcelIcon onClick={handleDownloadExcel} />
+              <CommonButton
+                contents="엑셀다운"
+                onClickFn={handleDownloadExcel}
+                backgroundColor="#010163"
+              />
             </S.RegisterContainer>
           </S.FilterContainer>
         )}
