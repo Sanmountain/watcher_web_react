@@ -5,9 +5,12 @@ import { IWeekChartData } from "../../../types/weekChart.types";
 import { getMonthChart } from "../../../api/dashboard/getMonthChart";
 import * as S from "../../../styles/Dashboard.styles";
 import Loading from "../Loading";
+import { useRecoilValue } from "recoil";
+import { loginState } from "../../../stores/loginState";
 
 export default function LineChart() {
   const [monthData, setMonthData] = useState<IWeekChartData[]>([]);
+  const login = useRecoilValue(loginState);
 
   const { mutate: monthChartMutate, isLoading: isMonthChartLoading } =
     getMonthChart(setMonthData);
@@ -111,6 +114,32 @@ export default function LineChart() {
                   itemBackground: "rgba(0, 0, 0, .03)",
                   itemOpacity: 1,
                 },
+              },
+            ],
+            data: [
+              {
+                id: "countIn",
+                label:
+                  login.company === "LOGEN"
+                    ? "배송입고"
+                    : login.company === "LOTTE"
+                      ? "도착"
+                      : login.company === "HANJIN"
+                        ? "간선상차"
+                        : "영업소상차",
+                color: colors.green[100],
+              },
+              {
+                id: "countOut",
+                label:
+                  login.company === "LOGEN"
+                    ? "집하출고"
+                    : login.company === "LOTTE"
+                      ? "발송"
+                      : login.company === "HANJIN"
+                        ? "간선하차"
+                        : "영업소하차",
+                color: colors.blue[100],
               },
             ],
           },
