@@ -99,6 +99,7 @@ export const ProfileButtonContainer = styled.div`
   width: fit-content;
   height: 100%;
   margin-right: 1%;
+  gap: 1%;
 `;
 
 export const Profile = styled.div`
@@ -145,7 +146,7 @@ export const LogOutButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: left;
-  width: 26%;
+  width: fit-content;
   height: fit-content;
   padding: 5px;
   background-color: transparent;

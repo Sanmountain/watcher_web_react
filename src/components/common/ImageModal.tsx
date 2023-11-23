@@ -10,6 +10,8 @@ import {
 import * as S from "../../styles/ImageModal.styles";
 import Draggable from "react-draggable";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import { getImagePage } from "../../utils/getLocationPath";
+import { useLocation } from "react-router";
 
 interface IImageModalProps {
   imageUrl: string;
@@ -25,6 +27,10 @@ export default function ImageModal({
   const [brightness, setBrightness] = useState(100);
 
   const imgRef = useRef<HTMLImageElement | null>(null);
+
+  const location = useLocation();
+
+  const IMAGE_PAGE = getImagePage(location);
 
   useEffect(() => {
     if (imgRef.current)
@@ -63,6 +69,7 @@ export default function ImageModal({
       <S.ModalContainer
         id="modalContainer"
         className={`modalContainer-${modalSize}`}
+        $IMAGE_PAGE={IMAGE_PAGE}
       >
         <S.CloseModal
           className={`closeModal-${modalSize}`}

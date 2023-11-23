@@ -31,6 +31,7 @@ export const nowVassDetailState = atom<IWorkListData>({
     dev_ver: "",
     seq: "",
     row_num: 0,
+    img_exists: false,
   },
   effects_UNSTABLE: [persistAtom],
 });

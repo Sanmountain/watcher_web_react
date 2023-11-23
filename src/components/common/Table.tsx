@@ -7,8 +7,11 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { IWorkListData } from "../../types/Work.types";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
-import { getWorkPage } from "../../utils/getLocationPath";
+import { getImagePage, getWorkPage } from "../../utils/getLocationPath";
 import { loginState } from "../../stores/loginState";
+import { useState } from "react";
+import { getImageInImagePage } from "../../api/getImageInImagePage";
+import ImageModal from "./ImageModal";
 
 export default function Table({
   title,
@@ -24,16 +27,27 @@ export default function Table({
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
   const login = useRecoilValue(loginState);
+  // NOTE 이미지
+  const [imageUrl, setImageUrl] = useState("");
+  const [isDisplayImageModal, setIsDisplayImageModal] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const WORK_PAGE = getWorkPage(location);
+  const IMAGE_PAGE = getImagePage(location);
+
+  const { mutate: imageMutate, isLoading: isImageLoading } =
+    getImageInImagePage(setImageUrl, setIsDisplayImageModal);
 
   const onClickMoveToDetail = (item: IWorkListData, index: number) => {
     navigate(`/vass/${item.barcode}`);
     setNowVassDetail(item);
     setPrevVassDetail(contents[index + 1]);
+  };
+
+  const onClickOpenImageModal = (barcode: string, scanDate: string) => {
+    imageMutate({ barcode, scanDate });
   };
 
   // NOTE 체크박스 전체 선택,해제
@@ -118,6 +132,20 @@ export default function Table({
                   <S.Contents key={el.label}>
                     {!el.value ? (
                       contents.length - index
+                    ) : IMAGE_PAGE ? (
+                      el.value === "button" && item.img_exists ? (
+                        <S.CommonButtonContainer>
+                          <CommonButton
+                            contents="조회"
+                            onClickFn={() =>
+                              onClickOpenImageModal(item.barcode, item.scandate)
+                            }
+                            backgroundColor="#010163"
+                          />
+                        </S.CommonButtonContainer>
+                      ) : (
+                        item[el.value]
+                      )
                     ) : el.value === "button" ? (
                       <S.CommonButtonContainer>
                         <CommonButton
@@ -136,6 +164,15 @@ export default function Table({
           )}
         </S.ContentsList>
       </S.Container>
+
+      {isDisplayImageModal && (
+        <ImageModal
+          imageUrl={imageUrl}
+          setIsDisplayImageModal={setIsDisplayImageModal}
+        />
+      )}
+
+      {isImageLoading && <Loading />}
     </>
   );
 }

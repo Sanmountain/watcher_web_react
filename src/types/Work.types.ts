@@ -23,6 +23,7 @@ export interface IWorkListData {
   dev_ver: string;
   seq: string;
   row_num: number;
+  img_exists: boolean;
 }
 
 export interface IWorkListResponse {
