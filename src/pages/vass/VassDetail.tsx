@@ -338,6 +338,7 @@ export default function VassDetail() {
           <CommonButton
             contents="송장번호 조회"
             onClickFn={onClickSearchInvoice}
+            width="100%"
             height="35px"
             backgroundColor="#010163"
           />
