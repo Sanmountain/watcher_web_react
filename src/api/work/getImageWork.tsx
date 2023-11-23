@@ -38,7 +38,7 @@ export const getImageWork = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             if (data.data[0]) {
               setIsDisplayImageModal(true);
               const imgUrl = "data:image/jpeg;base64," + data.data[0].img;
@@ -86,7 +86,7 @@ export const getImageWork = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             if (data.data[0]) {
               setIsDisplayImageModal(true);
               const imgUrl = "data:image/jpeg;base64," + data.data[0].img;
@@ -134,7 +134,7 @@ export const getImageWork = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             if (data.data[0]) {
               setIsDisplayImageModal(true);
               const imgUrl = "data:image/jpeg;base64," + data.data[0].img;
@@ -182,7 +182,7 @@ export const getImageWork = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             if (data.data[0]) {
               setIsDisplayImageModal(true);
               const imgUrl = "data:image/jpeg;base64," + data.data[0].img;

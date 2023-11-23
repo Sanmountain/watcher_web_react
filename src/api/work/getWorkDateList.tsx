@@ -40,7 +40,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 배송입고
@@ -63,7 +63,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             if (!isTmDvModal) {
               Swal.fire({
                 icon: "success",
-                title: "조회 성공",
+                title: "조회가 완료되었습니다.",
                 confirmButtonText: "확인",
               });
             }
@@ -97,7 +97,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 도착
@@ -120,7 +120,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             if (!isTmDvModal) {
               Swal.fire({
                 icon: "success",
-                title: "조회 성공",
+                title: "조회가 완료되었습니다.",
                 confirmButtonText: "확인",
               });
             }
@@ -154,7 +154,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 간선상차
@@ -177,7 +177,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             if (!isTmDvModal) {
               Swal.fire({
                 icon: "success",
-                title: "조회 성공",
+                title: "조회가 완료되었습니다.",
                 confirmButtonText: "확인",
               });
             }
@@ -211,7 +211,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 영업소상차
@@ -241,7 +241,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             if (!isTmDvModal) {
               Swal.fire({
                 icon: "success",
-                title: "조회 성공",
+                title: "조회가 완료되었습니다.",
                 confirmButtonText: "확인",
               });
             }

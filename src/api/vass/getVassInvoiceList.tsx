@@ -42,12 +42,12 @@ export const getVassInvoiceList = () => {
               title: "송장번호를 입력해주세요.",
               confirmButtonText: "확인",
             });
-          } else if (data.result === "00") {
+          } else if (data.result === "00" || data.result === "77") {
             setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -83,12 +83,12 @@ export const getVassInvoiceList = () => {
               title: "송장번호를 입력해주세요.",
               confirmButtonText: "확인",
             });
-          } else if (data.result === "00") {
+          } else if (data.result === "00" || data.result === "77") {
             setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -123,12 +123,12 @@ export const getVassInvoiceList = () => {
               title: "송장번호를 입력해주세요.",
               confirmButtonText: "확인",
             });
-          } else if (data.result === "00") {
+          } else if (data.result === "00" || data.result === "77") {
             setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -163,12 +163,12 @@ export const getVassInvoiceList = () => {
               title: "송장번호를 입력해주세요.",
               confirmButtonText: "확인",
             });
-          } else if (data.result === "00") {
+          } else if (data.result === "00" || data.result === "77") {
             setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }

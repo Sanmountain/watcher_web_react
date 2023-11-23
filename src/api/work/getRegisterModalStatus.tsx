@@ -34,7 +34,7 @@ export const getRegisterModalStatus = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setRegisterInfo(data.data[0]);
 
             let setData = {
@@ -138,7 +138,7 @@ export const getRegisterModalStatus = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setRegisterInfo(data.data[0]);
 
             let setData = {

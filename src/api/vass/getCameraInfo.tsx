@@ -34,7 +34,7 @@ export const getCameraInfo = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const sortedData = data.data.sort(
               (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
             );
@@ -65,7 +65,7 @@ export const getCameraInfo = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const sortedData = data.data.sort(
               (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
             );
@@ -95,7 +95,7 @@ export const getCameraInfo = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const sortedData = data.data.sort(
               (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
             );
@@ -125,7 +125,7 @@ export const getCameraInfo = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             const sortedData = data.data.sort(
               (a, b) => parseInt(a.cam_seq) - parseInt(b.cam_seq),
             );

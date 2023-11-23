@@ -44,7 +44,7 @@ export const getVassDetailInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             // NOTE refetch용
             setRefetchList((prev) => prev + 1);
 
@@ -94,7 +94,7 @@ export const getVassDetailInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             // NOTE refetch용
             setRefetchList((prev) => prev + 1);
 
@@ -143,7 +143,7 @@ export const getVassDetailInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             // NOTE refetch용
             setRefetchList((prev) => prev + 1);
 
@@ -192,7 +192,7 @@ export const getVassDetailInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             // NOTE refetch용
             setRefetchList((prev) => prev + 1);
 

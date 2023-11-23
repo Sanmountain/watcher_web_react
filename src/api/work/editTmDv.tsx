@@ -39,7 +39,7 @@ export const editTmDv = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             workDateListMutate();
             sendInvoiceMutate();
 
@@ -74,7 +74,7 @@ export const editTmDv = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             Swal.fire({
               icon: "success",
               title: "수정 완료되었습니다.",

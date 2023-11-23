@@ -212,7 +212,7 @@ export default function Filter({
               </S.RegisterContainer>
             )}
 
-            {(login.company === "LOGEN" || login.company === "LOTTE") && (
+            {login.company === "LOGEN" && (
               <S.RegisterContainer>
                 <CommonButton
                   contents="송장 등록"
@@ -221,31 +221,45 @@ export default function Filter({
                   backgroundColor="green"
                 />
                 <CommonButton
-                  contents={
-                    login.company === "LOGEN"
-                      ? "아이로젠 바로 전송"
-                      : "알프스 바로 전송"
-                  }
+                  contents="아이로젠 바로 전송"
                   onClickFn={onClickSendInvoice}
                   height="100%"
                   backgroundColor="green"
                 />
-              </S.RegisterContainer>
-            )}
-
-            {(login.company === "LOGEN" || login.company === "LOTTE") && (
-              <S.RegisterContainer>
                 <CommonButton
                   contents="업무 수정"
                   onClickFn={handleEditTmDv}
                   height="100%"
                   backgroundColor="#010163"
                 />
+                <S.ExcelIcon onClick={handleDownloadExcel} />
               </S.RegisterContainer>
             )}
-            <S.RegisterContainer>
-              <S.ExcelIcon onClick={handleDownloadExcel} />
-            </S.RegisterContainer>
+
+            {login.company === "LOTTE" && (
+              <S.RegisterContainer>
+                <CommonButton
+                  contents="송장 등록"
+                  onClickFn={onClickRegisterInvoice}
+                  height="100%"
+                  backgroundColor="green"
+                />
+                <CommonButton
+                  contents="알프스 바로 전송"
+                  onClickFn={onClickSendInvoice}
+                  height="100%"
+                  backgroundColor="green"
+                />
+                <CommonButton
+                  contents="업무 수정"
+                  onClickFn={handleEditTmDv}
+                  height="100%"
+                  backgroundColor="#010163"
+                  // style={{ marginRight: "3%" }}
+                />
+                <S.ExcelIcon onClick={handleDownloadExcel} />
+              </S.RegisterContainer>
+            )}
           </S.FilterContainer>
         )}
       </S.Container>

@@ -31,7 +31,7 @@ export const editPasswordLater = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             navigate("/");
           }
         },
@@ -57,7 +57,7 @@ export const editPasswordLater = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             navigate("/");
           }
         },
@@ -83,7 +83,7 @@ export const editPasswordLater = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             navigate("/");
           }
         },
@@ -109,7 +109,7 @@ export const editPasswordLater = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             navigate("/");
           }
         },
