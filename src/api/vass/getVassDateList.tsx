@@ -40,7 +40,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 도착
@@ -94,7 +94,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 도착
@@ -148,7 +148,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 간선상차
@@ -202,7 +202,7 @@ export const getVassDateList = () => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             let filteringData: any;
 
             // NOTE 영업소상차

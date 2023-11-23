@@ -30,7 +30,7 @@ export const registerInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsDisplayRegisterModal(false);
             Swal.fire({
               icon: "success",
@@ -68,7 +68,7 @@ export const registerInvoice = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             setIsDisplayRegisterModal(false);
             Swal.fire({
               icon: "success",

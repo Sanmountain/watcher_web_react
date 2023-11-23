@@ -46,7 +46,7 @@ export const editPassword = (userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             Swal.fire({
               icon: "success",
               title: "비밀번호 변경이 완료되었습니다. 다시 로그인해주세요.",
@@ -96,7 +96,7 @@ export const editPassword = (userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             Swal.fire({
               icon: "success",
               title: "비밀번호 변경이 완료되었습니다. 다시 로그인해주세요.",
@@ -146,7 +146,7 @@ export const editPassword = (userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             Swal.fire({
               icon: "success",
               title: "비밀번호 변경이 완료되었습니다. 다시 로그인해주세요.",
@@ -196,7 +196,7 @@ export const editPassword = (userPassword: string) => {
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00") {
+          if (data.result === "00" || data.result === "77") {
             Swal.fire({
               icon: "success",
               title: "비밀번호 변경이 완료되었습니다. 다시 로그인해주세요.",
