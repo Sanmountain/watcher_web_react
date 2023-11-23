@@ -2,7 +2,11 @@ import { ChangeEvent, useEffect, useState } from "react";
 import * as S from "../../styles/Filter.styles";
 import CommonButton from "./CommonButton";
 import { useLocation } from "react-router";
-import { getVassPage, getWorkPage } from "../../utils/getLocationPath";
+import {
+  getImagePage,
+  getVassPage,
+  getWorkPage,
+} from "../../utils/getLocationPath";
 import { IFilterProps } from "../../types/Filter.types";
 import { useRecoilValue } from "recoil";
 import { workListState } from "../../stores/work/workListState";
@@ -40,6 +44,7 @@ export default function Filter({
 
   const WORK_PAGE = getWorkPage(location);
   const VASS_PAGE = getVassPage(location);
+  const IMAGE_PAGE = getImagePage(location);
 
   // NOTE auto 체크
   const { mutate: autoCheckMutate } = getAutoCheck(setIsOn);
@@ -188,7 +193,7 @@ export default function Filter({
           />
         </S.FilterContainer>
 
-        {!VASS_PAGE && (
+        {!VASS_PAGE && !IMAGE_PAGE && (
           <S.FilterContainer
             className="register item3"
             $isLogen={login.company === "LOGEN"}

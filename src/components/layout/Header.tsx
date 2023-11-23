@@ -49,11 +49,25 @@ export default function Header() {
     navigate("/login");
   };
 
-  const menuList = [
-    { label: "대시보드", path: "/" },
-    { label: "송장조회", path: "/work" },
-    { label: "화물추적", path: "/vass" },
-  ];
+  let menuList;
+  if (login.camUsable === "0") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+    ];
+  } else if (login.camUsable === "1" || login.camUsable === "3") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+      { label: "이미지조회", path: "/image" },
+    ];
+  } else if (login.camUsable === "2") {
+    menuList = [
+      { label: "대시보드", path: "/" },
+      { label: "송장조회", path: "/work" },
+      { label: "화물추적", path: "/vass" },
+    ];
+  }
 
   useEffect(() => {
     modalClose(isModalOpen, setIsModalOpen, modalOutside);
@@ -71,16 +85,8 @@ export default function Header() {
   };
 
   const onClickMenu = (path: string) => {
-    if (login.camUsable === "2") {
-      navigate(path);
-      setCurrentMenu(path);
-    } else {
-      if (path === "/vass") {
-        navigate("/noCam");
-      } else {
-        navigate(path);
-      }
-    }
+    navigate(path);
+    setCurrentMenu(path);
   };
 
   const onClickProfile = () => {
@@ -94,7 +100,7 @@ export default function Header() {
         <S.LogoImg src={JHCLogo} onClick={onClickLogo} />
       </S.LogoContainer>
       <S.MenuContainer>
-        {menuList.map((menu) => (
+        {menuList?.map((menu) => (
           <S.MenuButton
             key={menu.label}
             onClick={() => onClickMenu(menu.path)}
@@ -103,7 +109,7 @@ export default function Header() {
             {menu.label}
           </S.MenuButton>
         ))}
-        {login.company === "LOGEN" && (
+        {login.company === "LOGEN" && login.camUsable === "2" && (
           <Link to="https://gigaeyes.co.kr/memberN/loginForm">
             <S.HeaderImg src={gigaLogo} />
           </Link>
