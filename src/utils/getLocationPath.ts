@@ -11,3 +11,7 @@ export const getWorkPage = (location: Location) => {
 export const getVassPage = (location: Location) => {
   return location.pathname === "/vass";
 };
+
+export const getImagePage = (location: Location) => {
+  return location.pathname === "/image";
+};
