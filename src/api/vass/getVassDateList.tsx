@@ -61,7 +61,7 @@ export const getVassDateList = () => {
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -115,7 +115,7 @@ export const getVassDateList = () => {
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -169,7 +169,7 @@ export const getVassDateList = () => {
             setWorkList(filteringData);
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }
@@ -231,7 +231,7 @@ export const getVassDateList = () => {
 
             Swal.fire({
               icon: "success",
-              title: "조회 성공",
+              title: "조회가 완료되었습니다.",
               confirmButtonText: "확인",
             });
           }

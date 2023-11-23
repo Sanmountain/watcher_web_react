@@ -49,7 +49,7 @@ const Button = styled.button<{
 
   background-color: ${(props) => props.$backgroundColor || colors.blue[300]};
   color: ${colors.black[1000]};
-  padding: 5px 15px;
+  padding: 5px 12px;
   border: 1px solid ${(props) => props.$backgroundColor || colors.blue[300]};
   border-radius: ${(props) => (props.$isRound ? "20px" : "10px")};
   width: ${(props) => props.$width || "fit-content"};
