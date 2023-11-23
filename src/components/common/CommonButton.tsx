@@ -1,3 +1,4 @@
+import React from "react";
 import { styled } from "styled-components";
 import { colors } from "../../styles/palette";
 
@@ -19,7 +20,8 @@ export default function CommonButton({
   height,
   backgroundColor,
   className,
-}: ICommonButtonProps) {
+  style,
+}: ICommonButtonProps & { style?: React.CSSProperties }) {
   return (
     <Button
       $isRound={$isRound}
@@ -28,6 +30,7 @@ export default function CommonButton({
       $height={height}
       $backgroundColor={backgroundColor}
       className={className}
+      style={style}
     >
       {contents}
     </Button>
