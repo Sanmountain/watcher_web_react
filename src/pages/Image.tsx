@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Filter from "../components/common/Filter";
 import Table from "../components/common/Table";
@@ -8,23 +9,29 @@ import { getVassDateList } from "../api/vass/getVassDateList";
 import { getVassInvoiceList } from "../api/vass/getVassInvoiceList";
 
 export default function Image() {
-  const title = [
-    { label: "No.", value: "" },
-    { label: "업무", value: "tm_dv" },
-    { label: "날짜 & 시간", value: "scan_total_time" },
-    { label: "차량번호", value: "car_num" },
-    { label: "송장번호", value: "barcode" },
-    { label: "이미지", value: "button" },
-  ];
+  const title = useMemo(
+    () => [
+      { label: "No.", value: "" },
+      { label: "업무", value: "tm_dv" },
+      { label: "날짜 & 시간", value: "scan_total_time" },
+      { label: "차량번호", value: "car_num" },
+      { label: "송장번호", value: "barcode" },
+      { label: "이미지", value: "button" },
+    ],
+    [],
+  );
 
-  const hanjinTitle = [
-    { label: "No.", value: "" },
-    { label: "업무", value: "tm_dv" },
-    { label: "날짜 & 시간", value: "scan_total_time" },
-    { label: "간선편명", value: "trk" },
-    { label: "송장번호", value: "barcode" },
-    { label: "이미지", value: "button" },
-  ];
+  const hanjinTitle = useMemo(
+    () => [
+      { label: "No.", value: "" },
+      { label: "업무", value: "tm_dv" },
+      { label: "날짜 & 시간", value: "scan_total_time" },
+      { label: "간선편명", value: "trk" },
+      { label: "송장번호", value: "barcode" },
+      { label: "이미지", value: "button" },
+    ],
+    [],
+  );
 
   const login = useRecoilValue(loginState);
   const [filterOption, setFilterOption] = useRecoilState(vassFilterState);

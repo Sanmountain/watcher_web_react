@@ -72,15 +72,19 @@ export default function Dashboard() {
       </S.TopContainer>
       <S.BottomContainer>
         <S.ChartContainer>
-          <S.ChartTitle>주간 스캔 수량</S.ChartTitle>
-          <S.ChartCount>{numberWithCommas(weekTotal)} 건</S.ChartCount>
+          <S.ChartTitleContainer>
+            <S.ChartTitle>주간 스캔 수량</S.ChartTitle>
+            <S.ChartCount>{numberWithCommas(weekTotal)} 건</S.ChartCount>
+          </S.ChartTitleContainer>
           <S.Chart>
             <BarChart />
           </S.Chart>
         </S.ChartContainer>
         <S.ChartContainer>
-          <S.ChartTitle>2023년 스캔 수량</S.ChartTitle>
-          <S.ChartCount>{numberWithCommas(monthTotal)} 건</S.ChartCount>
+          <S.ChartTitleContainer>
+            <S.ChartTitle>2023년 스캔 수량</S.ChartTitle>
+            <S.ChartCount>{numberWithCommas(monthTotal)} 건</S.ChartCount>
+          </S.ChartTitleContainer>
           <S.Chart>
             <LineChart />
           </S.Chart>
