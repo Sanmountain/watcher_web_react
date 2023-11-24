@@ -49,9 +49,8 @@ export const MenuContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 220px;
-  gap: 20px;
-
+  height: 200px;
+  gap: 10px;
   border-bottom: 1px solid black;
 `;
 
@@ -103,7 +102,6 @@ export const MenuButton = styled.button`
 export const ShoppingMallContainer = styled.div`
   position: absolute;
   bottom: 20px;
-  /* left: 50%; */
   display: flex;
   flex-direction: column;
   align-items: center;
