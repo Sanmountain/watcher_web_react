@@ -6,12 +6,10 @@ export const Container = styled.div<{ $isDetailPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: space-between; */
 
   min-width: 220px;
   width: 13%;
-  height: 88vh;
-  gap: 20px;
+  height: calc((var(--vh, 1vh) * 100) - 100px);
   background-color: ${colors.black[1000]};
   box-shadow: ${(props) =>
     props.$isDetailPage ? "0" : "4px 0 3px rgba(0, 0, 0, 0.1)"};
@@ -22,8 +20,19 @@ export const Container = styled.div<{ $isDetailPage: boolean }>`
   z-index: 1;
 `;
 
+export const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  gap: 50px;
+`;
+
 export const LogoContainer = styled.div`
-  width: 70%;
+  width: 80%;
   height: 70px;
   margin-top: 40px;
   cursor: pointer;
@@ -69,6 +78,7 @@ export const MenuButton = styled.button`
   font-weight: 550;
   background-color: white;
   border: none;
+  padding: 5px 0;
 
   cursor: pointer;
 
@@ -91,6 +101,9 @@ export const MenuButton = styled.button`
 `;
 
 export const ShoppingMallContainer = styled.div`
+  position: absolute;
+  bottom: 20px;
+  /* left: 50%; */
   display: flex;
   flex-direction: column;
   align-items: center;

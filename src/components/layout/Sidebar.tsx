@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { menuState } from "../../stores/menuState";
+import { setVH } from "../../utils/setVH";
 
 export default function Sidebar() {
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
@@ -31,6 +32,12 @@ export default function Sidebar() {
     ];
   }
 
+  // NOTE 실제 viewport값 가져오기
+  useEffect(() => {
+    window.addEventListener("resize", setVH);
+    setVH();
+  }, []);
+
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
     if (!params.invoiceNumber) {
@@ -50,7 +57,7 @@ export default function Sidebar() {
   return (
     <S.Container $isDetailPage={!!params.invoiceNumber}>
       {!params.invoiceNumber && (
-        <>
+        <S.Wrapper>
           <S.LogoContainer onClick={onClickLogo}>
             <S.Image src={VassIcon} />
           </S.LogoContainer>
@@ -85,7 +92,7 @@ export default function Sidebar() {
               <S.Image src={S4Image} />
             </S.ProductImageContainer>
           </S.ShoppingMallContainer>
-        </>
+        </S.Wrapper>
       )}
     </S.Container>
   );
