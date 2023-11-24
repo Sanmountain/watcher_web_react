@@ -18,6 +18,7 @@ import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 import { getImage } from "../../api/vass/getImage";
 import ImageModal from "../../components/common/ImageModal";
+import DeliveryState from "../../components/common/deliveryState/DeliveryState";
 
 export default function VassDetail() {
   // const login = useRecoilValue(loginState);
@@ -359,6 +360,17 @@ export default function VassDetail() {
             {prevVassDetail?.barcode}
           </S.InvoiceInfo>
         </S.InvoiceInfoContainer>
+
+        <S.DeliveryInfoContainer>
+          <DeliveryState />
+          <CommonButton
+            contents="배송추적 더 자세히"
+            onClickFn={onClickSearchInvoice}
+            width="80%"
+            height="35px"
+            backgroundColor="#010163"
+          />
+        </S.DeliveryInfoContainer>
 
         {/* <S.TradeSubInfoContainer>
           <p>담당직원 :{deliveryManName}</p>
