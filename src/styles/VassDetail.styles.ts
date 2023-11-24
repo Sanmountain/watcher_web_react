@@ -72,6 +72,20 @@ export const InvoiceInfoContainer = styled.div`
   font-weight: 700;
 `;
 
+export const DeliveryInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20%;
+  width: 90%;
+  height: 200px;
+  gap: 5px;
+  font-size: ${font.fontSize[200]};
+  font-weight: 700;
+`;
+
 export const InvoiceInfo = styled.div`
   display: flex;
   justify-content: center;
