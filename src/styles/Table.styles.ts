@@ -51,7 +51,7 @@ export const ContentsList = styled.div<{ $isWorkPage: boolean }>`
 
   margin-left: 1%;
   width: 101%;
-  height: calc(100vh - 200px);
+  height: calc((var(--vh, 1vh) * 100) - 190px);
   gap: 10px;
   overflow-y: scroll;
 

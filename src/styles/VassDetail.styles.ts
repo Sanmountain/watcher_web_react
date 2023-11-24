@@ -105,8 +105,10 @@ export const TradeSubInfoContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  width: 99.4%;
+  width: 100%;
+  height: 100%;
 `;
 
 export const VideoControllerContainer = styled.div`
@@ -207,12 +209,14 @@ export const SettingMenu = styled.div`
 export const VideoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 390px);
+  grid-template-rows: repeat(2, minmax(380px, 1fr));
   align-items: center;
   justify-items: center;
   margin-top: 1%;
   width: 99.5%;
-  height: 760px;
+  height: 85%;
+  min-height: 760px;
+  border: 1px solid red;
 `;
 
 export const Video = styled.div`
@@ -229,7 +233,7 @@ export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  height: fit-content;
 `;
 
 export const CameraInfo = styled.div`

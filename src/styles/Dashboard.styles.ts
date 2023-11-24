@@ -9,10 +9,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   width: 100%;
+  height: 100%;
   min-width: calc(${breakPoints.medium}px - 250px);
+  gap: 30px;
 `;
 
 export const TopContainer = styled.div<{ $login: ILoginState }>`
@@ -20,14 +21,13 @@ export const TopContainer = styled.div<{ $login: ILoginState }>`
   grid-template-columns: ${(props) =>
     props.$login.company === "HANDEX"
       ? "0.5fr 1fr 1fr 1fr"
-      : "1.5fr 1.3fr 1.3fr"};
+      : "1.3fr 1.5fr 1.5fr"};
   align-items: center;
   justify-items: center;
 
   width: 95%;
   height: 95px;
   border-bottom: 3px solid ${colors.black[300]};
-  margin-bottom: 30px;
 `;
 
 export const Date = styled.div<{ $login: ILoginState }>`
@@ -85,16 +85,27 @@ export const BottomContainer = styled.div`
   align-items: center;
   justify-items: center;
 
-  width: 90%;
+  width: 95%;
+  height: calc(100% - 130px);
 `;
 
 export const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 
   width: 100%;
-  height: 700px;
+  height: 100%;
+  min-height: 700px;
+`;
+
+export const ChartTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
   gap: 20px;
 `;
 
