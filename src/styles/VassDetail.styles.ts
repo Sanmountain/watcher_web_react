@@ -216,7 +216,6 @@ export const VideoContainer = styled.div`
   width: 99.5%;
   height: 85%;
   min-height: 760px;
-  border: 1px solid red;
 `;
 
 export const Video = styled.div`
