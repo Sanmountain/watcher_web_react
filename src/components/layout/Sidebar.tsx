@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { menuState } from "../../stores/menuState";
 import { setVH } from "../../utils/setVH";
+import { getMenuList } from "../../utils/getMenuList";
 
 export default function Sidebar() {
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
@@ -17,20 +18,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const params = useParams();
 
-  let menuList;
-  if (login.camUsable === "0") {
-    menuList = [{ label: "송장조회", path: "/work" }];
-  } else if (login.camUsable === "1" || login.camUsable === "3") {
-    menuList = [
-      { label: "송장조회", path: "/work" },
-      { label: "이미지조회", path: "/image" },
-    ];
-  } else if (login.camUsable === "2") {
-    menuList = [
-      { label: "송장조회", path: "/work" },
-      { label: "화물추적", path: "/vass" },
-    ];
-  }
+  const menuList = getMenuList(login);
 
   // NOTE 실제 viewport값 가져오기
   useEffect(() => {
