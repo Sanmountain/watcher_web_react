@@ -49,7 +49,7 @@ export const MenuContainer = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 200px;
+  height: 220px;
   gap: 10px;
   border-bottom: 1px solid black;
 `;

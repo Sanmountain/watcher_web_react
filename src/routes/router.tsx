@@ -8,6 +8,7 @@ import Layout from "../components/layout";
 import LoginRoute from "./LoginRouter";
 import Profile from "../pages/Profile";
 import Image from "../pages/Image";
+import ImageSetting from "../pages/ImageSetting";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -66,6 +67,17 @@ export const router = createBrowserRouter([
       <LoginRoute>
         <Layout>
           <Image />
+        </Layout>
+      </LoginRoute>
+    ),
+  },
+
+  {
+    path: "/imageSetting",
+    element: (
+      <LoginRoute>
+        <Layout>
+          <ImageSetting />
         </Layout>
       </LoginRoute>
     ),

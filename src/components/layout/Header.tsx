@@ -14,6 +14,7 @@ import { workListState } from "../../stores/work/workListState";
 import { workFilterState } from "../../stores/work/workFilterState";
 import { vassFilterState } from "../../stores/vass/vassFilterState";
 import modalClose from "../../utils/modalClose";
+import { getMenuList } from "../../utils/getMenuList";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -49,25 +50,7 @@ export default function Header() {
     navigate("/login");
   };
 
-  let menuList;
-  if (login.camUsable === "0") {
-    menuList = [
-      { label: "대시보드", path: "/" },
-      { label: "송장조회", path: "/work" },
-    ];
-  } else if (login.camUsable === "1" || login.camUsable === "3") {
-    menuList = [
-      { label: "대시보드", path: "/" },
-      { label: "송장조회", path: "/work" },
-      { label: "이미지조회", path: "/image" },
-    ];
-  } else if (login.camUsable === "2") {
-    menuList = [
-      { label: "대시보드", path: "/" },
-      { label: "송장조회", path: "/work" },
-      { label: "화물추적", path: "/vass" },
-    ];
-  }
+  const menuList = getMenuList(login);
 
   useEffect(() => {
     modalClose(isModalOpen, setIsModalOpen, modalOutside);
@@ -100,6 +83,12 @@ export default function Header() {
         <S.LogoImg src={JHCLogo} onClick={onClickLogo} />
       </S.LogoContainer>
       <S.MenuContainer>
+        <S.MenuButton
+          onClick={() => onClickMenu("/")}
+          className={currentMenu === "/" ? "current" : ""}
+        >
+          대시보드
+        </S.MenuButton>
         {menuList?.map((menu) => (
           <S.MenuButton
             key={menu.label}
