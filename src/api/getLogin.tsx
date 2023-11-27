@@ -58,7 +58,8 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          // NOTE 일반 로그인
+          if (data.result === "00") {
             setLogin({
               ...login,
               isLogin: true,
@@ -69,7 +70,6 @@ export const getLogin = (
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
             });
-
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {
               Swal.fire({
@@ -89,6 +89,40 @@ export const getLogin = (
               navigate("/");
             }
           }
+
+          // NOTE 어드민 로그인
+          else if (data.result === "77") {
+            setLogin({
+              ...login,
+              isLogin: true,
+              userId: data.data[0].user_id,
+              branchName: data.data[0].bran_exp,
+              branchCode: data.data[0].bran_cd,
+              saId: data.data[0].sa_id,
+              accountId: data.data[0].account_id,
+              camUsable: data.data[0].cam_usable,
+              isAdmin: true,
+            });
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
+          }
+
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
             Swal.fire({
@@ -131,7 +165,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setLogin({
               ...login,
               isLogin: true,
@@ -162,6 +196,40 @@ export const getLogin = (
               navigate("/");
             }
           }
+
+          // NOTE 어드민 로그인
+          else if (data.result === "77") {
+            setLogin({
+              ...login,
+              isLogin: true,
+              userId: data.data[0].user_id,
+              branchName: data.data[0].bran_exp,
+              branchCode: data.data[0].bran_cd,
+              saId: data.data[0].sa_id,
+              accountId: data.data[0].account_id,
+              camUsable: data.data[0].cam_usable,
+              isAdmin: true,
+            });
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
+          }
+
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
             Swal.fire({
@@ -204,7 +272,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setLogin({
               ...login,
               isLogin: true,
@@ -236,6 +304,40 @@ export const getLogin = (
               navigate("/");
             }
           }
+
+          // NOTE 어드민 로그인
+          else if (data.result === "77") {
+            setLogin({
+              ...login,
+              isLogin: true,
+              userId: data.data[0].user_id,
+              branchName: data.data[0].bran_exp,
+              branchCode: data.data[0].bran_cd,
+              saId: data.data[0].sa_id,
+              accountId: data.data[0].account_id,
+              camUsable: data.data[0].cam_usable,
+              isAdmin: true,
+            });
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
+          }
+
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
             Swal.fire({
@@ -278,7 +380,7 @@ export const getLogin = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setLogin({
               ...login,
               isLogin: true,
@@ -309,6 +411,40 @@ export const getLogin = (
               navigate("/");
             }
           }
+
+          // NOTE 어드민 로그인
+          else if (data.result === "77") {
+            setLogin({
+              ...login,
+              isLogin: true,
+              userId: data.data[0].user_id,
+              branchName: data.data[0].bran_exp,
+              branchCode: data.data[0].bran_cd,
+              saId: data.data[0].sa_id,
+              accountId: data.data[0].account_id,
+              camUsable: data.data[0].cam_usable,
+              isAdmin: true,
+            });
+            // NOTE 비밀번호 변경 3개월 된 지점
+            if (data.data[0].password_change_it === "1") {
+              Swal.fire({
+                title: "비밀번호 변경 대상입니다. 변경하시겠습니까?",
+                showCancelButton: true,
+                confirmButtonText: "변경",
+                cancelButtonText: "한 달 후 변경",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/profile");
+                } else if (result.isDismissed) {
+                  editPasswordLaterMutate();
+                }
+              });
+            } else {
+              navigate("/");
+            }
+          }
+
           // NOTE 비밀번호 불일치
           else if (data.result === "08") {
             Swal.fire({
