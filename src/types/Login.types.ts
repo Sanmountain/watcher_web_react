@@ -9,6 +9,7 @@ export interface ILoginState {
   saId: string;
   accountId: string;
   camUsable: string;
+  isAdmin: boolean;
 }
 
 export interface ILoginData {
