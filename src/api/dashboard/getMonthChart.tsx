@@ -35,7 +35,7 @@ export const getMonthChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setMonthData(data.data);
 
             const inSum = data.data.reduce((acc, item) => {
@@ -77,7 +77,7 @@ export const getMonthChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setMonthData(data.data);
 
             const totalSum = data.data.reduce((acc, item) => {
@@ -111,7 +111,7 @@ export const getMonthChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setMonthData(data.data);
 
             const totalSum = data.data.reduce((acc, item) => {
@@ -145,7 +145,7 @@ export const getMonthChart = (
         }),
       {
         onSuccess: (data) => {
-          if (data.result === "00" || data.result === "77") {
+          if (data.result === "00") {
             setMonthData(data.data);
 
             const totalSum = data.data.reduce((acc, item) => {
