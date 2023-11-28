@@ -18,6 +18,7 @@ import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 import { getImage } from "../../api/vass/getImage";
 import ImageModal from "../../components/common/ImageModal";
+import DeliveryModal from "../../components/common/deliveryState/DeliveryModal";
 import DeliveryState from "../../components/common/deliveryState/DeliveryState";
 
 export default function VassDetail() {
@@ -36,6 +37,7 @@ export default function VassDetail() {
   // NOTE 재생순서변경 모달
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
   const [changePlaySequence, setChangePlaySequence] = useState<
     ICameraInfoData[]
   >([]);
@@ -332,6 +334,11 @@ export default function VassDetail() {
     vassDetailInvoiceMutate();
   };
 
+  // NOTE 배송추적 모달 열리고 닫힘
+  const onClickDeliveryModal = () => {
+    setIsDeliveryModalOpen(!isDeliveryModalOpen);
+  };
+
   return (
     <>
       <S.ShoppingMallContainer>
@@ -365,7 +372,7 @@ export default function VassDetail() {
           <DeliveryState />
           <CommonButton
             contents="배송추적 더 자세히"
-            onClickFn={onClickSearchInvoice}
+            onClickFn={onClickDeliveryModal}
             width="80%"
             height="35px"
             backgroundColor="#010163"
@@ -498,6 +505,9 @@ export default function VassDetail() {
           setEditing={setEditing}
           setCameraInfo={setCameraInfo}
         />
+      )}
+      {isDeliveryModalOpen && (
+        <DeliveryModal onClose={() => setIsModalOpen(false)} />
       )}
     </>
   );
