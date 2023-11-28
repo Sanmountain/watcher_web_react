@@ -73,17 +73,18 @@ export const DeliveryText = styled.div`
 
 /* 모달 */
 export const DeliveryModalContainer = styled.div`
-  position: fixed; // 위치를 고정합니다.
-  top: 50%; // 상단에서 부터 50%의 위치에 배치합니다.
-  left: 50%; // 좌측에서 부터 50%의 위치에 배치합니다.
-  transform: translate(-50%, -50%); // 중심점을 조정합니다.
-  z-index: 100; // 다른 요소 위에 위치하도록 z-index를 설정합니다.
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
 
-  width: 70%;
-  height: 50%;
+  width: 40%;
+  height: 90%;
 
   margin: 0 auto;
-  background: white; // 배경색을 지정합니다.
+  background: ${colors.black[1000]};
+  border-radius: 20px;
 `;
 
 export const DeliveryModalHeader = styled.div`
@@ -91,11 +92,11 @@ export const DeliveryModalHeader = styled.div`
 `;
 
 export const ModalOverlay = styled.div`
-  position: fixed; // 위치를 고정합니다.
-  top: 0; // 상단에 붙입니다.
-  left: 0; // 좌측에 붙입니다.
-  right: 0; // 우측에 붙입니다.
-  bottom: 0; // 하단에 붙입니다.
-  background: rgba(0, 0, 0, 0.5); // 반투명한 검은색 배경을 만듭니다.
-  z-index: 99; // 모달창 바로 아래에 위치하도록 z-index를 설정합니다.
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
 `;

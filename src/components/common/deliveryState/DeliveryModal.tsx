@@ -5,7 +5,9 @@ export default function DeliveryModal({ onClose }: { onClose: () => void }) {
     <>
       <S.ModalOverlay onClick={onClose} />
       <S.DeliveryModalContainer>
-        <S.DeliveryModalHeader>이전 송장번호 배송추적</S.DeliveryModalHeader>
+        <S.DeliveryModalHeader>
+          <button onClick={onClose}>x</button>이전 송장번호 배송추적
+        </S.DeliveryModalHeader>
       </S.DeliveryModalContainer>
     </>
   );

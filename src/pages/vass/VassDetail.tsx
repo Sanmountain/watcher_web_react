@@ -507,7 +507,7 @@ export default function VassDetail() {
         />
       )}
       {isDeliveryModalOpen && (
-        <DeliveryModal onClose={() => setIsModalOpen(false)} />
+        <DeliveryModal onClose={() => setIsDeliveryModalOpen(false)} />
       )}
     </>
   );
