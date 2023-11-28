@@ -10,5 +10,9 @@ type LoginRouteProps = {
 export default function LoginRoute({ children }: LoginRouteProps) {
   const login = useRecoilValue(loginState);
 
-  return login.isLogin ? <>{children}</> : <Navigate to="/login" />;
+  if (!login.isLogin) return <Navigate to="/login" />;
+
+  if (!login.camStatus || !login.camUsable) {
+    return <Navigate to="/login" />;
+  } else return <>{children}</>;
 }
