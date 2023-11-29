@@ -319,9 +319,11 @@ export default function VassDetail() {
       <S.Container>
         {isVideoListLoading && <Loading isVass />}
 
-        {videoList.length === 0 ? (
+        {videoList.length === 0 && !isVideoListLoading && (
           <S.NoVideoContainer>송장번호를 조회해주세요.</S.NoVideoContainer>
-        ) : (
+        )}
+
+        {videoList.length > 0 && (
           <>
             <S.VideoContainer>
               {cameraInfo
