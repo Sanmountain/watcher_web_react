@@ -32,11 +32,26 @@ export default function BarChart() {
       countIn = parseInt(item.count, 10);
     }
 
+    let handexCountIn = 0;
+    let handexCountOut = 0;
+    let handexCountPick = 0;
+
+    if (Array.isArray(item.count) && item.count.length === 3) {
+      handexCountIn = parseInt(item.count[0], 10);
+      handexCountOut = parseInt(item.count[1], 10);
+      handexCountPick = parseInt(item.count[2], 10);
+    } else {
+      handexCountIn = countIn;
+      handexCountOut = countOut;
+      handexCountPick = 0;
+    }
+
     return {
       scandate: item.scandate,
       week: item.week,
-      countIn,
-      countOut,
+      handexCountIn,
+      handexCountOut,
+      handexCountPick,
     };
   });
 
@@ -44,13 +59,17 @@ export default function BarChart() {
     <>
       <ResponsiveBar
         data={revertWeekDataCountNumber}
-        keys={["countIn", "countOut"]}
+        keys={["handexCountIn", "handexCountOut", "handexCountPick"]}
         indexBy="week"
         margin={{ top: 20, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={[`${colors.green[100]}`, `${colors.blue[100]}`]}
+        colors={[
+          `${colors.green[100]}`,
+          `${colors.blue[100]}`,
+          `${colors.yellow[100]}`,
+        ]}
         fill={[
           {
             match: {
@@ -103,7 +122,7 @@ export default function BarChart() {
             ],
             data: [
               {
-                id: "countIn",
+                id: "handexCountIn",
                 label:
                   login.company === "LOGEN"
                     ? "배송입고"
@@ -115,7 +134,7 @@ export default function BarChart() {
                 color: colors.green[100],
               },
               {
-                id: "countOut",
+                id: "handexCountOut",
                 label:
                   login.company === "LOGEN"
                     ? "집하출고"
@@ -125,6 +144,12 @@ export default function BarChart() {
                         ? "간선하차"
                         : "영업소하차",
                 color: colors.blue[100],
+              },
+              {
+                id: "handexCountPick",
+                label: login.company === "HANDEX" ? "상품집하" : "",
+                color: colors.yellow[100],
+                hidden: login.company !== "HANDEX",
               },
             ],
           },

@@ -155,6 +155,7 @@ export const getWeekChart = (
                 return acc;
               }
             }, 0);
+
             setWeekTotal(totalSum);
           }
         },
