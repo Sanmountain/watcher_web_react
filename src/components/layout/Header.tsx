@@ -15,6 +15,7 @@ import { workFilterState } from "../../stores/work/workFilterState";
 import { vassFilterState } from "../../stores/vass/vassFilterState";
 import modalClose from "../../utils/modalClose";
 import { getMenuList } from "../../utils/getMenuList";
+import { videoListState } from "../../stores/vass/videoListState";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -23,6 +24,7 @@ export default function Header() {
   const resetVassFilter = useResetRecoilState(vassFilterState);
   const resetWorkList = useResetRecoilState(workListState);
   const resetVassList = useResetRecoilState(vassListState);
+  const resetVideoList = useResetRecoilState(videoListState);
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
@@ -45,6 +47,7 @@ export default function Header() {
     resetVassFilter();
     resetWorkList();
     resetVassList();
+    resetVideoList();
     resetNowVassDetail();
     resetPrevVassDetail();
     navigate("/login");
