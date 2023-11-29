@@ -23,14 +23,12 @@ export const getWorkInvoiceList = () => {
       "getWorkInvoiceList",
       () =>
         LogenInstance.post("/lose", {
-          api: "dvInAll",
+          api: "barcodeTime",
           data: [
             {
               barcode: filterOption.invoiceNumber,
               bran_cd: login.branchCode,
-              limit_count: 0,
-              longTime: "",
-              tm_dv: "60",
+              second: "0",
             },
           ],
         }),
@@ -43,7 +41,13 @@ export const getWorkInvoiceList = () => {
               confirmButtonText: "확인",
             });
           } else if (data.result === "00" || data.result === "77") {
-            setWorkList(data.data);
+            if (data.data.length > 1) {
+              setWorkList(
+                data.data.filter(
+                  (work) => work.barcode === filterOption.invoiceNumber,
+                ),
+              );
+            } else setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
@@ -64,14 +68,12 @@ export const getWorkInvoiceList = () => {
       "getWorkInvoiceList",
       () =>
         LotteInstance.post("/lose", {
-          api: "dvInAll",
+          api: "barcodeTime",
           data: [
             {
               barcode: filterOption.invoiceNumber,
               bran_cd: login.branchCode,
-              longTime: "",
-              tm_dv: "20",
-              limit_count: 0,
+              second: "0",
             },
           ],
         }),
@@ -84,7 +86,13 @@ export const getWorkInvoiceList = () => {
               confirmButtonText: "확인",
             });
           } else if (data.result === "00" || data.result === "77") {
-            setWorkList(data.data);
+            if (data.data.length > 1) {
+              setWorkList(
+                data.data.filter(
+                  (work) => work.barcode === filterOption.invoiceNumber,
+                ),
+              );
+            } else setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
@@ -105,13 +113,12 @@ export const getWorkInvoiceList = () => {
       "getWorkInvoiceList",
       () =>
         HanjinInstance.post("/lose", {
-          api: "dvInAll",
+          api: "barcodeTime",
           data: [
             {
               barcode: filterOption.invoiceNumber,
               bran_cd: login.branchCode,
-              longTime: "",
-              limit_count: 0,
+              second: "0",
             },
           ],
         }),
@@ -124,7 +131,13 @@ export const getWorkInvoiceList = () => {
               confirmButtonText: "확인",
             });
           } else if (data.result === "00" || data.result === "77") {
-            setWorkList(data.data);
+            if (data.data.length > 1) {
+              setWorkList(
+                data.data.filter(
+                  (work) => work.barcode === filterOption.invoiceNumber,
+                ),
+              );
+            } else setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
@@ -145,13 +158,12 @@ export const getWorkInvoiceList = () => {
       "getWorkInvoiceList",
       () =>
         HandexInstance.post("/lose", {
-          api: "dvInAll",
+          api: "barcodeTime",
           data: [
             {
               barcode: filterOption.invoiceNumber,
               bran_cd: login.branchCode,
-              longTime: "",
-              limit_count: 0,
+              second: "0",
             },
           ],
         }),
@@ -164,7 +176,13 @@ export const getWorkInvoiceList = () => {
               confirmButtonText: "확인",
             });
           } else if (data.result === "00" || data.result === "77") {
-            setWorkList(data.data);
+            if (data.data.length > 1) {
+              setWorkList(
+                data.data.filter(
+                  (work) => work.barcode === filterOption.invoiceNumber,
+                ),
+              );
+            } else setWorkList(data.data);
 
             Swal.fire({
               icon: "success",
