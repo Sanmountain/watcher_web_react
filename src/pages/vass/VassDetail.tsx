@@ -14,14 +14,14 @@ import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import { videoListState } from "../../stores/vass/videoListState";
 import CommonButton from "../../components/common/CommonButton";
-import { getVassDetailInvoice } from "../../api/vass/getVassDetailInvoice";
 import { IEditing } from "../../types/CameraModal.types";
 import { getImage } from "../../api/vass/getImage";
 import ImageModal from "../../components/common/ImageModal";
 import DeliveryState from "../../components/common/deliveryState/DeliveryState";
+import { getVassInvoiceListWithSeconds } from "../../api/vass/getVassInvoiceListWithSeconds";
+import Loading from "../../components/common/Loading";
 
 export default function VassDetail() {
-  // const login = useRecoilValue(loginState);
   const [videoList, setVideoList] = useRecoilState(videoListState);
   const [cameraInfo, setCameraInfo] = useState<ICameraInfoData[]>([]);
 
@@ -56,11 +56,9 @@ export default function VassDetail() {
   //  isPlaying true -> false -> true가 됐을 때 시작시간 기록용
   const currentScanTimeRef = useRef<any>(dayjs(nowVassDetail.scan_total_time));
 
-  // NOTE 담당직원, 배송상태
+  // NOTE 조회하는 송장번호
   const [searchInvoice, setSearchInvoice] = useState<number | null>(null);
-  // const [deliveryManName, setDeliveryManName] = useState<string | null>("");
-  // const [deliveryState, setDeliveryState] = useState("");
-  const [refetchList, setRefetchList] = useState(0);
+
   const prevVassDetail = useRecoilValue(prevVassDetailState);
 
   // NOTE 이미지
@@ -71,15 +69,18 @@ export default function VassDetail() {
   const playerRef = useRef<(ReactPlayer | null)[]>([]);
   const timerRef = useRef<any>(null);
 
-  const { mutate: videoListMutate } = getVideoList(setVideoList);
+  // NOTE videoList 가져오기
+  const { mutate: videoListMutate, isLoading: isVideoListLoading } =
+    getVideoList(setVideoList);
+  // NOTE 카메라 info 가져오기
   const { mutate: cameraInfoMutate } = getCameraInfo(
     setCameraInfo,
     setChangePlaySequence,
   );
-  const { mutate: vassDetailInvoiceMutate } = getVassDetailInvoice(
-    searchInvoice,
-    setRefetchList,
-  );
+  // NOTE 앞뒤 5초 송장번호 list 가져오기
+  const { mutate: vassInvoiceListWithSeconds } =
+    getVassInvoiceListWithSeconds(searchInvoice);
+  // NOTE 이미지 가져오기
   const { mutate: imageMutate } = getImage(
     setImageUrl,
     setIsDisplayImageModal,
@@ -88,8 +89,10 @@ export default function VassDetail() {
 
   // NOTE video list 담기
   useEffect(() => {
-    videoListMutate();
-  }, [refetchList]);
+    if (vassList.length > 0) {
+      videoListMutate();
+    }
+  }, [vassList]);
 
   // NOTE camera info 담기
   useEffect(() => {
@@ -101,72 +104,10 @@ export default function VassDetail() {
     imageMutate();
   }, []);
 
-  // NOTE 담당직원, 배송상태 담기
-  // useEffect(() => {
-  //   let url = "";
-  //   if (login.company === "LOGEN")
-  //     url = `https://apis.tracker.delivery/carriers/kr.logen/tracks/${prevVassDetail.barcode}`;
-  //   else if (login.company === "LOTTE")
-  //     url = `https://apis.tracker.delivery/carriers/kr.lotte/tracks/${prevVassDetail.barcode}`;
-  //   else if (login.company === "HANJIN")
-  //     url = `https://apis.tracker.delivery/carriers/kr.hanjin/tracks/${prevVassDetail.barcode}`;
-
-  //   axios
-  //     .get(url)
-  //     .then((res) => {
-  //       // NOTE 로젠
-  //       if (login.company === "LOGEN") {
-  //         const progresses =
-  //           res.data.progresses[res.data.progresses.length - 1].description;
-  //         const progressesArray = progresses.split(", ");
-  //         setDeliveryManName(progressesArray);
-  //         setDeliveryState(res.data.state.text);
-  //       }
-  //       // NOTE 롯데
-  //       else if (login.company === "LOTTE") {
-  //         const vassDelivery = res.data;
-
-  //         const extractDeliveryManName = (description: string) => {
-  //           const keyword = "배송담당: ";
-  //           const startIndex = description.indexOf(keyword);
-
-  //           if (startIndex === -1) return null; // 키워드가 없을 경우 null 반환
-
-  //           const subStr = description
-  //             .substring(startIndex + keyword.length)
-  //             .trim(); // 키워드 뒤의 문자열을 가져온 후 앞뒤 공백 제거
-  //           const endIndex = subStr.indexOf(" "); // 뒤에 오는 첫 번째 공백의 위치
-
-  //           if (endIndex === -1) return subStr; // 뒤에 공백이 없을 경우 남은 문자열 반환
-
-  //           return subStr.substring(0, endIndex);
-  //         };
-
-  //         setDeliveryManName(
-  //           extractDeliveryManName(
-  //             vassDelivery?.progresses[vassDelivery?.progresses.length - 1]
-  //               .description,
-  //           ),
-  //         );
-
-  //         setDeliveryState(vassDelivery?.state.text);
-  //       }
-  //       // NOTE 한진
-  //       else if (login.company === "HANJIN") {
-  //         const progresses =
-  //           res.data.progresses[res.data.progresses.length - 1].description;
-  //         const progressesArray = progresses.split(", ");
-  //         setDeliveryManName(progressesArray);
-  //         setDeliveryState(res.data.state.text);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [refetchList, nowVassDetail, prevVassDetail]);
-
   // NOTE 화면상 바코드 띄우기
   useEffect(() => {
     getBarcodes();
-  }, [isPlaying]);
+  }, [isPlaying, nowVassDetail]);
 
   useEffect(() => {
     if (currentBarcodes.length > 0) {
@@ -181,7 +122,7 @@ export default function VassDetail() {
         return updatedBarcodes.slice(-12); // 최근 12개만 유지
       });
     }
-  }, [currentBarcodes, refetchList]);
+  }, [currentBarcodes]);
 
   // NOTE 모달 닫힘
   useEffect(() => {
@@ -329,7 +270,9 @@ export default function VassDetail() {
   };
 
   const onClickSearchInvoice = () => {
-    vassDetailInvoiceMutate();
+    vassInvoiceListWithSeconds();
+    setDisplayedBarcodes([]);
+    setIsPlaying(false);
   };
 
   return (
@@ -371,115 +314,117 @@ export default function VassDetail() {
             backgroundColor="#010163"
           />
         </S.DeliveryInfoContainer>
-
-        {/* <S.TradeSubInfoContainer>
-          <p>담당직원 :{deliveryManName}</p>
-          <p>{deliveryState}</p>
-        </S.TradeSubInfoContainer> */}
       </S.ShoppingMallContainer>
 
       <S.Container>
-        <S.VideoContainer>
-          {cameraInfo
-            .slice(videoStartIndex, videoEndIndex)
-            .map((camera, index) => {
-              const videosWithSameCamId = videoList.filter(
-                (video) => video.cam_id === camera.cam_id,
-              );
+        {isVideoListLoading && <Loading isVass />}
 
-              return videosWithSameCamId.map((sameVideo) => (
-                <S.Video
-                  key={sameVideo.cam_id}
-                  style={
-                    videoStartIndex === 0 && index === 0
-                      ? { border: "2px solid red" }
-                      : {}
-                  }
-                >
-                  <ReactPlayer
-                    url={sameVideo.stream_url}
-                    ref={(ref) => (playerRef.current[index] = ref)}
-                    width="95%"
-                    height="95%"
-                    controls={true}
-                    muted={true}
-                    playing={isPlaying}
-                    onProgress={({ playedSeconds }) => {
-                      setPlayTime(playedSeconds);
-                    }}
-                  />
+        {videoList.length === 0 ? (
+          <S.NoVideoContainer>송장번호를 조회해주세요.</S.NoVideoContainer>
+        ) : (
+          <>
+            <S.VideoContainer>
+              {cameraInfo
+                .slice(videoStartIndex, videoEndIndex)
+                .map((camera, index) => {
+                  const videosWithSameCamId = videoList.filter(
+                    (video) => video.cam_id === camera.cam_id,
+                  );
 
-                  <S.CameraInfo>
-                    {camera.cam_seq}.{camera.cam_name}
-                  </S.CameraInfo>
+                  return videosWithSameCamId.map((sameVideo) => (
+                    <S.Video
+                      key={sameVideo.cam_id}
+                      $isFirst={videoStartIndex === 0 && index === 0}
+                    >
+                      <ReactPlayer
+                        url={sameVideo.stream_url}
+                        ref={(ref) => (playerRef.current[index] = ref)}
+                        width="95%"
+                        height="95%"
+                        controls={true}
+                        muted={true}
+                        playing={isPlaying}
+                        onProgress={({ playedSeconds }) => {
+                          setPlayTime(playedSeconds);
+                        }}
+                      />
 
-                  {videoStartIndex === 0 && index === 0 && (
-                    <S.InvoiceNumber>
-                      {displayedBarcodes.length < 1 ? (
-                        <p>No Barcode</p>
-                      ) : (
-                        displayedBarcodes.map((barcode, index) => {
-                          vassList.findIndex(
-                            (video) => video.barcode === barcode,
-                          );
+                      <S.CameraInfo>
+                        {camera.cam_seq}.{camera.cam_name}
+                      </S.CameraInfo>
 
-                          // const reversedIndex = vassList.length - originalIndex;
+                      {videoStartIndex === 0 && index === 0 && (
+                        <S.InvoiceNumber>
+                          {displayedBarcodes.length < 1 ? (
+                            <p>No Barcode</p>
+                          ) : (
+                            displayedBarcodes.map((barcode, index) => {
+                              vassList.findIndex(
+                                (video) => video.barcode === barcode,
+                              );
 
-                          if (barcode === nowVassDetail.barcode)
-                            return (
-                              <p className="sameBarcode" key={index}>
-                                {barcode ? `${barcode}` : barcode}
-                              </p>
-                            );
-                          else
-                            return (
-                              <p key={index}>
-                                {barcode ? `${barcode}` : barcode}
-                              </p>
-                            );
-                        })
+                              // const reversedIndex = vassList.length - originalIndex;
+
+                              if (barcode === nowVassDetail.barcode)
+                                return (
+                                  <p className="sameBarcode" key={index}>
+                                    {barcode ? `${barcode}` : barcode}
+                                  </p>
+                                );
+                              else
+                                return (
+                                  <p key={index}>
+                                    {barcode ? `${barcode}` : barcode}
+                                  </p>
+                                );
+                            })
+                          )}
+                        </S.InvoiceNumber>
                       )}
-                    </S.InvoiceNumber>
-                  )}
-                </S.Video>
-              ));
-            })}
-        </S.VideoContainer>
-        <S.PaginationContainer>
-          <S.VideoControllerContainer>
-            <S.Controller onClick={onClickRefresh}>영상 새로고침</S.Controller>
-            <S.Controller onClick={onClickMoveBefore10Second}>
-              - 10초
-            </S.Controller>
-            <S.Controller onClick={handlePlayVideos}>
-              {isPlaying ? "일시정지" : "재생"}
-            </S.Controller>
-            <S.Controller onClick={onClickMoveAfter10Second}>
-              + 10초
-            </S.Controller>
+                    </S.Video>
+                  ));
+                })}
+            </S.VideoContainer>
 
-            <S.SettingContainer ref={outSide}>
-              <S.SettingButton
-                onClick={onClickSetting}
-                $isSettingOpen={isSettingOpen}
-              >
-                설정
-                {isSettingOpen ? <S.UpArrowIcon /> : <S.DownArrowIcon />}
-              </S.SettingButton>
-              <S.SettingMenuContainer $isSettingOpen={isSettingOpen}>
-                <S.SettingMenu onClick={onClickChangeSequence}>
-                  재생 순서 변경
-                </S.SettingMenu>
-              </S.SettingMenuContainer>
-            </S.SettingContainer>
-          </S.VideoControllerContainer>
-          <Pagination
-            page={currentPage}
-            setPage={paginate}
-            total={videoList.length}
-            limit={videosPerPage}
-          />
-        </S.PaginationContainer>
+            <S.PaginationContainer>
+              <S.VideoControllerContainer>
+                <S.Controller onClick={onClickRefresh}>
+                  영상 새로고침
+                </S.Controller>
+                <S.Controller onClick={onClickMoveBefore10Second}>
+                  - 10초
+                </S.Controller>
+                <S.Controller onClick={handlePlayVideos}>
+                  {isPlaying ? "일시정지" : "재생"}
+                </S.Controller>
+                <S.Controller onClick={onClickMoveAfter10Second}>
+                  + 10초
+                </S.Controller>
+
+                <S.SettingContainer ref={outSide}>
+                  <S.SettingButton
+                    onClick={onClickSetting}
+                    $isSettingOpen={isSettingOpen}
+                  >
+                    설정
+                    {isSettingOpen ? <S.UpArrowIcon /> : <S.DownArrowIcon />}
+                  </S.SettingButton>
+                  <S.SettingMenuContainer $isSettingOpen={isSettingOpen}>
+                    <S.SettingMenu onClick={onClickChangeSequence}>
+                      재생 순서 변경
+                    </S.SettingMenu>
+                  </S.SettingMenuContainer>
+                </S.SettingContainer>
+              </S.VideoControllerContainer>
+              <Pagination
+                page={currentPage}
+                setPage={paginate}
+                total={videoList.length}
+                limit={videosPerPage}
+              />
+            </S.PaginationContainer>
+          </>
+        )}
       </S.Container>
 
       {isDisplayImageModal && (
