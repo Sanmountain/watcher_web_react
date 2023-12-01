@@ -109,7 +109,7 @@ export default function VassDetail() {
   // NOTE 화면상 바코드 띄우기
   useEffect(() => {
     getBarcodes();
-  }, [isPlaying, nowVassDetail]);
+  }, [isPlaying, nowVassDetail, vassList]);
 
   useEffect(() => {
     if (currentBarcodes.length > 0) {
