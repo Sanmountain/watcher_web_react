@@ -20,6 +20,7 @@ import { getAutoChange } from "../../api/work/getAutoChange";
 import { loginState } from "../../stores/loginState";
 import TmDvEditModal from "./TmDvEditModal";
 import { excelDownload } from "../../utils/excelDownload";
+import dayjs from "dayjs";
 
 export default function Filter({
   filterOption,
@@ -69,6 +70,7 @@ export default function Filter({
 
   const onClickDateSearch = () => {
     dateMutate();
+    setFilterOption({ ...filterOption, invoiceNumber: "" });
 
     if (setCheckedItems && setAllChecked) {
       setCheckedItems([]);
@@ -78,6 +80,11 @@ export default function Filter({
 
   const onClickInvoiceSearch = () => {
     invoiceMutate();
+    setFilterOption({
+      ...filterOption,
+      receivingShipment: "all",
+      date: dayjs().format("YYYY-MM-DD"),
+    });
 
     if (setCheckedItems && setAllChecked) {
       setCheckedItems([]);
@@ -126,7 +133,7 @@ export default function Filter({
           건{" "}
           <S.SelectBox
             name="receivingShipment"
-            defaultValue={filterOption.receivingShipment}
+            value={filterOption.receivingShipment}
             onChange={handleFilter}
           >
             {login.company === "LOGEN" && (
@@ -164,7 +171,7 @@ export default function Filter({
             className="date"
             type="date"
             name="date"
-            defaultValue={filterOption.date}
+            value={filterOption.date}
             onChange={handleFilter}
           />
           <CommonButton
@@ -183,7 +190,7 @@ export default function Filter({
           <S.Input
             placeholder="송장번호 입력"
             name="invoiceNumber"
-            defaultValue={filterOption.invoiceNumber}
+            value={filterOption.invoiceNumber}
             onChange={handleFilter}
           />
           <CommonButton

@@ -1,22 +1,29 @@
 import { styled } from "styled-components";
 import SpinnerImg from "../../assets/images/spinner.gif";
 
-export default function Loading() {
+interface ILoadingProps {
+  isVass?: boolean;
+}
+
+export default function Loading({ isVass }: ILoadingProps) {
   return (
-    <Spinner>
+    <Spinner $isVass={isVass}>
       <SpinnerImage src={SpinnerImg} />
     </Spinner>
   );
 }
 
-const Spinner = styled.div`
+const Spinner = styled.div<{ $isVass?: boolean }>`
+  position: ${(props) => (props.$isVass ? "absolute" : "static")};
+  top: 30%;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 
   width: 13%;
   height: 28%;
-  z-index: 3;
+  z-index: 999;
 `;
 
 const SpinnerImage = styled.img`

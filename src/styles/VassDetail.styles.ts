@@ -220,6 +220,18 @@ export const SettingMenu = styled.div`
   }
 `;
 
+export const NoVideoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 1%;
+  width: 99.5%;
+  height: 85%;
+  font-size: 2.3rem;
+  font-weight: 700;
+`;
+
 export const VideoContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -232,7 +244,7 @@ export const VideoContainer = styled.div`
   min-height: 760px;
 `;
 
-export const Video = styled.div`
+export const Video = styled.div<{ $isFirst?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -240,6 +252,7 @@ export const Video = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  border: ${(props) => props.$isFirst && "2px solid red"};
 `;
 
 export const PaginationContainer = styled.div`

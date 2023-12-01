@@ -69,6 +69,7 @@ export const getLogin = (
               saId: data.data[0].sa_id,
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
+              camStatus: data.data[0].cam_status,
             });
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {
@@ -102,6 +103,7 @@ export const getLogin = (
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
               isAdmin: true,
+              camStatus: data.data[0].cam_status,
             });
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {
@@ -175,6 +177,7 @@ export const getLogin = (
               saId: data.data[0].sa_id,
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
+              camStatus: data.data[0].cam_status,
             });
 
             // NOTE 비밀번호 변경 3개월 된 지점
@@ -209,6 +212,7 @@ export const getLogin = (
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
               isAdmin: true,
+              camStatus: data.data[0].cam_status,
             });
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {
@@ -282,6 +286,7 @@ export const getLogin = (
               saId: data.data[0].sa_id,
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
+              camStatus: data.data[0].cam_status,
             });
 
             // NOTE 비밀번호 변경 3개월 된 지점
@@ -317,6 +322,7 @@ export const getLogin = (
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
               isAdmin: true,
+              camStatus: data.data[0].cam_status,
             });
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {
@@ -390,6 +396,7 @@ export const getLogin = (
               saId: data.data[0].sa_id,
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
+              camStatus: data.data[0].cam_status,
             });
 
             // NOTE 비밀번호 변경 3개월 된 지점
@@ -424,6 +431,7 @@ export const getLogin = (
               accountId: data.data[0].account_id,
               camUsable: data.data[0].cam_usable,
               isAdmin: true,
+              camStatus: data.data[0].cam_status,
             });
             // NOTE 비밀번호 변경 3개월 된 지점
             if (data.data[0].password_change_it === "1") {

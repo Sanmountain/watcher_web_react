@@ -10,6 +10,7 @@ export interface ILoginState {
   accountId: string;
   camUsable: string;
   isAdmin: boolean;
+  camStatus: string;
 }
 
 export interface ILoginData {
@@ -28,6 +29,7 @@ export interface ILoginData {
   account_id: string;
   password_change_it: string;
   password_change_date: string;
+  cam_status: string;
 }
 
 export interface ILoginResponse {

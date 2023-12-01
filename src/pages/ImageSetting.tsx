@@ -1,13 +1,22 @@
 import styled from "styled-components";
 import { colors } from "../styles/palette";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Toggle from "../components/common/Toggle";
+import { getImageSetting } from "../api/getImageSetting";
+import { editImageSetting } from "../api/editImageSetting";
 
 export default function ImageSetting() {
   const [isOn, setIsOn] = useState(false);
 
+  const { mutate: getImageSettingMutate } = getImageSetting(setIsOn);
+  const { mutate: editImageSettingMutate } = editImageSetting(isOn, setIsOn);
+
+  useEffect(() => {
+    getImageSettingMutate();
+  }, []);
+
   const handleImageSetting = () => {
-    setIsOn(!isOn);
+    editImageSettingMutate();
   };
 
   return (
