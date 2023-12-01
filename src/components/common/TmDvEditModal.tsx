@@ -20,15 +20,15 @@ export default function TmDvEditModal({
     login.company === "LOGEN"
       ? "60"
       : login.company === "LOTTE"
-      ? "21"
-      : login.company === "HANJIN"
-      ? "31"
-      : "15",
+        ? "21"
+        : login.company === "HANJIN"
+          ? "31"
+          : "15",
   );
   const [isTmDvModal] = useState(true);
 
   // NOTE list refetch
-  const { mutate: workDateListMutate } = getWorkDateList(isTmDvModal);
+  const { mutate: workDateListMutate } = getWorkDateList();
   // NOTE i로젠, 알프스
   const { mutate: sendInvoiceMutate, isLoading: isSendInvoiceLoading } =
     sendInvoice(isTmDvModal, setIsOpen);

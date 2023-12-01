@@ -58,12 +58,16 @@ export default function Work() {
   const login = useRecoilValue(loginState);
   const [filterOption, setFilterOption] = useRecoilState(workFilterState);
   const workList = useRecoilValue(workListState);
+  const [total, setTotal] = useState(0);
   // NOTE 업무구분 수정 목록
   const [checkedItems, setCheckedItems] = useState<ICheckedItems[]>([]);
   const [allChecked, setAllChecked] = useState(false);
 
-  const { mutate: workDateListMutate, isLoading: isDateMutateLoading } =
-    getWorkDateList();
+  const {
+    mutate: workDateListMutate,
+    isLoading: isDateMutateLoading,
+    isSuccess: isDateMutateSuccess,
+  } = getWorkDateList(setTotal);
 
   const {
     mutate: workInvoiceNumberListMutate,
@@ -76,18 +80,20 @@ export default function Work() {
         filterOption={filterOption}
         setFilterOption={setFilterOption}
         dateMutate={workDateListMutate}
+        isDateMutateSuccess={isDateMutateSuccess}
         invoiceMutate={workInvoiceNumberListMutate}
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
         setAllChecked={setAllChecked}
+        total={total}
       />
       <Table
         title={
           login.company === "HANJIN"
             ? hanjinTitle
             : login.company === "HANDEX"
-            ? handexTitle
-            : title
+              ? handexTitle
+              : title
         }
         contents={workList}
         columns={

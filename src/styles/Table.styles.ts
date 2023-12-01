@@ -44,21 +44,25 @@ export const Title = styled.div`
   font-weight: 600;
 `;
 
+export const InfiniteScrollContainer = styled.div`
+  width: 101%;
+  margin-left: 1%;
+`;
+
 export const ContentsList = styled.div<{ $isWorkPage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  margin-left: 1%;
-  width: 101%;
+  width: 100%;
   height: calc((var(--vh, 1vh) * 100) - 190px);
   gap: 10px;
   overflow-y: scroll;
 
   ${(props) =>
     props.$isWorkPage &&
-    mediaQuery.largeMedium(`
-      height: calc(100vh - 240px);
+    mediaQuery.large(`
+      height: calc((var(--vh, 1vh) * 100) - 205px);
   `)}
 `;
 
