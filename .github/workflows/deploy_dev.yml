@@ -1,0 +1,26 @@
+# Deploy
+name: Deploy
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: excuting remote ssh commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_DEV_HOST }} # 인스턴스 IP
+          username: ${{secrets.REMOTE_SSH_USER}} # user
+          key: ${{ secrets.REMOTE_SSH_DEV_KEY }} # ec2 instance pem key
+          port: ${{ secrets.REMOTE_SSH_PORT }} # 접속포트
+          script: |
+            cd /home
+            cd vass_web_react/
+            git pull origin develop
+            service nginx restart
