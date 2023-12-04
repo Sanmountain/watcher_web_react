@@ -42,6 +42,7 @@ export const MenuContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 3%;
+  margin-left: 1%;
 `;
 
 export const HeaderImg = styled.img`

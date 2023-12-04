@@ -18,8 +18,6 @@ import { numberWithCommas } from "../../utils/numberWithCommas";
 import { getAutoCheck } from "../../api/work/getAutoCheck";
 import { getAutoChange } from "../../api/work/getAutoChange";
 import { loginState } from "../../stores/loginState";
-import TmDvEditModal from "./TmDvEditModal";
-// import { excelDownload } from "../../utils/excelDownload";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { workPageState } from "../../stores/work/workPageState";
@@ -30,17 +28,12 @@ export default function Filter({
   dateMutate,
   isDateMutateSuccess,
   invoiceMutate,
-  // checkedItems,
-  // setCheckedItems,
-  // setAllChecked,
   total,
 }: IFilterProps) {
   const login = useRecoilValue(loginState);
   const [isDisplayRegisterModal, setIsDisplayRegisterModal] = useState(false);
   // NOTE 토글
   const [isOn, setIsOn] = useState(false);
-  // NOTE 업무수정 모달
-  const [isOpen, setIsOpen] = useState(false);
   // NOTE 페이지네이션
   const setPage = useSetRecoilState(workPageState);
 
@@ -89,11 +82,6 @@ export default function Filter({
     setFilterOption({ ...filterOption, invoiceNumber: "" });
     setPage("1");
     setWorkList([]);
-
-    // if (setCheckedItems && setAllChecked) {
-    //   setCheckedItems([]);
-    //   setAllChecked(false);
-    // }
   };
 
   const onClickInvoiceSearch = () => {
@@ -104,11 +92,6 @@ export default function Filter({
       date: dayjs().format("YYYY-MM-DD"),
     });
     setPage("1");
-
-    // if (setCheckedItems && setAllChecked) {
-    //   setCheckedItems([]);
-    //   setAllChecked(false);
-    // }
   };
 
   // NOTE 자동,수동 변환
@@ -127,15 +110,6 @@ export default function Filter({
   const onClickSendInvoice = () => {
     sendInvoiceMutate();
   };
-
-  // NOTE 업무 수정
-  // const handleEditTmDv = () => {
-  //   setIsOpen(true);
-  // };
-
-  // const handleDownloadExcel = () => {
-  //   excelDownload(login.branchName, filterOption, workList);
-  // };
 
   return (
     <>
@@ -277,13 +251,6 @@ export default function Filter({
                 />
               </S.RegisterContainer>
             )}
-            {/* <S.RegisterContainer>
-              <CommonButton
-                contents="엑셀다운"
-                onClickFn={handleDownloadExcel}
-                backgroundColor="#010163"
-              />
-            </S.RegisterContainer> */}
           </S.FilterContainer>
         )}
       </S.Container>
@@ -298,14 +265,6 @@ export default function Filter({
         <S.LoadingContainer>
           <Loading />
         </S.LoadingContainer>
-      )}
-
-      {isOpen && (
-        <TmDvEditModal
-          // checkedItems={checkedItems}
-          // setCheckedItems={setCheckedItems}
-          setIsOpen={setIsOpen}
-        />
       )}
     </>
   );

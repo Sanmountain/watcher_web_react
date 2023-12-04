@@ -1,11 +1,16 @@
-import styled from "styled-components";
-import { colors } from "../styles/palette";
-import { useEffect, useState } from "react";
+import * as S from "../styles/Admin.styles";
+import { useEffect, useMemo, useState } from "react";
 import Toggle from "../components/common/Toggle";
 import { getImageSetting } from "../api/getImageSetting";
 import { editImageSetting } from "../api/editImageSetting";
+import EditMenu from "../components/common/admin/EditMenu";
 
 export default function Admin() {
+  const menu = useMemo(
+    () => [{ label: "업무수정" }, { label: "이미지설정" }],
+    [],
+  );
+  const [currentMenu, setCurrentMenu] = useState(0);
   const [isOn, setIsOn] = useState(false);
 
   const { mutate: getImageSettingMutate } = getImageSetting(setIsOn);
@@ -15,48 +20,38 @@ export default function Admin() {
     getImageSettingMutate();
   }, []);
 
+  const handleCurrentMenu = (index: number) => {
+    setCurrentMenu(index);
+  };
+
   const handleImageSetting = () => {
     editImageSettingMutate();
   };
 
   return (
-    <Container>
-      <TitleToggleContainer>
-        <Title>이미지설정</Title>
-        <Toggle onClick={handleImageSetting} $isOn={isOn} />
-      </TitleToggleContainer>
-    </Container>
+    <S.Container>
+      <S.AdminMenuContainer>
+        {menu.map((el, index) => (
+          <S.AdminMenu
+            key={el.label}
+            className={currentMenu === index ? "current" : ""}
+            onClick={() => handleCurrentMenu(index)}
+          >
+            {el.label}
+          </S.AdminMenu>
+        ))}
+      </S.AdminMenuContainer>
+      {currentMenu === 0 && <EditMenu />}
+      {currentMenu === 1 && (
+        <S.TitleToggleContainer>
+          <S.Title>이미지설정</S.Title>
+          <S.ToggleContainer>
+            Off
+            <Toggle onClick={handleImageSetting} $isOn={isOn} />
+            On
+          </S.ToggleContainer>
+        </S.TitleToggleContainer>
+      )}
+    </S.Container>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const TitleToggleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
-  padding: 7% 10%;
-  border: 1px solid ${colors.black[700]};
-  border-radius: 20px;
-`;
-
-const Title = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: ${colors.blue[500]};
-  margin-bottom: 50%;
-`;

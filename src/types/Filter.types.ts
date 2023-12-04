@@ -15,8 +15,5 @@ export interface IFilterProps {
   dateMutate: UseMutateFunction<any, unknown, any, unknown>;
   isDateMutateSuccess: boolean;
   invoiceMutate: UseMutateFunction<any, unknown, void, unknown>;
-  // checkedItems?: ICheckedItems[];
-  // setCheckedItems?: Dispatch<SetStateAction<ICheckedItems[]>>;
-  // setAllChecked?: Dispatch<SetStateAction<boolean>>;
   total?: number;
 }

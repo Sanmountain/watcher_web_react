@@ -1,14 +1,14 @@
 import { useRecoilValue } from "recoil";
-import * as S from "../../styles/TmDvEditModal.styles";
-import { ITmDvEditModalProps } from "../../types/TmDvEditModal.types";
-import CommonButton from "./CommonButton";
-import { loginState } from "../../stores/loginState";
+import * as S from "../../../styles/TmDvEditModal.styles";
+import { ITmDvEditModalProps } from "../../../types/TmDvEditModal.types";
+import CommonButton from "../CommonButton";
+import { loginState } from "../../../stores/loginState";
 import { ChangeEvent, useState } from "react";
-import { editTmDv } from "../../api/work/editTmDv";
-import { getWorkDateList } from "../../api/work/getWorkDateList";
+import { editTmDv } from "../../../api/admin/editTmDv";
+import { getWorkDateList } from "../../../api/work/getWorkDateList";
 import Swal from "sweetalert2";
-import { sendInvoice } from "../../api/work/sendInvoice";
-import Loading from "./Loading";
+import { sendInvoice } from "../../../api/work/sendInvoice";
+import Loading from "../Loading";
 
 export default function TmDvEditModal({
   checkedItems,

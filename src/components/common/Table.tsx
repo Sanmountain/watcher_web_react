@@ -62,40 +62,6 @@ export default function Table({
     imageMutate({ barcode, scanDate });
   };
 
-  // NOTE 체크박스 전체 선택,해제
-  // const handleCheckAll = () => {
-  //   if (setCheckedItems && setAllChecked) {
-  //     if (allChecked) {
-  //       setCheckedItems([]);
-  //     } else {
-  //       const newCheckedItems = contents.map((item) => ({
-  //         barcode: item.barcode,
-  //         scandate: item.scandate,
-  //       }));
-  //       setCheckedItems(newCheckedItems);
-  //     }
-  //     setAllChecked(!allChecked);
-  //   }
-  // };
-
-  // NOTE 체크박스 개별 선택,해제
-  // const handleCheckItem = (barcode: string, scandate: string) => {
-  //   if (checkedItems && setCheckedItems && setAllChecked) {
-  //     const newCheckedItems = checkedItems.some(
-  //       (item) => item.barcode === barcode && item.scandate === scandate,
-  //     )
-  //       ? checkedItems.filter(
-  //           (item) => item.barcode !== barcode || item.scandate !== scandate,
-  //         )
-  //       : [...checkedItems, { barcode, scandate }];
-
-  //     setCheckedItems(newCheckedItems);
-
-  //     // NOTE 모든 checkbox 체크 된 경우 전체 선택 체크박스 체크
-  //     setAllChecked(newCheckedItems.length === contents.length);
-  //   }
-  // };
-
   return (
     <>
       <S.Container>

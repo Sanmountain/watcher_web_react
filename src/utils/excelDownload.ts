@@ -1,16 +1,12 @@
-import dayjs from "dayjs";
 import * as XLSX from "xlsx";
-import { IFilterState } from "../types/Filter.types";
 import { IWorkListData } from "../types/Work.types";
 
 export const excelDownload = (
   branchName: string,
-  filterOption: IFilterState,
+  date: string,
   tableContents: IWorkListData[],
 ) => {
-  const excelFileName = `${branchName} ${dayjs(filterOption.date).format(
-    "YYYY-MM-DD",
-  )}.xlsx`;
+  const excelFileName = `${branchName} ${date}.xlsx`;
 
   const excelSheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tableContents);
 
