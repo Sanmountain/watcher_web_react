@@ -152,7 +152,7 @@ export default function Filter({
           건{" "}
           <S.SelectBox
             name="receivingShipment"
-            defaultValue={filterOption.receivingShipment}
+            value={filterOption.receivingShipment}
             onChange={handleFilter}
           >
             {login.company === "LOGEN" && (
@@ -190,7 +190,7 @@ export default function Filter({
             className="date"
             type="date"
             name="date"
-            defaultValue={filterOption.date}
+            value={filterOption.date}
             onChange={handleFilter}
           />
           <CommonButton
@@ -209,7 +209,7 @@ export default function Filter({
           <S.Input
             placeholder="송장번호 입력"
             name="invoiceNumber"
-            defaultValue={filterOption.invoiceNumber}
+            value={filterOption.invoiceNumber}
             onChange={handleFilter}
           />
           <CommonButton

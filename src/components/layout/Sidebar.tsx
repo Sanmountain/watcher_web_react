@@ -2,13 +2,14 @@ import * as S from "../../styles/layout/Sidebar.styles";
 import VassIcon from "../../assets/images/sidebar/icon_vass.png";
 import shoppingMallIcon from "../../assets/images/sidebar/icon_shoppingMall.png";
 import S4Image from "../../assets/images/sidebar/img_S4.png";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { menuState } from "../../stores/menuState";
 import { setVH } from "../../utils/setVH";
 import { getMenuList } from "../../utils/getMenuList";
+import { getVassPage } from "../../utils/getLocationPath";
 
 export default function Sidebar() {
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
@@ -16,7 +17,8 @@ export default function Sidebar() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const params = useParams();
+
+  const VASS_PAGE = getVassPage(location);
 
   const menuList = getMenuList(login);
 
@@ -28,10 +30,10 @@ export default function Sidebar() {
 
   // NOTE Vass detail 페이지를 제외하고 현재 활성화 돼있는 메뉴 담기 (새로고침 시 초기화 때문에)
   useEffect(() => {
-    if (!params.invoiceNumber) {
+    if (!VASS_PAGE) {
       setCurrentMenu(location.pathname);
     }
-  }, [params, location]);
+  }, [location]);
 
   const onClickLogo = () => {
     navigate("/");
@@ -43,8 +45,8 @@ export default function Sidebar() {
   };
 
   return (
-    <S.Container $isDetailPage={!!params.invoiceNumber}>
-      {!params.invoiceNumber && (
+    <S.Container $isDetailPage={VASS_PAGE}>
+      {!VASS_PAGE && (
         <S.Wrapper>
           <S.LogoContainer onClick={onClickLogo}>
             <S.Image src={VassIcon} />
