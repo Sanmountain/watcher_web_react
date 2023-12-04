@@ -12,6 +12,7 @@ import { workFilterState } from "../../stores/work/workFilterState";
 import dayjs from "dayjs";
 import { workListState } from "../../stores/work/workListState";
 import { Dispatch, SetStateAction } from "react";
+import { workLastPageState } from "../../stores/work/workPageState";
 
 export const getWorkDateList = (
   setTotal?: Dispatch<SetStateAction<number>>,
@@ -19,6 +20,7 @@ export const getWorkDateList = (
   const login = useRecoilValue(loginState);
   const filterOption = useRecoilValue(workFilterState);
   const setWorkList = useSetRecoilState(workListState);
+  const setWorkLastPage = useSetRecoilState(workLastPageState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -51,11 +53,13 @@ export const getWorkDateList = (
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "60");
               if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 집하출고
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "30");
               if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
@@ -63,6 +67,7 @@ export const getWorkDateList = (
                 (item) => item.tm_dv === "30" || item.tm_dv === "60",
               );
               if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
             setWorkList((current) => [...current, ...filteringData]);
@@ -105,11 +110,13 @@ export const getWorkDateList = (
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "21");
               if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 발송
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "20");
               if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
@@ -117,6 +124,7 @@ export const getWorkDateList = (
                 (item) => item.tm_dv === "20" || item.tm_dv === "21",
               );
               if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
             setWorkList((current) => [...current, ...filteringData]);
@@ -159,11 +167,13 @@ export const getWorkDateList = (
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "31");
               if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 간선하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "32");
               if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
@@ -171,6 +181,7 @@ export const getWorkDateList = (
                 (item) => item.tm_dv === "31" || item.tm_dv === "32",
               );
               if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
             setWorkList((current) => [...current, ...filteringData]);
@@ -213,11 +224,13 @@ export const getWorkDateList = (
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "15");
               if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 영업소하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "50");
               if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 상품집하
             else if (filterOption.receivingShipment === "goods") {
@@ -228,6 +241,13 @@ export const getWorkDateList = (
                     Number(data.deliveryInTotal) -
                     Number(data.deliveryOutTotal),
                 );
+              setWorkLastPage(
+                (
+                  Number(data.lastPage) -
+                  Number(data.deliveryInLastPage) -
+                  Number(data.deliveryOutLastPage)
+                ).toString(),
+              );
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
@@ -238,6 +258,7 @@ export const getWorkDateList = (
                   item.tm_dv === "10",
               );
               if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
             setWorkList((current) => [...current, ...filteringData]);

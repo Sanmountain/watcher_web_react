@@ -19,7 +19,7 @@ import { getAutoCheck } from "../../api/work/getAutoCheck";
 import { getAutoChange } from "../../api/work/getAutoChange";
 import { loginState } from "../../stores/loginState";
 import TmDvEditModal from "./TmDvEditModal";
-import { excelDownload } from "../../utils/excelDownload";
+// import { excelDownload } from "../../utils/excelDownload";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { workPageState } from "../../stores/work/workPageState";
@@ -30,9 +30,9 @@ export default function Filter({
   dateMutate,
   isDateMutateSuccess,
   invoiceMutate,
-  checkedItems,
-  setCheckedItems,
-  setAllChecked,
+  // checkedItems,
+  // setCheckedItems,
+  // setAllChecked,
   total,
 }: IFilterProps) {
   const login = useRecoilValue(loginState);
@@ -44,7 +44,7 @@ export default function Filter({
   // NOTE 페이지네이션
   const setPage = useSetRecoilState(workPageState);
 
-  const [workList, setWorkList] = useRecoilState(workListState);
+  const [, setWorkList] = useRecoilState(workListState);
   const vassList = useRecoilValue(vassListState);
 
   const location = useLocation();
@@ -90,10 +90,10 @@ export default function Filter({
     setPage("1");
     setWorkList([]);
 
-    if (setCheckedItems && setAllChecked) {
-      setCheckedItems([]);
-      setAllChecked(false);
-    }
+    // if (setCheckedItems && setAllChecked) {
+    //   setCheckedItems([]);
+    //   setAllChecked(false);
+    // }
   };
 
   const onClickInvoiceSearch = () => {
@@ -105,10 +105,10 @@ export default function Filter({
     });
     setPage("1");
 
-    if (setCheckedItems && setAllChecked) {
-      setCheckedItems([]);
-      setAllChecked(false);
-    }
+    // if (setCheckedItems && setAllChecked) {
+    //   setCheckedItems([]);
+    //   setAllChecked(false);
+    // }
   };
 
   // NOTE 자동,수동 변환
@@ -129,13 +129,13 @@ export default function Filter({
   };
 
   // NOTE 업무 수정
-  const handleEditTmDv = () => {
-    setIsOpen(true);
-  };
+  // const handleEditTmDv = () => {
+  //   setIsOpen(true);
+  // };
 
-  const handleDownloadExcel = () => {
-    excelDownload(login.branchName, filterOption, workList);
-  };
+  // const handleDownloadExcel = () => {
+  //   excelDownload(login.branchName, filterOption, workList);
+  // };
 
   return (
     <>
@@ -277,19 +277,13 @@ export default function Filter({
                 />
               </S.RegisterContainer>
             )}
-            <S.RegisterContainer>
-              <CommonButton
-                contents="업무 수정"
-                onClickFn={handleEditTmDv}
-                height="100%"
-                backgroundColor="#010163"
-              />
+            {/* <S.RegisterContainer>
               <CommonButton
                 contents="엑셀다운"
                 onClickFn={handleDownloadExcel}
                 backgroundColor="#010163"
               />
-            </S.RegisterContainer>
+            </S.RegisterContainer> */}
           </S.FilterContainer>
         )}
       </S.Container>
@@ -308,8 +302,8 @@ export default function Filter({
 
       {isOpen && (
         <TmDvEditModal
-          checkedItems={checkedItems}
-          setCheckedItems={setCheckedItems}
+          // checkedItems={checkedItems}
+          // setCheckedItems={setCheckedItems}
           setIsOpen={setIsOpen}
         />
       )}

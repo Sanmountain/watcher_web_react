@@ -8,11 +8,13 @@ import { nowVassDetailState } from "../../stores/vass/nowVassDetailState";
 import { IWorkListData } from "../../types/Work.types";
 import { prevVassDetailState } from "../../stores/vass/prevVassDetailState";
 import { getImagePage, getWorkPage } from "../../utils/getLocationPath";
-import { loginState } from "../../stores/loginState";
 import { useState } from "react";
 import { getImageInImagePage } from "../../api/getImageInImagePage";
 import ImageModal from "./ImageModal";
-import { workPageState } from "../../stores/work/workPageState";
+import {
+  workLastPageState,
+  workPageState,
+} from "../../stores/work/workPageState";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getWorkDateList } from "../../api/work/getWorkDateList";
 
@@ -22,19 +24,16 @@ export default function Table({
   columns,
   dateLoading,
   invoiceLoading,
-  checkedItems,
-  setCheckedItems,
-  allChecked,
-  setAllChecked,
+  total,
 }: ITableProps) {
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
-  const login = useRecoilValue(loginState);
   // NOTE 이미지
   const [imageUrl, setImageUrl] = useState("");
   const [isDisplayImageModal, setIsDisplayImageModal] = useState(false);
   // NOTE 페이지네이션
   const [page, setPage] = useRecoilState(workPageState);
+  const lastPage = useRecoilValue(workLastPageState);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -50,7 +49,7 @@ export default function Table({
     const nextPage = (Number(page) + 1).toString();
     setPage(nextPage);
 
-    workDateListMutate(nextPage);
+    if (Number(lastPage) >= Number(nextPage)) workDateListMutate(nextPage);
   };
 
   const onClickMoveToDetail = (item: IWorkListData, index: number) => {
@@ -64,55 +63,43 @@ export default function Table({
   };
 
   // NOTE 체크박스 전체 선택,해제
-  const handleCheckAll = () => {
-    if (setCheckedItems && setAllChecked) {
-      if (allChecked) {
-        setCheckedItems([]);
-      } else {
-        const newCheckedItems = contents.map((item) => ({
-          barcode: item.barcode,
-          scandate: item.scandate,
-        }));
-        setCheckedItems(newCheckedItems);
-      }
-      setAllChecked(!allChecked);
-    }
-  };
+  // const handleCheckAll = () => {
+  //   if (setCheckedItems && setAllChecked) {
+  //     if (allChecked) {
+  //       setCheckedItems([]);
+  //     } else {
+  //       const newCheckedItems = contents.map((item) => ({
+  //         barcode: item.barcode,
+  //         scandate: item.scandate,
+  //       }));
+  //       setCheckedItems(newCheckedItems);
+  //     }
+  //     setAllChecked(!allChecked);
+  //   }
+  // };
 
   // NOTE 체크박스 개별 선택,해제
-  const handleCheckItem = (barcode: string, scandate: string) => {
-    if (checkedItems && setCheckedItems && setAllChecked) {
-      const newCheckedItems = checkedItems.some(
-        (item) => item.barcode === barcode && item.scandate === scandate,
-      )
-        ? checkedItems.filter(
-            (item) => item.barcode !== barcode || item.scandate !== scandate,
-          )
-        : [...checkedItems, { barcode, scandate }];
+  // const handleCheckItem = (barcode: string, scandate: string) => {
+  //   if (checkedItems && setCheckedItems && setAllChecked) {
+  //     const newCheckedItems = checkedItems.some(
+  //       (item) => item.barcode === barcode && item.scandate === scandate,
+  //     )
+  //       ? checkedItems.filter(
+  //           (item) => item.barcode !== barcode || item.scandate !== scandate,
+  //         )
+  //       : [...checkedItems, { barcode, scandate }];
 
-      setCheckedItems(newCheckedItems);
+  //     setCheckedItems(newCheckedItems);
 
-      // NOTE 모든 checkbox 체크 된 경우 전체 선택 체크박스 체크
-      setAllChecked(newCheckedItems.length === contents.length);
-    }
-  };
+  //     // NOTE 모든 checkbox 체크 된 경우 전체 선택 체크박스 체크
+  //     setAllChecked(newCheckedItems.length === contents.length);
+  //   }
+  // };
 
   return (
     <>
       <S.Container>
         <S.TitleContainer $columns={columns}>
-          {WORK_PAGE &&
-            (login.company === "LOGEN" || login.company === "LOTTE") && (
-              <S.Title>
-                <input
-                  type="checkbox"
-                  id="checkAll"
-                  checked={allChecked}
-                  disabled={contents.length < 1}
-                  onChange={handleCheckAll}
-                />
-              </S.Title>
-            )}
           {title.map((item) => (
             <S.Title key={item.label}>{item.label}</S.Title>
           ))}
@@ -132,28 +119,10 @@ export default function Table({
               ) : (
                 contents.map((item, index) => (
                   <S.ContentsContainer $columns={columns} key={index}>
-                    {WORK_PAGE &&
-                      (login.company === "LOGEN" ||
-                        login.company === "LOTTE") && (
-                        <S.Contents>
-                          <input
-                            type="checkbox"
-                            id={`checkbox-${item.id}`}
-                            checked={checkedItems?.some(
-                              (checkedItem) =>
-                                checkedItem.barcode === item.barcode &&
-                                checkedItem.scandate === item.scandate,
-                            )}
-                            onChange={() =>
-                              handleCheckItem(item.barcode, item.scandate)
-                            }
-                          />
-                        </S.Contents>
-                      )}
                     {title.map((el) => (
                       <S.Contents key={el.label}>
                         {!el.value ? (
-                          contents.length - index
+                          (total || 0) - index
                         ) : IMAGE_PAGE ? (
                           el.value === "button" && item.img_exists ? (
                             <S.CommonButtonContainer>

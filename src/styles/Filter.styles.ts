@@ -40,6 +40,7 @@ export const FilterContainer = styled.div<{ $isLogen: boolean }>`
   width: 100%;
   gap: 10px;
   font-size: ${font.fontSize[200]};
+  /* border: 1px solid red; */
 
   ${mediaQuery.large(`
     gap: 10px;

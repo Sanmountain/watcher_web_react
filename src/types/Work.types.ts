@@ -35,6 +35,9 @@ export interface IWorkListResponse {
   deliveryOutTotal: string;
   nowPage: string;
   total: string;
+  lastPage: string;
+  deliveryInLastPage: string;
+  deliveryOutLastPage: string;
 }
 
 export interface ICheckedItems {
