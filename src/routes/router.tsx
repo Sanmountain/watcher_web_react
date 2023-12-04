@@ -8,7 +8,7 @@ import Layout from "../components/layout";
 import LoginRoute from "./LoginRouter";
 import Profile from "../pages/Profile";
 import Image from "../pages/Image";
-import ImageSetting from "../pages/ImageSetting";
+import Admin from "../pages/Admin";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -69,11 +69,11 @@ export const router = createBrowserRouter([
   },
 
   {
-    path: "/imageSetting",
+    path: "/admin",
     element: (
       <LoginRoute>
         <Layout>
-          <ImageSetting />
+          <Admin />
         </Layout>
       </LoginRoute>
     ),

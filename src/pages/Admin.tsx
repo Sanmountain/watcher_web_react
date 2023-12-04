@@ -5,7 +5,7 @@ import Toggle from "../components/common/Toggle";
 import { getImageSetting } from "../api/getImageSetting";
 import { editImageSetting } from "../api/editImageSetting";
 
-export default function ImageSetting() {
+export default function Admin() {
   const [isOn, setIsOn] = useState(false);
 
   const { mutate: getImageSettingMutate } = getImageSetting(setIsOn);
