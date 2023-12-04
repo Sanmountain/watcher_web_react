@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Dispatch, SetStateAction } from "react";
 import { ICheckedItems, IWorkListResponse } from "../../types/Work.types";
 import { IRegisterInvoiceResponse } from "../../types/registerInvoice.types";
+import { workPageState } from "../../stores/work/workPageState";
 
 export const editTmDv = (
   checkItems: ICheckedItems[] | undefined,
@@ -14,7 +15,7 @@ export const editTmDv = (
   workDateListMutate: UseMutateFunction<
     IWorkListResponse,
     unknown,
-    void,
+    string,
     unknown
   >,
   sendInvoiceMutate: UseMutateFunction<
@@ -25,6 +26,7 @@ export const editTmDv = (
   >,
 ) => {
   const login = useRecoilValue(loginState);
+  const page = useRecoilValue(workPageState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -40,7 +42,7 @@ export const editTmDv = (
       {
         onSuccess: (data) => {
           if (data.result === "00" || data.result === "77") {
-            workDateListMutate();
+            workDateListMutate(page);
             sendInvoiceMutate();
 
             if (setCheckedItems) {
@@ -80,7 +82,7 @@ export const editTmDv = (
               title: "수정 완료되었습니다.",
               confirmButtonText: "확인",
             });
-            workDateListMutate();
+            workDateListMutate(page);
             sendInvoiceMutate();
 
             if (setCheckedItems) {

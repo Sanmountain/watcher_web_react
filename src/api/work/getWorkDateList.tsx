@@ -11,20 +11,24 @@ import {
 import { workFilterState } from "../../stores/work/workFilterState";
 import dayjs from "dayjs";
 import { workListState } from "../../stores/work/workListState";
-import Swal from "sweetalert2";
+import { Dispatch, SetStateAction } from "react";
+import { workLastPageState } from "../../stores/work/workPageState";
 
-export const getWorkDateList = (isTmDvModal?: boolean) => {
+export const getWorkDateList = (
+  setTotal?: Dispatch<SetStateAction<number>>,
+) => {
   const login = useRecoilValue(loginState);
   const filterOption = useRecoilValue(workFilterState);
   const setWorkList = useSetRecoilState(workListState);
+  const setWorkLastPage = useSetRecoilState(workLastPageState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
-    return useMutation<IWorkListResponse, unknown, void, unknown>(
+    return useMutation<IWorkListResponse, unknown, string, unknown>(
       "useGetWorkDateList",
-      () =>
-        LogenInstance.post("/lose", {
-          api: "dvInAll",
+      (page: string) =>
+        LogenInstance.post("/dvInAllPaging", {
+          api: "dvInAllPaging",
           data: [
             {
               start_time: `${dayjs(filterOption.date).format(
@@ -35,6 +39,8 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
               )} 23:59:59`,
               bran_cd: login.branchCode,
               longTime: "",
+              page,
+              size: "30",
             },
           ],
         }),
@@ -46,27 +52,25 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             // NOTE 배송입고
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "60");
+              if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 집하출고
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "30");
+              if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
               filteringData = data.data.filter(
                 (item) => item.tm_dv === "30" || item.tm_dv === "60",
               );
+              if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
-            setWorkList(filteringData);
-
-            if (!isTmDvModal) {
-              Swal.fire({
-                icon: "success",
-                title: "조회가 완료되었습니다.",
-                confirmButtonText: "확인",
-              });
-            }
+            setWorkList((current) => [...current, ...filteringData]);
           }
         },
         onError: (error) => {
@@ -77,11 +81,11 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
   }
   // NOTE 롯데
   else if (login.company === "LOTTE") {
-    return useMutation<IWorkListResponse, unknown, void, unknown>(
+    return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
-      () =>
+      (page: string) =>
         LotteInstance.post("/lose", {
-          api: "dvInAll",
+          api: "dvInAllPaging",
           data: [
             {
               start_time: `${dayjs(filterOption.date).format(
@@ -92,6 +96,8 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
               )} 23:59:59`,
               bran_cd: login.branchCode,
               longTime: "",
+              page,
+              size: "30",
             },
           ],
         }),
@@ -103,27 +109,25 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             // NOTE 도착
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "21");
+              if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 발송
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "20");
+              if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
               filteringData = data.data.filter(
                 (item) => item.tm_dv === "20" || item.tm_dv === "21",
               );
+              if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
-            setWorkList(filteringData);
-
-            if (!isTmDvModal) {
-              Swal.fire({
-                icon: "success",
-                title: "조회가 완료되었습니다.",
-                confirmButtonText: "확인",
-              });
-            }
+            setWorkList((current) => [...current, ...filteringData]);
           }
         },
         onError: (error) => {
@@ -134,11 +138,11 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
   }
   // NOTE 한진
   else if (login.company === "HANJIN") {
-    return useMutation<IWorkListResponse, unknown, void, unknown>(
+    return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
-      () =>
+      (page: string) =>
         HanjinInstance.post("/lose", {
-          api: "dvInAll",
+          api: "dvInAllPaging",
           data: [
             {
               start_time: `${dayjs(filterOption.date).format(
@@ -149,6 +153,8 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
               )} 23:59:59`,
               bran_cd: login.branchCode,
               longTime: "",
+              page,
+              size: "30",
             },
           ],
         }),
@@ -160,27 +166,25 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             // NOTE 간선상차
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "31");
+              if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 간선하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "32");
+              if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
               filteringData = data.data.filter(
                 (item) => item.tm_dv === "31" || item.tm_dv === "32",
               );
+              if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
-            setWorkList(filteringData);
-
-            if (!isTmDvModal) {
-              Swal.fire({
-                icon: "success",
-                title: "조회가 완료되었습니다.",
-                confirmButtonText: "확인",
-              });
-            }
+            setWorkList((current) => [...current, ...filteringData]);
           }
         },
         onError: (error) => {
@@ -191,11 +195,11 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
   }
   // NOTE 한덱스
   else if (login.company === "HANDEX") {
-    return useMutation<IWorkListResponse, unknown, void, unknown>(
+    return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
-      () =>
+      (page: string) =>
         HandexInstance.post("/lose", {
-          api: "dvInAll",
+          api: "dvInAllPaging",
           data: [
             {
               start_time: `${dayjs(filterOption.date).format(
@@ -206,6 +210,8 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
               )} 23:59:59`,
               bran_cd: login.branchCode,
               longTime: "",
+              page,
+              size: "30",
             },
           ],
         }),
@@ -217,14 +223,31 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
             // NOTE 영업소상차
             if (filterOption.receivingShipment === "receive") {
               filteringData = data.data.filter((item) => item.tm_dv === "15");
+              if (setTotal) setTotal(Number(data.deliveryInTotal));
+              setWorkLastPage(data.deliveryInLastPage);
             }
             // NOTE 영업소하차
             else if (filterOption.receivingShipment === "shipment") {
               filteringData = data.data.filter((item) => item.tm_dv === "50");
+              if (setTotal) setTotal(Number(data.deliveryOutTotal));
+              setWorkLastPage(data.deliveryOutLastPage);
             }
             // NOTE 상품집하
             else if (filterOption.receivingShipment === "goods") {
               filteringData = data.data.filter((item) => item.tm_dv === "10");
+              if (setTotal)
+                setTotal(
+                  Number(data.total) -
+                    Number(data.deliveryInTotal) -
+                    Number(data.deliveryOutTotal),
+                );
+              setWorkLastPage(
+                (
+                  Number(data.lastPage) -
+                  Number(data.deliveryInLastPage) -
+                  Number(data.deliveryOutLastPage)
+                ).toString(),
+              );
             }
             // NOTE 전체
             else if (filterOption.receivingShipment === "all") {
@@ -234,17 +257,11 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
                   item.tm_dv === "50" ||
                   item.tm_dv === "10",
               );
+              if (setTotal) setTotal(Number(data.total));
+              setWorkLastPage(data.lastPage);
             }
 
-            setWorkList(filteringData);
-
-            if (!isTmDvModal) {
-              Swal.fire({
-                icon: "success",
-                title: "조회가 완료되었습니다.",
-                confirmButtonText: "확인",
-              });
-            }
+            setWorkList((current) => [...current, ...filteringData]);
           }
         },
         onError: (error) => {
@@ -254,7 +271,7 @@ export const getWorkDateList = (isTmDvModal?: boolean) => {
     );
   }
 
-  return useMutation<IWorkListResponse, unknown, void, unknown>(
+  return useMutation<IWorkListResponse, unknown, string, unknown>(
     "getWorkDateList",
     () => {
       throw new Error("Invalid company");

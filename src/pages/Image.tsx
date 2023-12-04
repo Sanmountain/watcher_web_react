@@ -37,8 +37,11 @@ export default function Image() {
   const [filterOption, setFilterOption] = useRecoilState(vassFilterState);
   const vassList = useRecoilValue(vassListState);
 
-  const { mutate: vassDateListMutate, isLoading: isDateMutateLoading } =
-    getVassDateList();
+  const {
+    mutate: vassDateListMutate,
+    isLoading: isDateMutateLoading,
+    isSuccess: isDateMutateSuccess,
+  } = getVassDateList();
   const {
     mutate: vassInvoiceNumberListMutate,
     isLoading: isInvoiceNumberMutateLoading,
@@ -50,6 +53,7 @@ export default function Image() {
         filterOption={filterOption}
         setFilterOption={setFilterOption}
         dateMutate={vassDateListMutate}
+        isDateMutateSuccess={isDateMutateSuccess}
         invoiceMutate={vassInvoiceNumberListMutate}
       />
       <Table

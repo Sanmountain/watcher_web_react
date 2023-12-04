@@ -30,6 +30,14 @@ export interface IWorkListResponse {
   result: string;
   message: string;
   data: IWorkListData[];
+  cntPerPage: string;
+  deliveryInTotal: string;
+  deliveryOutTotal: string;
+  nowPage: string;
+  total: string;
+  lastPage: string;
+  deliveryInLastPage: string;
+  deliveryOutLastPage: string;
 }
 
 export interface ICheckedItems {
