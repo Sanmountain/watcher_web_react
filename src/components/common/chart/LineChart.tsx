@@ -112,12 +112,13 @@ export default function LineChart() {
           legendOffset: -40,
           legendPosition: "middle",
         }}
-        pointSize={10}
+        pointSize={15}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
+        lineWidth={5}
         legends={[
           {
             anchor: "bottom-right",
@@ -127,7 +128,7 @@ export default function LineChart() {
             translateY: 0,
             itemsSpacing: 0,
             itemDirection: "left-to-right",
-            itemWidth: 80,
+            itemWidth: 100,
             itemHeight: 20,
             itemOpacity: 0.75,
             symbolSize: 12,

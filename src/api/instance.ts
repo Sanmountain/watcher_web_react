@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const LogenInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_TEST_API_URL}/AndyLogen`,
+  baseURL: `${process.env.REACT_APP_LOGEN_API_URL}/AndyLogen`,
 });
 
 LogenInstance.interceptors.response.use(
