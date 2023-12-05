@@ -89,6 +89,11 @@ export default function VassDetail() {
     nowVassDetail.scandate,
   );
 
+  // NOTE 배송추적 모달 열리고 닫힘
+  const onClickDeliveryModal = () => {
+    setIsDeliveryModalOpen(!isDeliveryModalOpen);
+  };
+
   // NOTE video list 담기
   useEffect(() => {
     if (vassList.length > 0) {
@@ -275,11 +280,6 @@ export default function VassDetail() {
     vassInvoiceListWithSeconds();
     setDisplayedBarcodes([]);
     setIsPlaying(false);
-  };
-
-  // NOTE 배송추적 모달 열리고 닫힘
-  const onClickDeliveryModal = () => {
-    setIsDeliveryModalOpen(!isDeliveryModalOpen);
   };
 
   return (
