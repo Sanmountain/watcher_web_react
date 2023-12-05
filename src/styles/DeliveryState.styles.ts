@@ -88,7 +88,13 @@ export const DeliveryModalContainer = styled.div`
 `;
 
 export const DeliveryModalHeader = styled.div`
-  font-size: 900;
+  font-size: 2.5rem;
+  margin: 5% 3%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const ModalOverlay = styled.div`
@@ -99,4 +105,51 @@ export const ModalOverlay = styled.div`
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
+`;
+
+export const CloseBtn = styled.button`
+  width: 10%;
+  height: 20%;
+  font-size: 3rem;
+  cursor: pointer;
+
+  border: none;
+  background-color: ${colors.black[1000]};
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const DeliveryTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+
+  thead > tr {
+    background-color: #f2f2f2;
+    font-size: 1.5rem;
+  }
+  th {
+    padding: 10px;
+    background-color: #f2f2f2;
+  }
+
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 1.5rem;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+export const DeliveryTableHeader = styled.div`
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 3% 3%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
