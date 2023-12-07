@@ -5,7 +5,7 @@ import { ILoginState } from "../types/Login.types";
 const { persistAtom } = recoilPersist();
 
 export const loginState = atom<ILoginState>({
-  key: "loginState",
+  key: "VASSLogin",
   default: {
     isLogin: false,
     isUserIdStored: false,
