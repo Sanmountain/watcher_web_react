@@ -13,3 +13,9 @@ export interface IWeekChartResponse {
   result: string;
   data: IWeekChartData[];
 }
+
+export interface ICustomToolTipProps {
+  id: string | number;
+  value: number;
+  color: string;
+}
