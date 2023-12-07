@@ -84,7 +84,7 @@ export const getWorkDateList = (
     return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
       (page: string) =>
-        LotteInstance.post("/lose", {
+        LotteInstance.post("/dvInAllPaging", {
           api: "dvInAllPaging",
           data: [
             {
@@ -141,7 +141,7 @@ export const getWorkDateList = (
     return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
       (page: string) =>
-        HanjinInstance.post("/lose", {
+        HanjinInstance.post("/dvInAllPaging", {
           api: "dvInAllPaging",
           data: [
             {
@@ -198,7 +198,7 @@ export const getWorkDateList = (
     return useMutation<IWorkListResponse, unknown, string, unknown>(
       "getWorkDateList",
       (page: string) =>
-        HandexInstance.post("/lose", {
+        HandexInstance.post("/dvInAllPaging", {
           api: "dvInAllPaging",
           data: [
             {
