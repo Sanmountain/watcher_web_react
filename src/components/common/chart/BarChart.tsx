@@ -2,7 +2,10 @@ import { ResponsiveBar } from "@nivo/bar";
 import { colors } from "../../../styles/palette";
 import { useEffect, useState } from "react";
 import { getWeekChart } from "../../../api/dashboard/getWeekChart";
-import { IWeekChartData } from "../../../types/weekChart.types";
+import {
+  ICustomToolTipProps,
+  IWeekChartData,
+} from "../../../types/weekChart.types";
 import Loading from "../Loading";
 import * as S from "../../../styles/Dashboard.styles";
 import { useRecoilValue } from "recoil";
@@ -56,6 +59,61 @@ export default function BarChart() {
     };
   });
 
+  const customTooltip = ({ id, value, color }: ICustomToolTipProps) => {
+    let label;
+
+    switch (id) {
+      case "handexCountIn":
+        login.company === "LOGEN"
+          ? (label = "배송입고")
+          : login.company === "LOTTE"
+            ? (label = "도착")
+            : login.company === "HANJIN"
+              ? (label = "간선상차")
+              : (label = "영업소상차");
+        break;
+      case "handexCountOut":
+        login.company === "LOGEN"
+          ? (label = "집하출고")
+          : login.company === "LOTTE"
+            ? (label = "발송")
+            : login.company === "HANJIN"
+              ? (label = "간선하차")
+              : (label = "영업소하차");
+        break;
+      case "handexCountPick":
+        label = "상품 집하";
+        break;
+      default:
+        label = id;
+    }
+
+    return (
+      <div
+        style={{
+          padding: "5px 10px",
+          background: "white",
+          border: "1px solid #ccc",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{
+            display: "inline-block",
+            width: "10px",
+            height: "10px",
+            background: color,
+            marginRight: "5px",
+          }}
+        />
+        <strong>
+          {label} : {value.toLocaleString()}
+        </strong>
+      </div>
+    );
+  };
+
   const legendsData = chartLegends(login.company);
 
   return (
@@ -63,6 +121,7 @@ export default function BarChart() {
       <ResponsiveBar
         data={revertWeekDataCountNumber}
         keys={["handexCountIn", "handexCountOut", "handexCountPick"]}
+        tooltip={({ id, value, color }) => customTooltip({ id, value, color })}
         indexBy="week"
         margin={{ top: 20, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
