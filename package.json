@@ -35,7 +35,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "rmdir /s /q build",
     "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "watch-env": "node watchEnvChanges.js",
     "test": "react-scripts test",
