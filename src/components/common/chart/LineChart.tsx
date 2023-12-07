@@ -7,6 +7,7 @@ import * as S from "../../../styles/Dashboard.styles";
 import Loading from "../Loading";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../../stores/loginState";
+import { chartLegends } from "../../../utils/chartLegends";
 
 export default function LineChart() {
   const [monthData, setMonthData] = useState<IWeekChartData[]>([]);
@@ -69,26 +70,31 @@ export default function LineChart() {
         y: item.handexCountOut,
       })),
     },
-    {
+  ];
+
+  if (login.company === "HANDEX") {
+    lineChartData.push({
       id: "handexCountPick",
       data: revertMonthDataCountNumber.map((item) => ({
         x: item.scandate,
         y: item.handexCountPick,
       })),
-    },
-  ];
+    });
+  }
+
+  const legendsData = chartLegends(login.company);
 
   return (
     <>
       <ResponsiveLine
         data={lineChartData}
-        margin={{ top: 30, right: 90, bottom: 50, left: 50 }}
+        margin={{ top: 30, right: 90, bottom: 50, left: 40 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
           min: "auto",
           max: "auto",
-          stacked: true,
+          stacked: false,
           reverse: false,
         }}
         colors={[
@@ -113,68 +119,27 @@ export default function LineChart() {
           legendPosition: "middle",
         }}
         pointSize={15}
+        lineWidth={5}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
         pointLabelYOffset={-12}
         useMesh={true}
-        lineWidth={5}
         legends={[
           {
             anchor: "bottom-right",
             direction: "column",
             justify: false,
-            translateX: 100,
+            translateX: 115,
             translateY: 0,
             itemsSpacing: 0,
             itemDirection: "left-to-right",
             itemWidth: 100,
             itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
+            itemOpacity: 0.85,
+            symbolSize: 13,
             symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-            data: [
-              {
-                id: "handexCountIn",
-                label:
-                  login.company === "LOGEN"
-                    ? "배송입고"
-                    : login.company === "LOTTE"
-                      ? "도착"
-                      : login.company === "HANJIN"
-                        ? "간선상차"
-                        : "영업소상차",
-                color: colors.green[100],
-              },
-              {
-                id: "handexCountOut",
-                label:
-                  login.company === "LOGEN"
-                    ? "집하출고"
-                    : login.company === "LOTTE"
-                      ? "발송"
-                      : login.company === "HANJIN"
-                        ? "간선하차"
-                        : "영업소하차",
-                color: colors.blue[100],
-              },
-              {
-                id: "handexCountPick",
-                label: login.company === "HANDEX" ? "상품집하" : "",
-                color: colors.yellow[100],
-                hidden: login.company !== "HANDEX",
-              },
-            ],
+            data: legendsData,
           },
         ]}
       />

@@ -81,11 +81,11 @@ export const Count = styled.div<{ $login: ILoginState }>`
 
 export const BottomContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
   align-items: center;
   justify-items: center;
 
-  width: 95%;
+  width: 97%;
   height: calc(100% - 130px);
 `;
 

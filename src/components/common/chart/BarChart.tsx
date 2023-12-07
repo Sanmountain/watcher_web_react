@@ -7,6 +7,7 @@ import Loading from "../Loading";
 import * as S from "../../../styles/Dashboard.styles";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../../stores/loginState";
+import { chartLegends } from "../../../utils/chartLegends";
 
 export default function BarChart() {
   const [weekData, setWeekData] = useState<IWeekChartData[]>([]);
@@ -54,6 +55,8 @@ export default function BarChart() {
       handexCountPick,
     };
   });
+
+  const legendsData = chartLegends(login.company);
 
   return (
     <>
@@ -111,47 +114,8 @@ export default function BarChart() {
             itemHeight: 20,
             itemDirection: "left-to-right",
             itemOpacity: 0.85,
-            symbolSize: 20,
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemOpacity: 1,
-                },
-              },
-            ],
-            data: [
-              {
-                id: "handexCountIn",
-                label:
-                  login.company === "LOGEN"
-                    ? "배송입고"
-                    : login.company === "LOTTE"
-                      ? "도착"
-                      : login.company === "HANJIN"
-                        ? "간선상차"
-                        : "영업소상차",
-                color: colors.green[100],
-              },
-              {
-                id: "handexCountOut",
-                label:
-                  login.company === "LOGEN"
-                    ? "집하출고"
-                    : login.company === "LOTTE"
-                      ? "발송"
-                      : login.company === "HANJIN"
-                        ? "간선하차"
-                        : "영업소하차",
-                color: colors.blue[100],
-              },
-              {
-                id: "handexCountPick",
-                label: login.company === "HANDEX" ? "상품집하" : "",
-                color: colors.yellow[100],
-                hidden: login.company !== "HANDEX",
-              },
-            ],
+            symbolSize: 13,
+            data: legendsData,
           },
         ]}
       />
