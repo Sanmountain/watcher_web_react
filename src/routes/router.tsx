@@ -56,6 +56,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { path: "/vass", element: <Vass /> },
+
       { path: "/vass/:invoiceNumber", element: <VassDetail /> },
     ],
   },
