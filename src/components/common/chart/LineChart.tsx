@@ -7,6 +7,7 @@ import * as S from "../../../styles/Dashboard.styles";
 import Loading from "../Loading";
 import { useRecoilValue } from "recoil";
 import { loginState } from "../../../stores/loginState";
+import { chartLegends } from "../../../utils/chartLegends";
 
 export default function LineChart() {
   const [monthData, setMonthData] = useState<IWeekChartData[]>([]);
@@ -32,41 +33,68 @@ export default function LineChart() {
       countIn = parseInt(item.count, 10);
     }
 
+    let handexCountIn = 0;
+    let handexCountOut = 0;
+    let handexCountPick = 0;
+
+    if (Array.isArray(item.count) && item.count.length === 3) {
+      handexCountIn = parseInt(item.count[0], 10);
+      handexCountOut = parseInt(item.count[1], 10);
+      handexCountPick = parseInt(item.count[2], 10);
+    } else {
+      handexCountIn = countIn;
+      handexCountOut = countOut;
+      handexCountPick = 0;
+    }
+
     return {
       scandate: item.scandate,
-      countIn,
-      countOut,
+      handexCountIn,
+      handexCountOut,
+      handexCountPick,
     };
   });
 
   const lineChartData = [
     {
-      id: "countIn",
+      id: "handexCountIn",
       data: revertMonthDataCountNumber.map((item) => ({
         x: item.scandate,
-        y: item.countIn,
+        y: item.handexCountIn,
       })),
     },
     {
-      id: "countOut",
+      id: "handexCountOut",
       data: revertMonthDataCountNumber.map((item) => ({
         x: item.scandate,
-        y: item.countOut,
+        y: item.handexCountOut,
       })),
     },
   ];
+
+  if (login.company === "HANDEX") {
+    lineChartData.push({
+      id: "handexCountPick",
+      data: revertMonthDataCountNumber.map((item) => ({
+        x: item.scandate,
+        y: item.handexCountPick,
+      })),
+    });
+  }
+
+  const legendsData = chartLegends(login.company);
 
   return (
     <>
       <ResponsiveLine
         data={lineChartData}
-        margin={{ top: 30, right: 90, bottom: 50, left: 50 }}
+        margin={{ top: 30, right: 90, bottom: 50, left: 40 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
           min: "auto",
           max: "auto",
-          stacked: true,
+          stacked: false,
           reverse: false,
         }}
         colors={[`${colors.green[100]}`, `${colors.blue[100]}`]}
@@ -86,7 +114,8 @@ export default function LineChart() {
           legendOffset: -40,
           legendPosition: "middle",
         }}
-        pointSize={10}
+        pointSize={15}
+        lineWidth={5}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
@@ -97,51 +126,16 @@ export default function LineChart() {
             anchor: "bottom-right",
             direction: "column",
             justify: false,
-            translateX: 100,
+            translateX: 115,
             translateY: 0,
             itemsSpacing: 0,
             itemDirection: "left-to-right",
-            itemWidth: 80,
+            itemWidth: 100,
             itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
+            itemOpacity: 0.85,
+            symbolSize: 13,
             symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-            data: [
-              {
-                id: "countIn",
-                label:
-                  login.company === "LOGEN"
-                    ? "배송입고"
-                    : login.company === "LOTTE"
-                      ? "도착"
-                      : login.company === "HANJIN"
-                        ? "간선상차"
-                        : "영업소상차",
-                color: colors.green[100],
-              },
-              {
-                id: "countOut",
-                label:
-                  login.company === "LOGEN"
-                    ? "집하출고"
-                    : login.company === "LOTTE"
-                      ? "발송"
-                      : login.company === "HANJIN"
-                        ? "간선하차"
-                        : "영업소하차",
-                color: colors.blue[100],
-              },
-            ],
+            data: legendsData,
           },
         ]}
       />
