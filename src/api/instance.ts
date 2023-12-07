@@ -17,7 +17,7 @@ LogenInstance.interceptors.response.use(
 );
 
 export const LotteInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_LOTTE_API_URL}/AndyLotte`,
+  baseURL: `${process.env.REACT_APP_TEST_API_URL}/AndyLotte`,
 });
 
 LotteInstance.interceptors.response.use(
@@ -33,7 +33,7 @@ LotteInstance.interceptors.response.use(
 );
 
 export const HanjinInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_HANJIN_API_URL}/AndyHanjin`,
+  baseURL: `${process.env.REACT_APP_TEST_API_URL}/AndyHanjin`,
 });
 
 HanjinInstance.interceptors.response.use(
@@ -49,7 +49,7 @@ HanjinInstance.interceptors.response.use(
 );
 
 export const HandexInstance = axios.create({
-  baseURL: `${process.env.REACT_APP_HANDEX_API_URL}/AndyHandex`,
+  baseURL: `${process.env.REACT_APP_TEST_API_URL}/AndyHandex`,
 });
 
 HandexInstance.interceptors.response.use(
