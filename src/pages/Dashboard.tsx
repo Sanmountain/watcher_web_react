@@ -82,7 +82,7 @@ export default function Dashboard() {
         </S.ChartContainer>
         <S.ChartContainer>
           <S.ChartTitleContainer>
-            <S.ChartTitle>2023년 스캔 수량</S.ChartTitle>
+            <S.ChartTitle>{dayjs().year()}년 스캔 수량</S.ChartTitle>
             <S.ChartCount>{numberWithCommas(monthTotal)} 건</S.ChartCount>
           </S.ChartTitleContainer>
           <S.Chart>
