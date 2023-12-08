@@ -11,11 +11,13 @@ import {
 import { workFilterState } from "../../stores/work/workFilterState";
 import { workListState } from "../../stores/work/workListState";
 import Swal from "sweetalert2";
+import { workListTotalState } from "../../stores/work/workListTotalState";
 
 export const getWorkInvoiceList = () => {
   const login = useRecoilValue(loginState);
   const filterOption = useRecoilValue(workFilterState);
   const setWorkList = useSetRecoilState(workListState);
+  const setTotal = useSetRecoilState(workListTotalState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -42,12 +44,15 @@ export const getWorkInvoiceList = () => {
             });
           } else if (data.result === "00" || data.result === "77") {
             if (data.data.length > 1) {
-              setWorkList(
-                data.data.filter(
-                  (work) => work.barcode === filterOption.invoiceNumber,
-                ),
+              const filterList = data.data.filter(
+                (work) => work.barcode === filterOption.invoiceNumber,
               );
-            } else setWorkList(data.data);
+              setWorkList(filterList);
+              setTotal(filterList.length);
+            } else {
+              setWorkList(data.data);
+              setTotal(data.data.length);
+            }
 
             Swal.fire({
               icon: "success",
@@ -87,12 +92,15 @@ export const getWorkInvoiceList = () => {
             });
           } else if (data.result === "00" || data.result === "77") {
             if (data.data.length > 1) {
-              setWorkList(
-                data.data.filter(
-                  (work) => work.barcode === filterOption.invoiceNumber,
-                ),
+              const filterList = data.data.filter(
+                (work) => work.barcode === filterOption.invoiceNumber,
               );
-            } else setWorkList(data.data);
+              setWorkList(filterList);
+              setTotal(filterList.length);
+            } else {
+              setWorkList(data.data);
+              setTotal(data.data.length);
+            }
 
             Swal.fire({
               icon: "success",
@@ -132,12 +140,15 @@ export const getWorkInvoiceList = () => {
             });
           } else if (data.result === "00" || data.result === "77") {
             if (data.data.length > 1) {
-              setWorkList(
-                data.data.filter(
-                  (work) => work.barcode === filterOption.invoiceNumber,
-                ),
+              const filterList = data.data.filter(
+                (work) => work.barcode === filterOption.invoiceNumber,
               );
-            } else setWorkList(data.data);
+              setWorkList(filterList);
+              setTotal(filterList.length);
+            } else {
+              setWorkList(data.data);
+              setTotal(data.data.length);
+            }
 
             Swal.fire({
               icon: "success",
@@ -177,12 +188,15 @@ export const getWorkInvoiceList = () => {
             });
           } else if (data.result === "00" || data.result === "77") {
             if (data.data.length > 1) {
-              setWorkList(
-                data.data.filter(
-                  (work) => work.barcode === filterOption.invoiceNumber,
-                ),
+              const filterList = data.data.filter(
+                (work) => work.barcode === filterOption.invoiceNumber,
               );
-            } else setWorkList(data.data);
+              setWorkList(filterList);
+              setTotal(filterList.length);
+            } else {
+              setWorkList(data.data);
+              setTotal(data.data.length);
+            }
 
             Swal.fire({
               icon: "success",

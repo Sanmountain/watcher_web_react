@@ -15,5 +15,4 @@ export interface IFilterProps {
   dateMutate: UseMutateFunction<any, unknown, any, unknown>;
   isDateMutateSuccess: boolean;
   invoiceMutate: UseMutateFunction<any, unknown, void, unknown>;
-  total?: number;
 }

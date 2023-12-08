@@ -6,8 +6,7 @@ import { getWorkDateList } from "../api/work/getWorkDateList";
 import { workListState } from "../stores/work/workListState";
 import { getWorkInvoiceList } from "../api/work/getWorkInvoiceList";
 import { loginState } from "../stores/loginState";
-import { useMemo, useState } from "react";
-// import { ICheckedItems } from "../types/Work.types";
+import { useMemo } from "react";
 
 export default function Work() {
   const title = useMemo(
@@ -58,16 +57,12 @@ export default function Work() {
   const login = useRecoilValue(loginState);
   const [filterOption, setFilterOption] = useRecoilState(workFilterState);
   const workList = useRecoilValue(workListState);
-  const [total, setTotal] = useState(0);
-  // NOTE 업무구분 수정 목록
-  // const [checkedItems, setCheckedItems] = useState<ICheckedItems[]>([]);
-  // const [, setAllChecked] = useState(false);
 
   const {
     mutate: workDateListMutate,
     isLoading: isDateMutateLoading,
     isSuccess: isDateMutateSuccess,
-  } = getWorkDateList(setTotal);
+  } = getWorkDateList();
 
   const {
     mutate: workInvoiceNumberListMutate,
@@ -82,10 +77,6 @@ export default function Work() {
         dateMutate={workDateListMutate}
         isDateMutateSuccess={isDateMutateSuccess}
         invoiceMutate={workInvoiceNumberListMutate}
-        // checkedItems={checkedItems}
-        // setCheckedItems={setCheckedItems}
-        // setAllChecked={setAllChecked}
-        total={total}
       />
       <Table
         title={
@@ -101,7 +92,6 @@ export default function Work() {
         }
         dateLoading={isDateMutateLoading}
         invoiceLoading={isInvoiceNumberMutateLoading}
-        total={total}
       />
     </>
   );

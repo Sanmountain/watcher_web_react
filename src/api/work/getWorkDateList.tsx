@@ -11,16 +11,15 @@ import {
 import { workFilterState } from "../../stores/work/workFilterState";
 import dayjs from "dayjs";
 import { workListState } from "../../stores/work/workListState";
-import { Dispatch, SetStateAction } from "react";
 import { workLastPageState } from "../../stores/work/workPageState";
+import { workListTotalState } from "../../stores/work/workListTotalState";
 
-export const getWorkDateList = (
-  setTotal?: Dispatch<SetStateAction<number>>,
-) => {
+export const getWorkDateList = () => {
   const login = useRecoilValue(loginState);
   const filterOption = useRecoilValue(workFilterState);
   const setWorkList = useSetRecoilState(workListState);
   const setWorkLastPage = useSetRecoilState(workLastPageState);
+  const setTotal = useSetRecoilState(workListTotalState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
