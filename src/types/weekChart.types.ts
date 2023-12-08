@@ -18,4 +18,5 @@ export interface ICustomToolTipProps {
   id: string | number;
   value: number;
   color: string;
+  indexValue: string | number;
 }
