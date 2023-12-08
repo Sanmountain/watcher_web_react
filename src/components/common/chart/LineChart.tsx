@@ -1,4 +1,4 @@
-import { ResponsiveLine } from "@nivo/line";
+import { Point, ResponsiveLine } from "@nivo/line";
 import { colors } from "../../../styles/palette";
 import { useEffect, useState } from "react";
 import { IWeekChartData } from "../../../types/weekChart.types";
@@ -82,13 +82,32 @@ export default function LineChart() {
     });
   }
 
+  const customTooltip = (point: Point) => {
+    return (
+      <div
+        style={{
+          padding: "5px 10px",
+          background: "white",
+          border: "1px solid #ccc",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <strong>
+          {point.data.xFormatted} :
+          {Number(point.data.yFormatted).toLocaleString()}건
+        </strong>
+      </div>
+    );
+  };
+
   const legendsData = chartLegends(login.company);
 
   return (
     <>
       <ResponsiveLine
         data={lineChartData}
-        margin={{ top: 30, right: 90, bottom: 50, left: 40 }}
+        margin={{ top: 30, right: 90, bottom: 50, left: 50 }}
         xScale={{ type: "point" }}
         yScale={{
           type: "linear",
@@ -117,9 +136,11 @@ export default function LineChart() {
           tickRotation: 0,
           legendOffset: -40,
           legendPosition: "middle",
+          format: (value) => `${Number(value).toLocaleString()}`,
         }}
         pointSize={15}
         lineWidth={5}
+        tooltip={({ point }) => customTooltip(point)}
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
