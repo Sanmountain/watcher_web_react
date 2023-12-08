@@ -89,6 +89,11 @@ export default function VassDetail() {
     nowVassDetail.scandate,
   );
 
+  // NOTE 배송추적 모달 열리고 닫힘
+  const onClickDeliveryModal = () => {
+    setIsDeliveryModalOpen(!isDeliveryModalOpen);
+  };
+
   // NOTE video list 담기
   useEffect(() => {
     if (vassList.length > 0) {
@@ -277,11 +282,6 @@ export default function VassDetail() {
     setIsPlaying(false);
   };
 
-  // NOTE 배송추적 모달 열리고 닫힘
-  const onClickDeliveryModal = () => {
-    setIsDeliveryModalOpen(!isDeliveryModalOpen);
-  };
-
   return (
     <>
       <S.ShoppingMallContainer>
@@ -312,7 +312,7 @@ export default function VassDetail() {
         </S.InvoiceInfoContainer>
 
         <S.DeliveryInfoContainer>
-          <DeliveryState />
+          <DeliveryState invoiceNumber={prevVassDetail?.barcode} />
           <CommonButton
             contents="배송추적 더 자세히"
             onClickFn={onClickDeliveryModal}
@@ -454,7 +454,10 @@ export default function VassDetail() {
         />
       )}
       {isDeliveryModalOpen && (
-        <DeliveryModal onClose={() => setIsDeliveryModalOpen(false)} />
+        <DeliveryModal
+          onClose={() => setIsDeliveryModalOpen(false)}
+          barcode={prevVassDetail?.barcode}
+        />
       )}
     </>
   );
