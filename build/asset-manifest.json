@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.db5d6182.css",
-    "main.js": "/static/js/main.194f09cc.js",
+    "main.js": "/static/js/main.4955d713.js",
     "static/media/img_S4.png": "/static/media/img_S4.c0d54847a4fe93fbb64f.png",
     "static/media/Roboto-Regular.ttf": "/static/media/Roboto-Regular.fc2b5060f7accec5cf74.ttf",
     "static/media/spinner.gif": "/static/media/spinner.6fabc374b0b6c0b01d88.gif",
@@ -10,6 +10,6 @@
   },
   "entrypoints": [
     "static/css/main.db5d6182.css",
-    "static/js/main.194f09cc.js"
+    "static/js/main.4955d713.js"
   ]
 }
