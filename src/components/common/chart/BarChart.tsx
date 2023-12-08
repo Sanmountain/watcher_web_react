@@ -113,7 +113,7 @@ export default function BarChart() {
           }}
         />
         <strong>
-          {indexValue} - {label} : {value.toLocaleString()}
+          {indexValue} - {label} : {value.toLocaleString()}건
         </strong>
       </div>
     );
@@ -163,7 +163,9 @@ export default function BarChart() {
           tickRotation: 0,
           legendPosition: "middle",
           legendOffset: -40,
+          format: (value) => `${Number(value).toLocaleString()}`,
         }}
+        label={(value) => `${Number(value.value).toLocaleString()}`}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor="white"
