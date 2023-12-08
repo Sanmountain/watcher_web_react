@@ -59,7 +59,12 @@ export default function BarChart() {
     };
   });
 
-  const customTooltip = ({ id, value, color }: ICustomToolTipProps) => {
+  const customTooltip = ({
+    id,
+    value,
+    color,
+    indexValue,
+  }: ICustomToolTipProps) => {
     let label;
 
     switch (id) {
@@ -108,7 +113,7 @@ export default function BarChart() {
           }}
         />
         <strong>
-          {label} : {value.toLocaleString()}
+          {indexValue} - {label} : {value.toLocaleString()}
         </strong>
       </div>
     );
@@ -121,7 +126,9 @@ export default function BarChart() {
       <ResponsiveBar
         data={revertWeekDataCountNumber}
         keys={["handexCountIn", "handexCountOut", "handexCountPick"]}
-        tooltip={({ id, value, color }) => customTooltip({ id, value, color })}
+        tooltip={({ id, value, color, indexValue }) =>
+          customTooltip({ id, value, color, indexValue })
+        }
         indexBy="week"
         margin={{ top: 20, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
