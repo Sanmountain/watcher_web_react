@@ -1,5 +1,5 @@
 export interface IWeekChartData {
-  count: string | string[];
+  count: string[];
   scandate: string;
   week: string;
 }

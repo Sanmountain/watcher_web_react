@@ -80,13 +80,14 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce((acc, item) => {
-              if (!Array.isArray(item.count)) {
-                return acc + parseInt(item.count, 10);
-              } else {
-                return acc;
-              }
+            const totalSum = data.data.reduce((totalSum, item) => {
+              const itemSum = item.count.reduce(
+                (sum, countStr) => sum + parseInt(countStr, 10),
+                0,
+              );
+              return totalSum + itemSum;
             }, 0);
+
             setMonthTotal(totalSum);
           }
         },
@@ -114,13 +115,14 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce((acc, item) => {
-              if (!Array.isArray(item.count)) {
-                return acc + parseInt(item.count, 10);
-              } else {
-                return acc;
-              }
+            const totalSum = data.data.reduce((totalSum, item) => {
+              const itemSum = item.count.reduce(
+                (sum, countStr) => sum + parseInt(countStr, 10),
+                0,
+              );
+              return totalSum + itemSum;
             }, 0);
+
             setMonthTotal(totalSum);
           }
         },
@@ -148,13 +150,14 @@ export const getMonthChart = (
           if (data.result === "00") {
             setMonthData(data.data);
 
-            const totalSum = data.data.reduce((acc, item) => {
-              if (!Array.isArray(item.count)) {
-                return acc + parseInt(item.count, 10);
-              } else {
-                return acc;
-              }
+            const totalSum = data.data.reduce((totalSum, item) => {
+              const itemSum = item.count.reduce(
+                (sum, countStr) => sum + parseInt(countStr, 10),
+                0,
+              );
+              return totalSum + itemSum;
             }, 0);
+
             setMonthTotal(totalSum);
           }
         },
