@@ -4,6 +4,7 @@ import { IVassTrackingData } from "../../types/vassTracking.types";
 export const vassTrackingState = atom<IVassTrackingData>({
   key: "vassTrackingState",
   default: {
+    cust_nm: "",
     fare: "",
     pick_trade_cd: "",
     dv_tradesub_nm: "",

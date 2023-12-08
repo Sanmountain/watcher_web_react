@@ -89,7 +89,7 @@ export const DeliveryModalContainer = styled.div`
 
 export const DeliveryModalHeader = styled.div`
   font-size: 2.5rem;
-  margin: 5% 3%;
+  margin: 3% 3%;
 
   display: flex;
   flex-direction: row;
@@ -142,12 +142,14 @@ export const DeliveryTable = styled.table`
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
+  tr:last-child > td:last-child {
+  }
 `;
 
 export const DeliveryTableHeader = styled.div`
   font-size: 2rem;
   font-weight: 900;
-  margin: 3% 3%;
+  margin: 2% 3%;
 
   display: flex;
   flex-direction: row;

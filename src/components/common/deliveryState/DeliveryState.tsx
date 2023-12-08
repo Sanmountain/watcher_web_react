@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { FaBoxesPacking, FaTruckFast } from "react-icons/fa6";
+import { FcCheckmark } from "react-icons/fc";
 import { MdWarehouse } from "react-icons/md";
 import * as S from "../../../styles/DeliveryState.styles";
 import { useRecoilValue } from "recoil";
 import { vassTrackingState } from "../../../stores/vass/vassTrackingState";
 import { getVassTracking } from "../../../api/vass/getVassTracking";
 
-export default function DeliveryState() {
+interface Props {
+  invoiceNumber: string | undefined;
+}
+
+export default function DeliveryState({ invoiceNumber }: Props) {
   const { mutate: vasslist } = getVassTracking();
   useEffect(() => {
     vasslist();
-  }, []);
+  }, [invoiceNumber]);
   const vassTrackingData = useRecoilValue(vassTrackingState);
 
   // NOTE 배송상태
@@ -30,10 +35,11 @@ export default function DeliveryState() {
     <FaBoxesPacking key="FaBoxesPacking" />,
     <MdWarehouse key="MdWarehouse" />,
     <FaTruckFast key="FaTruckFast" />,
+    <FcCheckmark key="FcCheckmark " />,
   ];
 
   const levelIcon = vassTrackingData.level
-    ? levelIcons[parseInt(vassTrackingData.level, 10) - 1]
+    ? levelIcons[parseInt(vassTrackingData.level, 10)]
     : null;
 
   // 배송 상태에 따른 dot의 위치를 결정하는 percent 변수

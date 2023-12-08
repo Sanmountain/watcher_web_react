@@ -1,5 +1,6 @@
 export interface IVassTrackingData {
   fare: string;
+  cust_nm: string;
   pick_trade_cd: string;
   dv_tradesub_nm: string;
   dv_date: string;
