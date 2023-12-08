@@ -311,16 +311,18 @@ export default function VassDetail() {
           </S.InvoiceInfo>
         </S.InvoiceInfoContainer>
 
-        <S.DeliveryInfoContainer>
-          <DeliveryState invoiceNumber={prevVassDetail?.barcode} />
-          <CommonButton
-            contents="배송추적 더 자세히"
-            onClickFn={onClickDeliveryModal}
-            width="80%"
-            height="35px"
-            backgroundColor="#010163"
-          />
-        </S.DeliveryInfoContainer>
+        {videoList.length !== 0 && (
+          <S.DeliveryInfoContainer>
+            <DeliveryState invoiceNumber={prevVassDetail?.barcode} />
+            <CommonButton
+              contents="배송추적 더 자세히"
+              onClickFn={onClickDeliveryModal}
+              width="80%"
+              height="35px"
+              backgroundColor="#010163"
+            />
+          </S.DeliveryInfoContainer>
+        )}
       </S.ShoppingMallContainer>
 
       <S.Container>
@@ -453,6 +455,7 @@ export default function VassDetail() {
           setCameraInfo={setCameraInfo}
         />
       )}
+
       {isDeliveryModalOpen && (
         <DeliveryModal
           onClose={() => setIsDeliveryModalOpen(false)}

@@ -85,6 +85,7 @@ export const DeliveryModalContainer = styled.div`
   margin: 0 auto;
   background: ${colors.black[1000]};
   border-radius: 20px;
+  padding: 20px 5px;
 `;
 
 export const DeliveryModalHeader = styled.div`

@@ -16,6 +16,7 @@ import { vassFilterState } from "../../stores/vass/vassFilterState";
 import modalClose from "../../utils/modalClose";
 import { getMenuList } from "../../utils/getMenuList";
 import { videoListState } from "../../stores/vass/videoListState";
+import { vassTrackingState } from "../../stores/vass/vassTrackingState";
 
 export default function Header() {
   const [login, setLogin] = useRecoilState(loginState);
@@ -27,6 +28,7 @@ export default function Header() {
   const resetVideoList = useResetRecoilState(videoListState);
   const resetNowVassDetail = useResetRecoilState(nowVassDetailState);
   const resetPrevVassDetail = useResetRecoilState(prevVassDetailState);
+  const resetTrackingState = useResetRecoilState(vassTrackingState);
   const [currentMenu, setCurrentMenu] = useRecoilState(menuState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -50,6 +52,7 @@ export default function Header() {
     resetVideoList();
     resetNowVassDetail();
     resetPrevVassDetail();
+    resetTrackingState();
     navigate("/login");
   };
 
