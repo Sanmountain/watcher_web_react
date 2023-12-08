@@ -21,6 +21,7 @@ import { loginState } from "../../stores/loginState";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import { workPageState } from "../../stores/work/workPageState";
+import { workListTotalState } from "../../stores/work/workListTotalState";
 
 export default function Filter({
   filterOption,
@@ -28,7 +29,6 @@ export default function Filter({
   dateMutate,
   isDateMutateSuccess,
   invoiceMutate,
-  total,
 }: IFilterProps) {
   const login = useRecoilValue(loginState);
   const [isDisplayRegisterModal, setIsDisplayRegisterModal] = useState(false);
@@ -38,6 +38,7 @@ export default function Filter({
   const setPage = useSetRecoilState(workPageState);
 
   const [, setWorkList] = useRecoilState(workListState);
+  const total = useRecoilValue(workListTotalState);
   const vassList = useRecoilValue(vassListState);
 
   const location = useLocation();

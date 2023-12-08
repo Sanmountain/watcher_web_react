@@ -17,6 +17,7 @@ import {
 } from "../../stores/work/workPageState";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { getWorkDateList } from "../../api/work/getWorkDateList";
+import { workListTotalState } from "../../stores/work/workListTotalState";
 
 export default function Table({
   title,
@@ -24,10 +25,10 @@ export default function Table({
   columns,
   dateLoading,
   invoiceLoading,
-  total,
 }: ITableProps) {
   const setNowVassDetail = useSetRecoilState(nowVassDetailState);
   const setPrevVassDetail = useSetRecoilState(prevVassDetailState);
+  const total = useRecoilValue(workListTotalState);
   // NOTE 이미지
   const [imageUrl, setImageUrl] = useState("");
   const [isDisplayImageModal, setIsDisplayImageModal] = useState(false);

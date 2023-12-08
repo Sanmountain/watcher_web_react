@@ -9,5 +9,4 @@ export interface ITableProps {
   columns: number;
   dateLoading: boolean;
   invoiceLoading: boolean;
-  total?: number;
 }
