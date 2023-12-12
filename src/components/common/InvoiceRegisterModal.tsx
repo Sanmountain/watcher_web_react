@@ -10,12 +10,13 @@ import {
 } from "../../types/registerInvoice.types";
 import { getRegisterModalStatus } from "../../api/work/getRegisterModalStatus";
 import { useRecoilValue } from "recoil";
-import { workFilterState } from "../../stores/work/workFilterState";
 import { loginState } from "../../stores/loginState";
 import Loading from "./Loading";
+import dayjs from "dayjs";
 export default function InvoiceRegisterModal({
   setIsDisplayRegisterModal,
 }: IInvoiceRegisterModalProps) {
+  const login = useRecoilValue(loginState);
   const [registerInfo, setRegisterInfo] = useState<IRegisterModalStatusData>({
     bran_cd: "",
     car_num: "",
@@ -27,8 +28,8 @@ export default function InvoiceRegisterModal({
     tm_dv: "",
   });
   const [registeredData, setRegisteredData] = useState<IRegisteredData>({
-    tm_dv: "",
-    scandate: "",
+    tm_dv: login.company === "LOGEN" ? "60" : "21",
+    scandate: dayjs().format("YYYY-MM-DD"),
     bran_cd: "",
     car_num: "",
     emp_cd: "",
@@ -36,19 +37,19 @@ export default function InvoiceRegisterModal({
     pob: "",
     barcode: "",
   });
-  const filterOption = useRecoilValue(workFilterState);
-  const login = useRecoilValue(loginState);
 
   const { mutate: registerModalStatus } = getRegisterModalStatus(
+    registeredData,
     setRegisterInfo,
     setRegisteredData,
   );
+
   const { mutate: registerInvoiceMutate, isLoading: isRegisterLoading } =
     registerInvoice(setIsDisplayRegisterModal);
 
   useEffect(() => {
     registerModalStatus();
-  }, [filterOption]);
+  }, []);
 
   const onClickCloseButton = () => {
     setIsDisplayRegisterModal(false);
@@ -158,16 +159,33 @@ export default function InvoiceRegisterModal({
           <S.LeftRightContainer>
             <S.TitleInputContainer>
               <S.Title>업무분류</S.Title>
-              <S.Info>
-                {login.company === "LOGEN" &&
-                  (filterOption?.receivingShipment === "receive" ? "60" : "30")}
-                {login.company === "LOTTE" &&
-                  (filterOption?.receivingShipment === "receive" ? "21" : "20")}
-              </S.Info>
+              <S.InfoSelectBox
+                name="tm_dv"
+                value={registeredData.tm_dv}
+                onChange={handleRegisteredData}
+              >
+                {login.company === "LOGEN" && (
+                  <>
+                    <option value="60">배송입고(60)</option>
+                    <option value="30">집하출고(30)</option>
+                  </>
+                )}
+                {login.company === "LOTTE" && (
+                  <>
+                    <option value="21">도착(21)</option>
+                    <option value="20">발송(20)</option>
+                  </>
+                )}
+              </S.InfoSelectBox>
             </S.TitleInputContainer>
             <S.TitleInputContainer>
               <S.Title>날짜</S.Title>
-              <S.Info>{filterOption?.date}</S.Info>
+              <S.InfoInput
+                name="scandate"
+                type="date"
+                onChange={handleRegisteredData}
+                value={registeredData.scandate}
+              />
             </S.TitleInputContainer>
             <S.TitleInputContainer>
               <S.Title>사업장</S.Title>

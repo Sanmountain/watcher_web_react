@@ -2,21 +2,19 @@ import { useRecoilValue } from "recoil";
 import { loginState } from "../../stores/loginState";
 import { useMutation } from "react-query";
 import { LogenInstance, LotteInstance } from "../instance";
-import { workFilterState } from "../../stores/work/workFilterState";
 import {
   IRegisterModalStatusData,
   IRegisterModalStatusResponse,
   IRegisteredData,
 } from "../../types/registerInvoice.types";
 import { Dispatch, SetStateAction } from "react";
-import dayjs from "dayjs";
 
 export const getRegisterModalStatus = (
+  registeredData: IRegisteredData,
   setRegisterInfo: Dispatch<SetStateAction<IRegisterModalStatusData>>,
   setRegisteredData: Dispatch<SetStateAction<IRegisteredData>>,
 ) => {
   const login = useRecoilValue(loginState);
-  const filterOption = useRecoilValue(workFilterState);
 
   // NOTE 로젠
   if (login.company === "LOGEN") {
@@ -28,7 +26,7 @@ export const getRegisterModalStatus = (
           data: [
             {
               bran_cd: login.branchCode,
-              scandate: dayjs(filterOption.date).format("YYYY-MM-DD"),
+              scandate: registeredData.scandate,
             },
           ],
         }),
@@ -49,13 +47,13 @@ export const getRegisterModalStatus = (
             };
 
             // NOTE 집하출고 선택한 경우
-            if (filterOption.receivingShipment === "shipment") {
+            if (registeredData.tm_dv === "30") {
               const filteredData = data.data.filter(
                 (item) => item.tm_dv === "30",
               )[0] || {
-                tm_dv: "",
-                scandate: "",
-                bran_cd: "",
+                tm_dv: registeredData.tm_dv,
+                scandate: registeredData.scandate,
+                bran_cd: login.branchCode,
                 car_num: "",
                 emp_cd: "",
                 tg_bran_cd: "",
@@ -81,13 +79,13 @@ export const getRegisterModalStatus = (
               };
             }
             // NOTE 배송입고 선택한 경우
-            else if (filterOption.receivingShipment === "receive") {
+            else if (registeredData.tm_dv === "60") {
               const filteredData = data.data.filter(
                 (item) => item.tm_dv === "60",
               )[0] || {
-                tm_dv: "",
-                scandate: "",
-                bran_cd: "",
+                tm_dv: registeredData.tm_dv,
+                scandate: registeredData.scandate,
+                bran_cd: login.branchCode,
                 car_num: "",
                 emp_cd: "",
                 tg_bran_cd: "",
@@ -132,7 +130,7 @@ export const getRegisterModalStatus = (
           data: [
             {
               bran_cd: login.branchCode,
-              scandate: filterOption.date,
+              scandate: registeredData.scandate,
             },
           ],
         }),
@@ -154,9 +152,8 @@ export const getRegisterModalStatus = (
 
             if (!data.data[0]) {
               setData = {
-                tm_dv:
-                  filterOption.receivingShipment === "receive" ? "21" : "20",
-                scandate: filterOption.date,
+                tm_dv: registeredData.tm_dv,
+                scandate: registeredData.scandate,
                 bran_cd: login.branchCode,
                 car_num: "",
                 emp_cd: "",
@@ -164,13 +161,13 @@ export const getRegisterModalStatus = (
                 pob: "",
                 barcode: "",
               };
-            } else if (filterOption.receivingShipment === "receive") {
+            } else if (registeredData.tm_dv === "21") {
               const filteredData = data.data.filter(
                 (item) => item.tm_dv === "21",
               )[0] || {
-                tm_dv: "",
-                scandate: "",
-                bran_cd: "",
+                tm_dv: registeredData.tm_dv,
+                scandate: registeredData.scandate,
+                bran_cd: login.branchCode,
                 car_num: "",
                 emp_cd: "",
                 tg_bran_cd: "",
@@ -194,13 +191,13 @@ export const getRegisterModalStatus = (
                 pob: filteredData.pob ? filteredData.pob.split(",")[0] : "",
                 barcode: "",
               };
-            } else if (filterOption.receivingShipment === "shipment") {
+            } else if (registeredData.tm_dv === "20") {
               const filteredData = data.data.filter(
                 (item) => item.tm_dv === "20",
               )[0] || {
-                tm_dv: "",
-                scandate: "",
-                bran_cd: "",
+                tm_dv: registeredData.tm_dv,
+                scandate: registeredData.scandate,
+                bran_cd: login.branchCode,
                 car_num: "",
                 emp_cd: "",
                 tg_bran_cd: "",
